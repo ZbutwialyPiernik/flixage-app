@@ -9,7 +9,7 @@ part of 'track_repository.dart';
 class _TrackRepository implements TrackRepository {
   _TrackRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
+    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -17,13 +17,13 @@ class _TrackRepository implements TrackRepository {
   String baseUrl;
 
   @override
-  fetchAudio({id}) async {
+  getById(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/track/$id',
+        '/tracks/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -36,22 +36,19 @@ class _TrackRepository implements TrackRepository {
   }
 
   @override
-  searchAudio({query, limit}) async {
+  increaseStreamCount(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'query': query, 'limit': limit};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request('/track',
+    await _dio.request<void>('/tracks/$id/streamCount',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
+            method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    var value = _result.data
-        .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return Future.value(value);
+    return Future.value(null);
   }
 }

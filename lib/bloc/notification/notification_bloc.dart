@@ -1,29 +1,15 @@
-import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/notification/simple_notification.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class NotificationEvent extends Equatable {}
-
-class DisplayNotification extends NotificationEvent {
-  final SimpleNotification notification;
-
-  DisplayNotification(this.notification);
-
-  @override
-  List<Object> get props => [notification];
-}
-
-class NotificationBloc extends Bloc<NotificationEvent> {
+class NotificationBloc extends Bloc<SimpleNotification> {
   final PublishSubject<SimpleNotification> _notificationSubject = PublishSubject();
 
-  Stream<SimpleNotification> get notificationStream => _notificationSubject.stream;
+  Stream<SimpleNotification> get notifications => _notificationSubject.stream;
 
   @override
-  void onEvent(NotificationEvent event) {
-    if (event is DisplayNotification) {
-      _notificationSubject.add(event.notification);
-    }
+  void onEvent(SimpleNotification notification) {
+    _notificationSubject.add(notification);
   }
 
   @override

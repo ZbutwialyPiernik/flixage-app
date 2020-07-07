@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/util/constants.dart';
 import 'package:retrofit/http.dart';
 
-import 'package:flixage/constants.dart';
 import 'package:flixage/model/authentication.dart';
 
 part 'authentication_repository.g.dart';

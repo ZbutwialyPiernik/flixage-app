@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
+import 'package:flixage/util/constants.dart';
 import 'package:retrofit/http.dart';
-
-import 'package:flixage/constants.dart';
 
 part 'playlist_repository.g.dart';
 
@@ -11,29 +12,32 @@ part 'playlist_repository.g.dart';
 abstract class PlaylistRepository {
   factory PlaylistRepository(Dio dio, {String baseUrl}) = _PlaylistRepository;
 
-  @GET("/playlists")
-  Future<List<Playlist>> searchPlaylists(@Query("q") String query);
+  @GET("/playlists/{id}")
+  Future<Playlist> getById(@Path() String id);
 
   @POST("/playlists")
-  Future<Playlist> createPlaylist(@Body() Map<String, dynamic> body);
+  Future<Playlist> create(@Body() Map<String, dynamic> body);
 
-  @PUT("/playlists/{playlistId}")
-  Future<Playlist> updatePlaylist(
-      @Path("playlistId") String playlistId, @Body() Playlist playlist);
+  @PUT("/playlists/{id}")
+  Future<Playlist> update(@Path("id") String id, @Body() Playlist playlist);
 
-  @DELETE("/playlists")
-  Future<void> deletePlaylist(@Path("playlistId") String playlistId);
+  @POST("/playlists/{id}/thumbnail")
+  Future<void> uploadThumbnail(@Path("id") String id, @Part() File file,
+      @Header("Content-Type") String contentType);
 
-  @POST("/playlists/{playlistId}/tracks")
-  Future<void> addTrackToPlaylist(
-      @Path("playlistId") String playlistId, @Body() List<String> tracks);
+  @GET("/playlists/{id}/tracks")
+  Future<List<Track>> getTracksFromPlaylist(@Path("id") String id);
 
-  @DELETE("/playlists/{playlistId}/tracks")
-  Future<void> removeTracksFromPlaylist(
-      @Path("playlistId") String playlistId, @Body() List<String> tracks);
+  @DELETE("/playlists/{id}")
+  Future<void> delete(@Path("id") String id);
 
-  @GET("/playlists/{playlistId}/tracks")
-  Future<List<Track>> getTracksFromPlaylist(@Path("userId") String userId);
+  @PUT("/playlists/{id}/tracks")
+  Future<void> addTracks(@Path("id") String id, @Body() Map<String, dynamic> tracks);
+
+  @DELETE("/playlists/{id}/tracks")
+  Future<void> removeTrack(@Path("id") String id, @Body() Map<String, dynamic> tracks);
+
+  // User oriented
 
   @GET("/users/{userId}/playlists")
   Future<List<Playlist>> getUserPlaylists(@Path("userId") String userId);

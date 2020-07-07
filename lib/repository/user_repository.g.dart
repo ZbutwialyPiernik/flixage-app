@@ -9,7 +9,7 @@ part of 'user_repository.dart';
 class _UserRepository implements UserRepository {
   _UserRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
+    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -17,10 +17,10 @@ class _UserRepository implements UserRepository {
   String baseUrl;
 
   @override
-  getUserById({id}) async {
+  getById(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
         '/users/$id',

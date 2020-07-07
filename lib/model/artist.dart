@@ -7,7 +7,7 @@ part 'artist.g.dart';
 class Artist extends Queryable {
   Artist({id, name, thumbnailUrl}) : super(id, name, thumbnailUrl);
 
-  factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
+  static Artist fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
   Map<String, dynamic> toJson() => _$ArtistToJson(this);
 
   @override

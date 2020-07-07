@@ -1,3 +1,4 @@
+import 'package:flixage/model/album.dart';
 import 'package:flixage/model/queryable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,22 +9,28 @@ part 'track.g.dart';
 @JsonSerializable()
 class Track extends Queryable {
   final String fileUrl;
-  final List<Artist> artists;
-  final double duration;
-  bool saved;
+  final Artist artist;
+  final Album album;
+  final Duration duration;
+  final bool saved;
+  final int streamCount;
+
   Track(
       {String id,
       String name,
       String thumbnailUrl,
+      this.streamCount,
       this.fileUrl,
-      this.artists,
+      this.album,
+      this.artist,
       this.duration,
       this.saved})
       : super(id, name, thumbnailUrl);
 
-  factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
+  static Track fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
   Map<String, dynamic> toJson() => _$TrackToJson(this);
 
   @override
-  List<Object> get props => [id, name, thumbnailUrl, fileUrl, saved, duration];
+  List<Object> get props =>
+      [id, name, thumbnailUrl, album, fileUrl, saved, duration, streamCount];
 }

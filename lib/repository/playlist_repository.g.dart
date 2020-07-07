@@ -9,7 +9,7 @@ part of 'playlist_repository.dart';
 class _PlaylistRepository implements PlaylistRepository {
   _PlaylistRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
+    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -17,12 +17,13 @@ class _PlaylistRepository implements PlaylistRepository {
   String baseUrl;
 
   @override
-  searchPlaylists(query) async {
-    ArgumentError.checkNotNull(query, 'query');
+  getById(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'q': query};
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request('/playlists',
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/playlists/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -30,21 +31,19 @@ class _PlaylistRepository implements PlaylistRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    var value = _result.data
-        .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = Playlist.fromJson(_result.data);
     return Future.value(value);
   }
 
   @override
-  createPlaylist(body) async {
+  create(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/playlists/{playlistId}',
+        '/playlists',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -57,15 +56,15 @@ class _PlaylistRepository implements PlaylistRepository {
   }
 
   @override
-  updatePlaylist(playlistId, playlist) async {
-    ArgumentError.checkNotNull(playlistId, 'playlistId');
+  update(id, playlist) async {
+    ArgumentError.checkNotNull(id, 'id');
     ArgumentError.checkNotNull(playlist, 'playlist');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(playlist?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/playlists/$playlistId',
+        '/playlists/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'PUT',
@@ -78,66 +77,37 @@ class _PlaylistRepository implements PlaylistRepository {
   }
 
   @override
-  deletePlaylist(playlistId) async {
-    ArgumentError.checkNotNull(playlistId, 'playlistId');
+  uploadThumbnail(id, file, contentType) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(file, 'file');
+    ArgumentError.checkNotNull(contentType, 'contentType');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    await _dio.request<void>('/playlists',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    return Future.value(null);
-  }
-
-  @override
-  addTrackToPlaylist(playlistId, tracks) async {
-    ArgumentError.checkNotNull(playlistId, 'playlistId');
-    ArgumentError.checkNotNull(tracks, 'tracks');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = tracks;
-    await _dio.request<void>('/playlists/$playlistId/tracks',
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromFileSync(file.path,
+            filename: file.path.split(Platform.pathSeparator).last)));
+    await _dio.request<void>('/playlists/$id/thumbnail',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
-            headers: <String, dynamic>{},
+            headers: <String, dynamic>{'Content-Type': contentType},
             extra: _extra,
+            contentType: contentType,
             baseUrl: baseUrl),
         data: _data);
     return Future.value(null);
   }
 
   @override
-  removeTracksFromPlaylist(playlistId, tracks) async {
-    ArgumentError.checkNotNull(playlistId, 'playlistId');
-    ArgumentError.checkNotNull(tracks, 'tracks');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = tracks;
-    await _dio.request<void>('/playlists/$playlistId/tracks',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    return Future.value(null);
-  }
-
-  @override
-  getTracksFromPlaylist(userId) async {
-    ArgumentError.checkNotNull(userId, 'userId');
+  getTracksFromPlaylist(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<List<dynamic>> _result = await _dio.request(
-        '/playlists/{playlistId}/tracks',
+        '/playlists/$id/tracks',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -149,6 +119,61 @@ class _PlaylistRepository implements PlaylistRepository {
         .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
         .toList();
     return Future.value(value);
+  }
+
+  @override
+  delete(id) async {
+    ArgumentError.checkNotNull(id, 'id');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    await _dio.request<void>('/playlists/$id',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    return Future.value(null);
+  }
+
+  @override
+  addTracks(id, tracks) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(tracks, 'tracks');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(tracks ?? <String, dynamic>{});
+    await _dio.request<void>('/playlists/$id/tracks',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    return Future.value(null);
+  }
+
+  @override
+  removeTrack(id, tracks) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(tracks, 'tracks');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(tracks ?? <String, dynamic>{});
+    await _dio.request<void>('/playlists/$id/tracks',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    return Future.value(null);
   }
 
   @override

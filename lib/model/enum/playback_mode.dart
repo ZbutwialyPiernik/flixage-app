@@ -1,1 +1,0 @@
-enum PlaybackMode { Random, Ordered }

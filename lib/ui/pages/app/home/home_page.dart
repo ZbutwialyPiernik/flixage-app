@@ -2,6 +2,8 @@ import 'package:flixage/ui/pages/app/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  static const String route = "home";
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,8 +17,7 @@ class HomePage extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.settings),
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true)
-                      .pushNamed(SettingsPage.route);
+                  Navigator.of(context).pushNamed(SettingsPage.route);
                 },
               ),
             ],

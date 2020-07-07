@@ -6,14 +6,14 @@ part 'playlist.g.dart';
 
 @JsonSerializable()
 class Playlist extends Queryable {
-  final User author;
+  final User owner;
 
-  Playlist({String id, String name, String thumbnailUrl, this.author})
+  Playlist({String id, String name, String thumbnailUrl, this.owner})
       : super(id, name, thumbnailUrl);
 
-  factory Playlist.fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
+  static Playlist fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 
   @override
-  List<Object> get props => [id, name, thumbnailUrl];
+  List<Object> get props => [id, name, thumbnailUrl, owner];
 }

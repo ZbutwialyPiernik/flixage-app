@@ -9,7 +9,7 @@ part of 'authentication_repository.dart';
 class _AuthenticationRepository implements AuthenticationRepository {
   _AuthenticationRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
+    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
