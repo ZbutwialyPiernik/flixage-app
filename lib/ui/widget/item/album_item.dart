@@ -1,5 +1,5 @@
 import 'package:flixage/model/album.dart';
-import 'package:flixage/ui/pages/routes/album/album_page.dart';
+import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/widget/item/context_menu/album_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
 import 'package:flutter/cupertino.dart';

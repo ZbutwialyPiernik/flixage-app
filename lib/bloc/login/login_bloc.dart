@@ -3,7 +3,6 @@ import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/login/login_state.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/notification/simple_notification.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/util/validation/common_validators.dart';
 import 'package:flixage/util/validation/validation_result.dart';

@@ -1,6 +1,5 @@
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/notification/simple_notification.dart';
 import 'package:flixage/bloc/playlist/playlist_event.dart';
 import 'package:flixage/bloc/playlist/playlist_state.dart';
 import 'package:flixage/repository/playlist_repository.dart';
@@ -30,7 +29,7 @@ class PlaylistBloc extends Bloc<PlaylistEvent> {
       playlistRepository.getTracksFromPlaylist(event.playlist.id).then((tracks) {
         _trackSubject.add(PlaylistLoadingSuccess(tracks));
       }).catchError((e) {
-        _trackSubject.add(PlaylistLoadingError(e));
+        _trackSubject.add(PlaylistLoadingError("Playlist loading error"));
       });
     } else if (event is UploadThumbnail) {
       final extension = p.extension(event.image.path);

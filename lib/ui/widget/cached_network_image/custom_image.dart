@@ -15,11 +15,12 @@ class CustomImage extends StatelessWidget {
   final double height;
   final bool rounded;
 
-  CustomImage(
-      {@required this.imageUrl,
-      @required this.width,
-      @required this.height,
-      this.rounded = false});
+  CustomImage({
+    @required this.imageUrl,
+    this.width = double.infinity,
+    this.height = double.infinity,
+    this.rounded = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +59,6 @@ class CustomImage extends StatelessWidget {
         width: width,
         height: height,
         color: Colors.black26,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
       ),
       errorWidget: (context, url, error) => Container(
         width: width,

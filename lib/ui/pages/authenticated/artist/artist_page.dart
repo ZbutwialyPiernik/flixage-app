@@ -7,7 +7,7 @@ import 'package:flixage/model/album.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/artist_repository.dart';
-import 'package:flixage/ui/pages/routes/material_route.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/album_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
@@ -26,7 +26,7 @@ class ArtistPage extends StatefulWidget {
 class _ArtistPageState extends State<ArtistPage> {
   @override
   Widget build(BuildContext context) {
-    final Artist artist = ModalRoute.of(context).settings.arguments;
+    final Artist artist = (ModalRoute.of(context).settings.arguments as Arguments).extra;
 
     final notificationBloc = Provider.of<NotificationBloc>(context);
     final dio = Provider.of<Dio>(context);
@@ -38,7 +38,8 @@ class _ArtistPageState extends State<ArtistPage> {
     return StatefulWrapper(
       onInit: () => artistBloc.dispatch(artist),
       onDispose: () => artistBloc.dispose(),
-      child: MaterialRoute(
+      child: Material(
+        color: Theme.of(context).backgroundColor,
         child: StreamBuilder<ArtistData>(
           stream: artistBloc.stream,
           builder: (context, snapshot) {
@@ -73,15 +74,12 @@ class _ArtistPageState extends State<ArtistPage> {
                       "Popularne",
                       style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
                     ),
-                    SizedBox(height: 16),
                     ..._buildSingles(snapshot.data.singles),
                     Text(
                       "Albumy",
                       style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
                     ),
-                    SizedBox(height: 16),
                     ..._buildAlbums(context, snapshot.data.albums),
-                    SizedBox(height: 16),
                     Text("Biogram",
                         style:
                             Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18)),
@@ -112,6 +110,8 @@ class _ArtistPageState extends State<ArtistPage> {
   }
 
   List<Widget> _buildSingles(List<Track> singles) {
+    singles.sort((s1, s2) => s2.streamCount.compareTo(s1.streamCount));
+
     return [
       ListView.separated(
           shrinkWrap: true,

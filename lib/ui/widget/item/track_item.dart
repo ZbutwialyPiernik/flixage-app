@@ -27,23 +27,16 @@ class TrackItem extends StatelessWidget {
       height: height,
       prefix: prefix,
       contextMenuRoute: TrackContextMenu.route,
-      details: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      details: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(track.name, style: TextStyle(fontSize: 18)),
-                subheader ??
-                    Text('Utwór • ${track.artist.name}',
-                        style: TextStyle(color: Colors.white.withOpacity(0.8)))
-              ],
-            ),
-          ),
+          Text(track.name, style: TextStyle(fontSize: 18)),
+          subheader ??
+              Text('Utwór • ${track.artist.name}',
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.8),
+                  ))
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flixage/model/queryable.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,10 @@ abstract class ContextMenu<T extends Queryable> extends StatelessWidget {
   List<ContextMenuItem<T>> createActions(BuildContext context, T item);
 
   Widget build(BuildContext context) {
-    final T item = ModalRoute.of(context).settings.arguments;
+    final T item = (ModalRoute.of(context).settings.arguments as Arguments).extra;
 
     return Material(
+      elevation: (Theme.of(context).bottomAppBarTheme.elevation ?? 8) + 1,
       type: MaterialType.transparency,
       child: GestureDetector(
         onTap: () => Navigator.of(context).pop(),
@@ -46,14 +48,15 @@ abstract class ContextMenu<T extends Queryable> extends StatelessWidget {
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             children: <Widget>[
-              Divider(height: 120),
+              SizedBox(height: 120),
               Column(
                 children: <Widget>[
                   CustomImage(imageUrl: item.thumbnailUrl, width: 128, height: 128),
+                  SizedBox(height: 16),
                   Text(item.name,
                       style:
                           Theme.of(context).textTheme.headline6.copyWith(fontSize: 16)),
-                  Divider(height: 24),
+                  SizedBox(height: 24),
                 ],
               ),
               Column(

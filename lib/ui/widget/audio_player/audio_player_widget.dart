@@ -1,17 +1,16 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/model/track.dart';
-import 'package:flixage/ui/pages/routes/audio_player/audio_player.dart';
-import 'package:flixage/ui/pages/routes/audio_player/subcomponent/audio_player_state_button.dart';
+import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';
+import 'package:flixage/ui/pages/authenticated/audio_player/subcomponent/audio_player_state_button.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
-import 'package:flixage/ui/widget/named_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flixage/ui/widget/reroute_request.dart';
 
 class AudioPlayerWidget extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
+  final NavigatorState navigator;
 
-  const AudioPlayerWidget({Key key, this.navigatorKey}) : super(key: key);
+  const AudioPlayerWidget({Key key, this.navigator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +23,13 @@ class AudioPlayerWidget extends StatelessWidget {
           return Container();
         }
 
-        final audio = audioSnapshot.data;
+        final track = audioSnapshot.data;
         final screenWidth = MediaQuery.of(context).size.width;
 
         return GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => handleReroute(
-            navigatorKey.currentState,
-            NamedNavigator.of(context, NamedNavigator.root)
-                .pushNamed(AudioPlayerPage.route),
-          ),
+          onTap: () => navigator.pushNamed(AudioPlayerPage.route,
+              arguments: Arguments(showBottomAppBar: false)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -47,18 +43,18 @@ class AudioPlayerWidget extends StatelessWidget {
                       height: 2,
                       child: LinearProgressIndicator(
                           backgroundColor: Colors.white30,
-                          value: duration.inSeconds / audio.duration.inSeconds));
+                          value: duration.inSeconds / track.duration.inSeconds));
                 },
               ),
               Container(
                 width: screenWidth,
                 height: 64,
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: Theme.of(context).bottomAppBarColor,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     // Image is a rectangle she we will use height as width
-                    CustomImage(imageUrl: audio.thumbnailUrl, width: 64, height: 64),
+                    CustomImage(imageUrl: track.thumbnailUrl, width: 64, height: 64),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,10 +64,10 @@ class AudioPlayerWidget extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Row(
                                 children: <Widget>[
-                                  Text(audio.name,
+                                  Text(track.name,
                                       style: TextStyle(fontWeight: FontWeight.bold)),
                                   Text(" | "),
-                                  Text(audio.artist.name)
+                                  Text(track.artist.name)
                                 ],
                               )),
                           AudioPlayerStateButton(

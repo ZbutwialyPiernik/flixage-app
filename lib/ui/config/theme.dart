@@ -4,7 +4,7 @@ final theme = ThemeData(
   brightness: Brightness.dark,
   fontFamily: 'Roboto',
   backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-  //backgroundColor: Colors.grey.shade900,
+  bottomAppBarColor: Color.fromRGBO(33, 33, 33, 1),
   primaryColor: Color.fromARGB(255, 96, 30, 61),
   accentColor: Colors.amberAccent,
   textTheme: TextTheme(

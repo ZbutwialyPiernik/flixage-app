@@ -2,14 +2,15 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/model/track.dart';
-import 'package:flixage/ui/pages/routes/artist/artist_page.dart';
-import 'package:flixage/ui/pages/routes/audio_player/audio_player_slider.dart';
-import 'package:flixage/ui/pages/routes/audio_player/subcomponent/audio_player_state_button.dart';
+import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
+import 'package:flixage/ui/pages/authenticated/audio_player/audio_player_slider.dart';
+import 'package:flixage/ui/pages/authenticated/audio_player/subcomponent/audio_player_state_button.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
+import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
+import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/track_context_menu.dart';
 import 'package:flixage/ui/widget/notification_root.dart';
-import 'package:flixage/ui/widget/named_navigator.dart';
-import 'package:flixage/ui/widget/reroute_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,33 +46,31 @@ class AudioPlayerPage extends StatelessWidget {
                     IconButton(
                         icon: Icon(Icons.keyboard_arrow_down),
                         onPressed: () => Navigator.of(context).pop()),
-                    IconButton(
-                      icon: Icon(Icons.more_vert),
-                      onPressed: () => NamedNavigator.of(context, NamedNavigator.root)
-                          .pushNamed(TrackContextMenu.route, arguments: track),
-                    )
+                    ContextMenuButton(route: TrackContextMenu.route, item: track)
                   ],
                 ),
                 Container(
-                  width: double.infinity,
+                  width: MediaQuery.of(context).size.width - 24 * 2,
+                  height: MediaQuery.of(context).size.width - 24 * 2,
                   margin: EdgeInsets.symmetric(horizontal: 24),
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 8.0,
-                          spreadRadius: 1.0,
-                          offset: Offset(0.0, 1))
+                        color: Colors.black,
+                        blurRadius: 8.0,
+                        spreadRadius: 1.0,
+                        offset: Offset(0.0, 1),
+                      )
                     ],
                   ),
                   child: CustomImage(
-                    width: double.infinity,
                     imageUrl: track.thumbnailUrl,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 24, bottom: 24, right: 24),
+                  padding: const EdgeInsets.only(left: 24, right: 24),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,8 +92,8 @@ class AudioPlayerPage extends StatelessWidget {
                                         TextStyle(color: Colors.white.withOpacity(0.6))),
                                 onTap: () => Navigator.pop(
                                   context,
-                                  RerouteRequest(
-                                      route: ArtistPage.route, arguments: track.artist),
+                                  Navigator.of(context).pushNamed(ArtistPage.route,
+                                      arguments: Arguments(extra: track.artist)),
                                 ),
                               ),
                             ],
@@ -105,13 +104,13 @@ class AudioPlayerPage extends StatelessWidget {
                       AudioPlayerSlider(track: snapshot.data),
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           StreamBuilder<PlayMode>(
                             stream: _bloc.playMode,
                             builder: (context, snapshot) {
                               return IconButton(
-                                iconSize: 32,
+                                iconSize: 24,
                                 icon: Icon(Icons.shuffle),
                                 color: snapshot.data == PlayMode.random
                                     ? Theme.of(context).accentColor
@@ -121,16 +120,18 @@ class AudioPlayerPage extends StatelessWidget {
                             },
                           ),
                           IconButton(
-                              iconSize: 40,
+                              padding: EdgeInsets.all(0),
+                              iconSize: 32,
                               icon: Icon(Icons.skip_previous),
                               onPressed: () => _bloc.dispatch(PlayPreviousEvent())),
                           AudioPlayerStateButton(
                               bloc: _bloc,
-                              iconSize: 72,
+                              iconSize: 64,
                               playIcon: Icons.play_circle_filled,
                               pauseIcon: Icons.pause_circle_filled),
                           IconButton(
-                              iconSize: 40,
+                              padding: EdgeInsets.all(0),
+                              iconSize: 32,
                               icon: Icon(Icons.skip_next),
                               onPressed: () => _bloc.dispatch(PlayNextEvent())),
                           StreamBuilder<LoopMode>(
@@ -146,13 +147,14 @@ class AudioPlayerPage extends StatelessWidget {
                                   icon = Icon(Icons.repeat,
                                       color: Theme.of(context).accentColor);
                                   break;
-                                case LoopMode.none:
+                                default:
                                   icon = Icon(Icons.repeat);
                                   break;
                               }
 
                               return IconButton(
-                                iconSize: 32,
+                                iconSize: 24,
+                                padding: EdgeInsets.all(0),
                                 icon: icon,
                                 onPressed: () => _bloc.dispatch(
                                   new TogglePlaybackMode(),

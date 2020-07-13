@@ -24,25 +24,26 @@ class _NotificationRootState extends State<NotificationRoot> {
   Widget build(BuildContext context) {
     final bloc = Provider.of<NotificationBloc>(context);
 
-    subscription = bloc.notifications.listen((notification) {
-      widget.scaffoldKey.currentState.showSnackBar(
-        SnackBar(
-          duration: notification.duration,
-          content: Text(
-            '${notification.content}',
-            style: TextStyle(color: notification.fontColor),
+    if (subscription == null)
+      subscription = bloc.notifications.listen((notification) {
+        widget.scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            duration: notification.duration,
+            content: Text(
+              '${notification.content}',
+              style: TextStyle(color: notification.fontColor),
+            ),
+            backgroundColor: notification.backgroundColor,
           ),
-          backgroundColor: notification.backgroundColor,
-        ),
-      );
-    });
+        );
+      });
 
     return widget.child;
   }
 
   @override
   void dispose() {
-    super.dispose();
     subscription?.cancel();
+    super.dispose();
   }
 }

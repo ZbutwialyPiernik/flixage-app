@@ -162,20 +162,28 @@ class SearchField extends StatefulWidget {
   _SearchFieldState createState() => _SearchFieldState();
 }
 
-class _SearchFieldState extends State<SearchField> {
+class _SearchFieldState extends State<SearchField> with SingleTickerProviderStateMixin {
   FocusNode _focusNode = FocusNode();
+
+  AnimationController _controller;
+  Animation sizeAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    _focusNode.addListener(() => setState(() {}));
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _controller.addListener(() => setState(() {}));
+    sizeAnimation = Tween<double>(begin: 8, end: 0).animate(_controller);
+    _focusNode.addListener(() {
+      _focusNode.hasFocus ? _controller.forward() : _controller.reverse();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: _focusNode.hasFocus ? EdgeInsets.all(0) : EdgeInsets.all(8),
+    return Padding(
+      padding: EdgeInsets.all(sizeAnimation.value),
       child: TextField(
         onChanged: this.widget.onChanged,
         focusNode: _focusNode,
@@ -194,7 +202,8 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   void dispose() {
-    super.dispose();
+    _controller.dispose();
     _focusNode.dispose();
+    super.dispose();
   }
 }

@@ -21,6 +21,7 @@ class QueryableAppBar extends StatelessWidget {
   })  : assert(showRandomButton != null ? onRandomButtonTap != null : true),
         assert(queryable != null),
         assert(secondaryText != null),
+        assert(contextMenuRoute != null),
         super(key: key);
 
   @override
@@ -32,7 +33,8 @@ class QueryableAppBar extends StatelessWidget {
           queryable: queryable,
           secondaryText: secondaryText,
           showRandomButton: showRandomButton,
-          onRandomButtonTap: onRandomButtonTap),
+          onRandomButtonTap: onRandomButtonTap,
+          contextMenuRoute: contextMenuRoute),
     );
   }
 }
@@ -45,23 +47,25 @@ class QueryableAppBar extends StatelessWidget {
 class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
   final Queryable queryable;
   final String secondaryText;
+  final String contextMenuRoute;
   final bool showRandomButton;
   final Function onRandomButtonTap;
 
-  _QueryableAppBarDelegate(
-      {@required this.queryable,
-      @required this.secondaryText,
-      @required this.showRandomButton,
-      @required this.onRandomButtonTap});
+  _QueryableAppBarDelegate({
+    @required this.queryable,
+    @required this.secondaryText,
+    @required this.showRandomButton,
+    @required this.onRandomButtonTap,
+    @required this.contextMenuRoute,
+  });
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double scrollableSize = maxExtent - minExtent;
 
     return Container(
-      height: maxExtent - shrinkOffset,
+      height: maxExtent,
       child: Stack(
-        overflow: Overflow.clip,
         children: [
           Transform.translate(
             offset: Offset(0, -shrinkOffset.clamp(0, scrollableSize)),
@@ -99,7 +103,7 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
                         ),
                   ),
                   ContextMenuButton(
-                    route: ArtistContextMenu.route,
+                    route: contextMenuRoute,
                     item: queryable,
                   )
                 ],

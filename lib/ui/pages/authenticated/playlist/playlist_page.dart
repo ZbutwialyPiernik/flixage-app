@@ -6,6 +6,7 @@ import 'package:flixage/bloc/playlist/playlist_event.dart';
 import 'package:flixage/bloc/playlist/playlist_state.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';
@@ -21,7 +22,8 @@ class PlaylistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Playlist playlist = ModalRoute.of(context).settings.arguments;
+    final Playlist playlist =
+        (ModalRoute.of(context).settings.arguments as Arguments).extra;
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
     final notificationBloc = Provider.of<NotificationBloc>(context);
@@ -80,7 +82,7 @@ class PlaylistPage extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
+                          children: [
                             ListView.separated(
                               shrinkWrap: true,
                               separatorBuilder: (context, index) => SizedBox(height: 2),

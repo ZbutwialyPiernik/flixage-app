@@ -1,10 +1,8 @@
 import 'package:flixage/model/queryable.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flixage/ui/widget/named_navigator.dart';
-
-import 'package:flixage/ui/widget/reroute_request.dart';
 
 class QueryableItem<T extends Queryable> extends StatelessWidget {
   final Function onTap;
@@ -38,10 +36,8 @@ class QueryableItem<T extends Queryable> extends StatelessWidget {
       onTap: onTap,
       onLongPress: () => {
         if (contextMenuRoute != null)
-          handleReroute(
-              Navigator.of(context),
-              NamedNavigator.of(context, NamedNavigator.root)
-                  .pushNamed(contextMenuRoute, arguments: item))
+          Navigator.of(context)
+              .pushNamed(contextMenuRoute, arguments: Arguments(extra: item))
       },
       child: Container(
         width: double.infinity,

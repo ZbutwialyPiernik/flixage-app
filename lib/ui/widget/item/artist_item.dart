@@ -1,5 +1,6 @@
 import 'package:flixage/model/artist.dart';
-import 'package:flixage/ui/pages/routes/artist/artist_page.dart';
+import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
+import 'package:flixage/ui/pages/authenticated/page_settings.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,8 @@ class ArtistItem extends StatelessWidget {
       item: artist,
       roundedImage: true,
       contextMenuRoute: ArtistContextMenu.route,
-      onTap: () => Navigator.pushNamed(context, ArtistPage.route, arguments: artist),
+      onTap: () => Navigator.pushNamed(context, ArtistPage.route,
+          arguments: Arguments(extra: artist)),
       details: Text(artist.name),
     );
   }
