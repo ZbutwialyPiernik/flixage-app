@@ -1,13 +1,14 @@
 import 'package:flixage/model/queryable.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
 import 'package:flutter/material.dart';
 
 class QueryableItem<T extends Queryable> extends StatelessWidget {
   final Function onTap;
-  final Widget details;
-  final Widget prefix;
+  final Widget primary;
+  final Widget secondary;
+  final Widget leading;
   final Color backgroundColor;
   final String contextMenuRoute;
   final double height;
@@ -17,15 +18,16 @@ class QueryableItem<T extends Queryable> extends StatelessWidget {
   const QueryableItem({
     Key key,
     @required this.onTap,
-    @required this.details,
+    @required this.secondary,
     @required this.item,
-    this.prefix,
+    this.primary,
+    this.leading,
     this.roundedImage = false,
     this.height = 56,
     this.contextMenuRoute,
     this.backgroundColor = Colors.transparent,
   })  : assert(onTap != null),
-        assert(details != null),
+        assert(secondary != null),
         assert(item != null),
         super(key: key);
 
@@ -40,14 +42,13 @@ class QueryableItem<T extends Queryable> extends StatelessWidget {
               .pushNamed(contextMenuRoute, arguments: Arguments(extra: item))
       },
       child: Container(
-        width: double.infinity,
         height: height,
         child: Column(
           children: <Widget>[
             Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
-                prefix ??
+                leading ??
                     // By default thumbnail is prefix widget
                     // Image is a rectangle she we will use height as width
                     CustomImage(
@@ -58,8 +59,17 @@ class QueryableItem<T extends Queryable> extends StatelessWidget {
                     ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: details,
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        primary ??
+                            Text(item.name, style: Theme.of(context).textTheme.subtitle1),
+                        secondary,
+                      ],
+                    ),
                   ),
                 ),
                 if (contextMenuRoute != null)

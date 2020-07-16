@@ -7,9 +7,10 @@ import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/token_store.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/repository/track_repository.dart';
-import 'package:flixage/ui/pages/authenticated/main_app_page.dart';
+import 'package:flixage/ui/pages/authenticated/authenticated_main_page.dart';
 import 'package:flixage/ui/pages/unauthenticated/loading/splash_page.dart';
 import 'package:flixage/ui/pages/unauthenticated/login/login_page.dart';
+import 'package:flixage/ui/pages/unauthenticated/unauthenticated_main_page.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
 import 'package:flixage/ui/widget/cached_network_image/dio_cache_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,19 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-class Root extends StatefulWidget {
+class AuthenticationRoot extends StatelessWidget {
   static final Logger logger = Logger();
-
-  Root({Key key}) : super(key: key);
-
-  @override
-  _RootState createState() => _RootState();
-}
-
-class _RootState extends State<Root> {
-  final unauthenticatedRoutes = {LoginPage.route: (_) => LoginPage()};
-
-  GlobalKey<LoggedMainPageState> mainPageState;
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +47,9 @@ class _RootState extends State<Root> {
                 update: (_, notificationBloc, __) =>
                     LibraryBloc(PlaylistRepository(dio), notificationBloc),
               ),
-            ], child: LoggedMainPage());
+            ], child: AuthenticatedMainPage());
           case AuthenticationUnauthenticated:
-            return Navigator(
-              initialRoute: LoginPage.route,
-              onGenerateRoute: (settings) {
-                return MaterialPageRoute(
-                    settings: settings, builder: unauthenticatedRoutes[settings.name]);
-              },
-            );
+            return UnauthenticatedMainPage();
           default:
             return SplashPage();
         }

@@ -1,5 +1,6 @@
 import 'package:flixage/bloc/library/library_bloc.dart';
 import 'package:flixage/bloc/library/library_event.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class CreatePlaylistPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Nazwij swoją playlistę", style: Theme.of(context).textTheme.headline6),
+            Text(S.current.createPlaylistPage_namePlaylist,
+                style: Theme.of(context).textTheme.headline6),
             SizedBox(height: 16),
             TextField(
               textAlign: TextAlign.center,

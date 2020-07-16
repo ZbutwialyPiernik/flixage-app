@@ -1,8 +1,9 @@
 import 'package:flixage/bloc/library/library_bloc.dart';
 import 'package:flixage/bloc/library/library_event.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/pick_playlist_page.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
@@ -21,12 +22,8 @@ class TrackContextMenu extends ContextMenu<Track> {
 
     return [
       ContextMenuItem(
-          iconData: track.saved ?? false ? Icons.favorite : Icons.favorite_border,
-          description: "Lubię to",
-          onPressed: () {}),
-      ContextMenuItem(
           iconData: Icons.add,
-          description: "Dodaj do playlisty",
+          description: S.current.trackContextMenu_addToPlaylist,
           onPressed: () {
             Navigator.of(context)
                 .popAndPushNamed(PickPlaylistPage.route,
@@ -37,22 +34,23 @@ class TrackContextMenu extends ContextMenu<Track> {
                     .dispatch(AddTracksToPlaylist(playlist: playlist, tracks: [track]));
             });
           }),
-      ContextMenuItem(
-          iconData: Icons.queue_music, description: "Dodaj do kolejki", onPressed: () {}),
       if (track.album != null)
         ContextMenuItem(
           iconData: Icons.album,
-          description: "Pokaż album",
+          description: S.current.trackContextMenu_showAlbum,
           onPressed: () => Navigator.of(context)
               .popAndPushNamed(AlbumPage.route, arguments: Arguments(extra: track.album)),
         ),
       ContextMenuItem(
         iconData: Icons.person,
-        description: "Pokaż wykonawcę",
+        description: S.current.trackContextMenu_showArtist,
         onPressed: () => Navigator.of(context)
             .popAndPushNamed(ArtistPage.route, arguments: Arguments(extra: track.artist)),
       ),
-      ContextMenuItem(iconData: Icons.share, description: "Udostępnij", onPressed: () {})
+      ContextMenuItem(
+          iconData: Icons.share,
+          description: S.current.playlistContextMenu_sharePlaylist,
+          onPressed: () {})
     ];
   }
 }

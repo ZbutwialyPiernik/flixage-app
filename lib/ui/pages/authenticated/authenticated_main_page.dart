@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:flixage/generated/l10n.dart';
+import 'package:flixage/model/album.dart';
+import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';
 import 'package:flixage/ui/pages/authenticated/home/home_page.dart';
 import 'package:flixage/ui/pages/authenticated/library/library_page.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/pick_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/search/search_page.dart';
-import 'package:flixage/ui/pages/authenticated/settings_page.dart';
+import 'package:flixage/ui/pages/authenticated/settings/settings_page.dart';
 import 'package:flixage/ui/pages/authenticated/user/user_page.dart';
 import 'package:flixage/ui/widget/audio_player/audio_player_widget.dart';
 import 'package:flixage/ui/widget/item/context_menu/album_context_menu.dart';
@@ -22,16 +25,17 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 /// Main page of app, user gets redirected here after successful login
-class LoggedMainPage extends StatefulWidget {
+class AuthenticatedMainPage extends StatefulWidget {
   static const route = "/";
 
-  LoggedMainPage({Key key}) : super(key: key);
+  AuthenticatedMainPage({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => LoggedMainPageState();
+  State<StatefulWidget> createState() => AuthenticatedMainPageState();
 }
 
-class LoggedMainPageState extends State<LoggedMainPage> with NavigatorObserver {
+class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
+    with NavigatorObserver {
   final Logger logger = Logger();
 
   final routes = {
@@ -39,6 +43,7 @@ class LoggedMainPageState extends State<LoggedMainPage> with NavigatorObserver {
     CreatePlaylistPage.route: (_) => CreatePlaylistPage(),
     PickPlaylistPage.route: (_) => PickPlaylistPage(),
     UserPage.route: (_) => UserPage(),
+    AlbumPage.route: (_) => AlbumPage(),
     ArtistPage.route: (_) => ArtistPage(),
     SettingsPage.route: (_) => SettingsPage(),
     HomePage.route: (_) => HomePage(),
@@ -97,8 +102,14 @@ class LoggedMainPageState extends State<LoggedMainPage> with NavigatorObserver {
               observers: [this],
               initialRoute: initialRoutes[0],
               onGenerateRoute: (settings) {
+                final routeBuilder = routes[settings.name];
+
+                if (routeBuilder == null) {
+                  throw Exception('Route builder is null ${settings.name}');
+                }
+
                 return PageRouteBuilder(
-                  pageBuilder: (c, a1, a2) => routes[settings.name](context),
+                  pageBuilder: (c, a1, a2) => routeBuilder(context),
                   transitionsBuilder: (c, anim, a2, child) =>
                       FadeTransition(opacity: anim, child: child),
                   transitionDuration: Duration(milliseconds: 200),
@@ -134,15 +145,15 @@ class LoggedMainPageState extends State<LoggedMainPage> with NavigatorObserver {
                       items: [
                         BottomNavigationBarItem(
                           icon: Icon(Icons.home),
-                          title: Text("Home"),
+                          title: Text(S.current.buttomAppBar_home),
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.search),
-                          title: Text("Search"),
+                          title: Text(S.current.buttomAppBar_search),
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.library_music),
-                          title: Text("Library"),
+                          title: Text(S.current.bottomAppBar_library),
                         )
                       ],
                     ),

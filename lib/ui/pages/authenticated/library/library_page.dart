@@ -1,7 +1,8 @@
 import 'package:flixage/bloc/library/library_bloc.dart';
 import 'package:flixage/bloc/library/library_event.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
@@ -26,10 +27,13 @@ class LibraryPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: Text("Playlisty", style: Theme.of(context).textTheme.headline6),
+              title: Text(S.current.libraryPage_title,
+                  style: Theme.of(context).textTheme.headline6),
               centerTitle: true,
+              automaticallyImplyLeading: false,
               actions: <Widget>[
                 IconButton(
+                  color: Colors.white,
                   icon: Icon(Icons.add_circle),
                   onPressed: () => Navigator.of(context).pushNamed(
                       CreatePlaylistPage.route,
@@ -48,7 +52,7 @@ class LibraryPage extends StatelessWidget {
                   return Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[Text("Nie masz jeszcze żadnej playlisty")],
+                      children: <Widget>[Text(S.current.libraryPage_noPlaylists)],
                     ),
                   );
                 }
@@ -56,7 +60,7 @@ class LibraryPage extends StatelessWidget {
                 final playlists = snapshot.data;
                 return Expanded(
                   child: ListView.separated(
-                    padding: EdgeInsets.symmetric(vertical: 8),
+                    padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
                     separatorBuilder: (context, index) => SizedBox(height: 8),
                     itemCount: playlists.length,
                     itemBuilder: (context, index) => PlaylistItem(

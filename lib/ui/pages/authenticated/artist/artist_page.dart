@@ -3,11 +3,12 @@ import 'package:flixage/bloc/artist/artist_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/album.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/artist_repository.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/album_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
@@ -38,73 +39,56 @@ class _ArtistPageState extends State<ArtistPage> {
     return StatefulWrapper(
       onInit: () => artistBloc.dispatch(artist),
       onDispose: () => artistBloc.dispose(),
-      child: Material(
-        color: Theme.of(context).backgroundColor,
-        child: StreamBuilder<ArtistData>(
-          stream: artistBloc.stream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData)
-              return Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-
-            return NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return <Widget>[
-                  QueryableAppBar(
-                    queryable: artist,
-                    secondaryText: "Słuchawcze w tym miesiącu: 4 024 553",
-                    contextMenuRoute: ArtistContextMenu.route,
-                    showRandomButton: true,
-                    onRandomButtonTap: () => audioPlayerBloc.dispatch(PlayTracks(
-                        playMode: PlayMode.random, tracks: snapshot.data.singles)),
-                  ),
-                ];
-              },
-              body: SingleChildScrollView(
-                controller: PrimaryScrollController.of(context),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 48),
-                    Text(
-                      "Popularne",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
-                    ),
-                    ..._buildSingles(snapshot.data.singles),
-                    Text(
-                      "Albumy",
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
-                    ),
-                    ..._buildAlbums(context, snapshot.data.albums),
-                    Text("Biogram",
-                        style:
-                            Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18)),
-                    SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                  "ASAP (or A\$AP) Rocky is an American rapper who burst on the music scene in 2011 and soon after released his chart-topping albums 'Long.Live.A\$AP' and 'At.Long.Last.A\$AP.'",
-                                  style: Theme.of(context).textTheme.bodyText1)
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+      child: StreamBuilder<ArtistData>(
+        stream: artistBloc.stream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
               ),
             );
-          },
-        ),
+
+          return NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return <Widget>[
+                QueryableAppBar(
+                  queryable: artist,
+                  secondaryText: S.current.albumPage_monthlyListeners(4024553),
+                  contextMenuRoute: ArtistContextMenu.route,
+                  showRandomButton: true,
+                  onRandomButtonTap: () => audioPlayerBloc.dispatch(PlayTracks(
+                      playMode: PlayMode.random, tracks: snapshot.data.singles)),
+                ),
+              ];
+            },
+            body: SingleChildScrollView(
+              controller: PrimaryScrollController.of(context),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: 48),
+                  Text(
+                    S.current.artistPage_popular,
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
+                  ),
+                  ..._buildSingles(snapshot.data.singles),
+                  Text(
+                    S.current.artistPage_singles,
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
+                  ),
+                  ..._buildSingles(snapshot.data.singles),
+                  Text(
+                    S.current.artistPage_albums,
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
+                  ),
+                  ..._buildAlbums(context, snapshot.data.albums),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -122,13 +106,13 @@ class _ArtistPageState extends State<ArtistPage> {
                   padding: EdgeInsets.only(right: 8),
                   child: Text((index + 1).toString()),
                 ),
-                subheader: Text(singles[index].streamCount.toString()),
+                secondary: Text(singles[index].streamCount.toString()),
               ),
           separatorBuilder: (_, index) => SizedBox(height: 8),
           itemCount: singles.length >= 5 ? 5 : singles.length),
       if (singles.length > 5)
         RaisedButton(
-          child: Text("Pokaż wszystkie"),
+          child: Text(S.current.artistPage_showAll),
           onPressed: () {},
         ),
     ];
@@ -142,13 +126,12 @@ class _ArtistPageState extends State<ArtistPage> {
           itemBuilder: (_, index) => AlbumItem(
                 height: 96,
                 album: albums[index],
-                //subheader: Text("2018 · Album"),
               ),
           separatorBuilder: (_, index) => SizedBox(height: 8),
           itemCount: albums.length >= 5 ? 5 : albums.length),
       if (albums.length > 5)
         RaisedButton(
-          child: Text("Pokaż wszystkie"),
+          child: Text(S.current.artistPage_showAll),
           onPressed: () {},
         ),
     ];

@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/ui/root.dart';
+import 'package:flixage/generated/l10n.dart';
+import 'package:flixage/ui/authentication_root.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:logger/logger.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,22 +21,56 @@ import 'package:flixage/ui/config/custom_scroll_behaviour.dart';
 
 import 'bloc/token_store.dart';
 
+import 'package:intl/intl_standalone.dart';
+
+const languageKey = "LANGUAGE";
+const defaultLanguage = "en";
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dio = Dio();
-  final authenticationRepository = AuthenticationRepository(dio);
-  final tokenStore = TokenStore(FlutterSecureStorage());
+  findSystemLocale().then((value) {
+    final logger = Logger();
 
-  dio.options.connectTimeout = 2 * 2000;
-  dio.options.receiveTimeout = 1 * 1000;
-  dio.options.sendTimeout = 1 * 1000;
+    final dio = Dio();
+    final authenticationRepository = AuthenticationRepository(dio);
+    final secureStorage = FlutterSecureStorage();
+    final tokenStore = TokenStore(secureStorage);
 
-  runApp(Main(
-    dio: dio,
-    tokenStore: tokenStore,
-    authenticationRepository: authenticationRepository,
-  ));
+    secureStorage.read(key: languageKey).then((savedLanguage) async {
+      logger.d("Reading locale settings");
+
+      if (savedLanguage == null) {
+        final systemLanguage = (await findSystemLocale()).split("_").first;
+
+        if (S.delegate.isSupported(Locale(systemLanguage))) {
+          logger.d(
+              "System locale '$systemLanguage' is supported, settings as default language");
+
+          secureStorage.write(key: languageKey, value: systemLanguage);
+          savedLanguage = systemLanguage;
+        } else {
+          logger.d("System locale '$systemLanguage' is not supported");
+        }
+      }
+
+      final localeToLoad = savedLanguage ?? defaultLanguage;
+
+      logger.d("Loading locale '$savedLanguage'");
+
+      S.delegate.load(Locale(localeToLoad));
+    });
+
+    dio.options.connectTimeout = 2 * 2000;
+    dio.options.receiveTimeout = 2 * 1000;
+    dio.options.sendTimeout = 2 * 1000;
+
+    runApp(Main(
+      dio: dio,
+      tokenStore: tokenStore,
+      authenticationRepository: authenticationRepository,
+    ));
+  });
 }
 
 class Main extends StatelessWidget {
@@ -65,12 +102,18 @@ class Main extends StatelessWidget {
       //lazy: false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        title: 'Flixage',
         theme: theme,
         home: SafeArea(
           child: ScrollConfiguration(
             behavior: CustomScrollBehavior(),
-            child: Root(),
+            child: AuthenticationRoot(),
           ),
         ),
       ),

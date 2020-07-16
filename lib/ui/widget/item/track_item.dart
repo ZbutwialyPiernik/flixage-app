@@ -1,5 +1,6 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/ui/widget/item/context_menu/track_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
@@ -10,11 +11,11 @@ import 'package:provider/provider.dart';
 class TrackItem extends StatelessWidget {
   final Track track;
   final Widget prefix;
-  final Widget subheader;
+  final Widget secondary;
   final double height;
 
   const TrackItem(
-      {Key key, @required this.track, this.height = 64, this.prefix, th, this.subheader})
+      {Key key, @required this.track, this.height = 64, this.prefix, th, this.secondary})
       : super(key: key);
 
   @override
@@ -25,20 +26,15 @@ class TrackItem extends StatelessWidget {
       onTap: () => bloc.dispatch(PlayTrack(track: track)),
       item: track,
       height: height,
-      prefix: prefix,
+      leading: prefix,
       contextMenuRoute: TrackContextMenu.route,
-      details: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(track.name, style: TextStyle(fontSize: 18)),
-          subheader ??
-              Text('Utwór • ${track.artist.name}',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                  ))
-        ],
-      ),
+      secondary: secondary ??
+          Text(
+            S.current.trackItem_track(track.name),
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+            ),
+          ),
     );
   }
 }

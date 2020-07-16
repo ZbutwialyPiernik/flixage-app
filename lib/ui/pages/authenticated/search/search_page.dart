@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/search_bloc.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/album.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/playlist.dart';
@@ -60,8 +61,8 @@ class _SearchPageState extends State<SearchPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(Icons.search, size: 96),
-                      Text("Wyszukaj w flixage"),
-                      Text("Znajdz ulubioną muzykę i podcasty")
+                      Text(S.current.searchPage_searchInFlixage),
+                      Text(S.current.searchPage_findFavouriteMusic),
                     ],
                   ),
                 );
@@ -72,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Icon(Icons.error, size: 96),
-                        Text('Wystąpił nieznany błąd :('),
+                        Text(S.current.searchPage_unknownError),
                       ],
                     ),
                   ),
@@ -90,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Nie znaleziono "${state.query}"',
+                          S.current.searchPage_notFound(state.query),
                           style: Theme.of(context)
                               .textTheme
                               .headline5
@@ -98,7 +99,7 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         Divider(height: 8, color: Colors.transparent),
                         Text(
-                          'Spróbuj ponownie, sprawdzając pisownie',
+                          S.current.searchPage_tryAgain,
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
@@ -190,7 +191,7 @@ class _SearchFieldState extends State<SearchField> with SingleTickerProviderStat
         textAlign: _focusNode.hasFocus ? TextAlign.start : TextAlign.center,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: "Search",
+          hintText: S.current.searchPage_search,
           filled: true,
           hintStyle: TextStyle(
               color: _focusNode.hasFocus ? Colors.white.withOpacity(0.5) : Colors.white,

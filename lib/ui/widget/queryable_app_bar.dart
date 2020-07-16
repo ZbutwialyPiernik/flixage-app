@@ -1,3 +1,4 @@
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/queryable.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
@@ -144,7 +145,7 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
                 elevation: 5,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  child: Text("Odtwarzaj Losowo".toUpperCase(),
+                  child: Text(S.current.queryablePage_playRandomly.toUpperCase(),
                       style: Theme.of(context).textTheme.button.copyWith(fontSize: 16)),
                 ),
                 color: Theme.of(context).accentColor,

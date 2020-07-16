@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Arguments {
   final bool opaque;
   final bool showBottomAppBar;

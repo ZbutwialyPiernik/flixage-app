@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/bloc.dart';
-import 'package:flixage/bloc/login/login_state.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
+import 'package:flixage/bloc/register/register_event.dart';
+import 'package:flixage/bloc/register/register_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/util/validation/common_validators.dart';
@@ -10,23 +11,18 @@ import 'package:flixage/util/validation/validator.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'login_event.dart';
-
-class LoginBloc extends Bloc<LoginEvent> {
-  // One upper, one lower, one number, no whitespace
-
+class RegisterBloc extends Bloc<RegisterEvent> {
   static final log = Logger();
 
-  final BehaviorSubject<LoginState> _loginState =
-      BehaviorSubject.seeded(LoginInitialized());
+  final BehaviorSubject<RegisterState> _loginState = BehaviorSubject();
 
   final AuthenticationBloc _authenticationBloc;
   final AuthenticationRepository _authenticationRepository;
   final NotificationBloc notificationBloc;
 
-  Stream<LoginState> get state => _loginState.stream;
+  Stream<RegisterState> get state => _loginState.stream;
 
-  LoginBloc(
+  RegisterBloc(
       this._authenticationBloc, this._authenticationRepository, this.notificationBloc);
 
   @override
@@ -35,13 +31,13 @@ class LoginBloc extends Bloc<LoginEvent> {
   }
 
   @override
-  void onEvent(LoginEvent event) async {
-    if (event is LoginAttempEvent) {
+  void onEvent(RegisterEvent event) async {
+    if (event is RegisterAttempEvent) {
       if (!validateFields(event)) {
         return;
       }
 
-      _loginState.add(LoginLoading());
+      _loginState.add(RegisterLoading());
       _authenticationRepository
           .authenticate({'username': event.username, 'password': event.password}).then(
         (authentication) {
@@ -52,13 +48,16 @@ class LoginBloc extends Bloc<LoginEvent> {
         if (e is DioError) {
           if (e.request != null) {
             switch (e.response?.statusCode) {
-              case 401:
+              case 409:
                 notificationBloc.dispatch(SimpleNotification.error(
-                    content: S.current.loginPage_invalidCredentials));
+                    content: S.current.registerPage_usernameTaken));
                 break;
               case 400:
                 log.e(
-                    "Login validator is not properly implemented, server should not throw 400");
+                    "Register validator is not properly implemented, server should not throw 400");
+                notificationBloc
+                    .dispatch(SimpleNotification.error(content: S.current.unknownError));
+
                 break;
               default:
                 log.e(e);
@@ -72,22 +71,28 @@ class LoginBloc extends Bloc<LoginEvent> {
           }
         }
 
-        _loginState.add(LoginInitialized());
+        _loginState.add(RegisterInitialized());
       });
     } else if (event is TextChangedEvent) {
-      // Clearning error flag
-      if (_loginState.value is LoginValidatorError) {
-        _loginState.add(LoginInitialized());
+      if (_loginState.value is RegisterValidatorError) {
+        _loginState.add(RegisterInitialized());
       }
     }
   }
 
-  bool validateFields(LoginAttempEvent event) {
-    ValidationResult usernameValidation = usernameValidator.validate(event.username);
-    ValidationResult passwordValidation = loginPasswordValidator.validate(event.password);
+  bool validateFields(RegisterAttempEvent event) {
+    final usernameValidation = usernameValidator.validate(event.username);
+    final passwordValidation = loginPasswordValidator.validate(event.password);
+    final repeatPasswordValidation =
+        event.repeatPassword.isNotEmpty && event.repeatPassword != event.password
+            ? ValidationResult(error: S.current.registerPage_passwordDoesNotMatch)
+            : ValidationResult.empty();
 
-    if (usernameValidation.hasError || passwordValidation.hasError) {
-      _loginState.add(LoginValidatorError(usernameValidation, passwordValidation));
+    if (usernameValidation.hasError ||
+        passwordValidation.hasError ||
+        repeatPasswordValidation.hasError) {
+      _loginState.add(RegisterValidatorError(
+          usernameValidation, passwordValidation, repeatPasswordValidation));
       return false;
     }
 

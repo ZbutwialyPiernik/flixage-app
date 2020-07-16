@@ -73,4 +73,24 @@ class _AuthenticationRepository implements AuthenticationRepository {
         data: _data);
     return Future.value(null);
   }
+
+  @override
+  registerUser(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/authentication/register',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Authentication.fromJson(_result.data);
+    return Future.value(value);
+  }
 }

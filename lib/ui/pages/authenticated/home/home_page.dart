@@ -1,4 +1,4 @@
-import 'package:flixage/ui/pages/authenticated/settings_page.dart';
+import 'package:flixage/ui/pages/authenticated/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

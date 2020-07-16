@@ -1,5 +1,4 @@
-import 'package:flixage/util/validation/validation_result.dart';
-import 'package:flixage/util/validation/validator_step.dart';
+typedef Predicate = bool Function(String);
 
 class Validator {
   final List<ValidatorStep> _steps;
@@ -28,4 +27,21 @@ class ValidatorBuilder {
   }
 
   Validator build() => Validator._(steps);
+}
+
+class ValidationResult {
+  final String error;
+
+  ValidationResult({this.error});
+
+  bool get hasError => error != null;
+
+  static empty() => ValidationResult();
+}
+
+class ValidatorStep {
+  final Predicate predicate;
+  final String message;
+
+  ValidatorStep(this.predicate, this.message);
 }

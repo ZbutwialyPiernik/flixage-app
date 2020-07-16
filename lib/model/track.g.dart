@@ -13,13 +13,15 @@ Track _$TrackFromJson(Map<String, dynamic> json) {
     thumbnailUrl: json['thumbnailUrl'] as String,
     streamCount: json['streamCount'] as int,
     fileUrl: json['fileUrl'] as String,
-    artist: json['artist'] == null
-        ? null
-        : Artist.fromJson(json['artist'] as Map<String, dynamic>),
     album: json['album'] == null
         ? null
         : Album.fromJson(json['album'] as Map<String, dynamic>),
-    duration: Duration(seconds: (json['duration'] as num)?.toInt()),
+    artist: json['artist'] == null
+        ? null
+        : Artist.fromJson(json['artist'] as Map<String, dynamic>),
+    duration: json['duration'] == null
+        ? null
+        : Duration(microseconds: json['duration'] as int),
     saved: json['saved'] as bool,
   );
 }
@@ -30,7 +32,8 @@ Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
       'thumbnailUrl': instance.thumbnailUrl,
       'fileUrl': instance.fileUrl,
       'artist': instance.artist,
-      'duration': instance.duration,
+      'album': instance.album,
+      'duration': instance.duration?.inMicroseconds,
       'saved': instance.saved,
       'streamCount': instance.streamCount,
     };

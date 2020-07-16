@@ -1,3 +1,4 @@
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
@@ -7,12 +8,14 @@ import 'package:flutter/material.dart';
 class PlaylistItem extends StatelessWidget {
   final Playlist playlist;
   final double height;
+  final Widget secondary;
   final Function onTap;
 
   const PlaylistItem({
     Key key,
     @required this.playlist,
     @required this.onTap,
+    this.secondary,
     this.height = 80,
   }) : super(key: key);
 
@@ -23,14 +26,7 @@ class PlaylistItem extends StatelessWidget {
       item: playlist,
       contextMenuRoute: PlaylistContextMenu.route,
       onTap: onTap,
-      details: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(playlist.name, style: Theme.of(context).textTheme.subtitle1),
-          Text("Utworzona przez ${playlist.owner.name}")
-        ],
-      ),
+      secondary: secondary ?? Text(S.current.playlistItem_playlist),
     );
   }
 }

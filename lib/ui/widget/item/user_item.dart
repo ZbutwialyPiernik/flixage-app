@@ -1,3 +1,4 @@
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/user.dart';
 import 'package:flixage/ui/pages/authenticated/user/user_page.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
@@ -14,7 +15,7 @@ class UserItem extends StatelessWidget {
       item: user,
       roundedImage: true,
       onTap: () => Navigator.pushNamed(context, UserPage.route, arguments: user),
-      details: Text(user.name),
+      secondary: Text(S.current.userItem_user),
     );
   }
 }

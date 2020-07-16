@@ -18,4 +18,7 @@ abstract class AuthenticationRepository {
 
   @POST("/authentication/invalidate")
   Future<void> invalidateToken(@Body() Map<String, dynamic> body);
+
+  @POST("/authentication/register")
+  Future<Authentication> registerUser(@Body() Map<String, dynamic> body);
 }

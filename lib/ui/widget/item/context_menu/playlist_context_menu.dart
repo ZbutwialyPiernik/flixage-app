@@ -1,5 +1,6 @@
 import 'package:flixage/bloc/library/library_bloc.dart';
 import 'package:flixage/bloc/library/library_event.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
@@ -16,16 +17,20 @@ class PlaylistContextMenu extends ContextMenu<Playlist> {
     return [
       ContextMenuItem(
         iconData: Icons.clear,
-        description: "Usuń playlistę",
+        description: S.current.playlistContextMenu_removePlaylist,
         onPressed: () {
           bloc.dispatch(DeletePlaylist(playlist: playlist));
           Navigator.of(context).pop();
         },
       ),
       ContextMenuItem(
-          iconData: Icons.edit, description: "Edytuj playlistę", onPressed: () {}),
+          iconData: Icons.edit,
+          description: S.current.playlistContextMenu_editPlaylist,
+          onPressed: () {}),
       ContextMenuItem(
-          iconData: Icons.edit, description: "Udostępnij playlistę", onPressed: () {})
+          iconData: Icons.edit,
+          description: S.current.playlistContextMenu_sharePlaylist,
+          onPressed: () {})
     ];
   }
 }

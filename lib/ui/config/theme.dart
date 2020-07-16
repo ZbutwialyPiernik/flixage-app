@@ -5,8 +5,8 @@ final theme = ThemeData(
   fontFamily: 'Roboto',
   backgroundColor: Color.fromRGBO(18, 18, 18, 1),
   bottomAppBarColor: Color.fromRGBO(33, 33, 33, 1),
-  primaryColor: Color.fromARGB(255, 96, 30, 61),
-  accentColor: Colors.amberAccent,
+  primaryColor: Colors.amber[800],
+  accentColor: Colors.amber[800],
   textTheme: TextTheme(
     headline1: TextStyle(fontWeight: FontWeight.w300, fontSize: 96, letterSpacing: -1.5),
     headline2: TextStyle(fontWeight: FontWeight.w300, fontSize: 60, letterSpacing: -0.5),

@@ -2,6 +2,7 @@ import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/playlist/playlist_event.dart';
 import 'package:flixage/bloc/playlist/playlist_state.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
@@ -29,22 +30,23 @@ class PlaylistBloc extends Bloc<PlaylistEvent> {
       playlistRepository.getTracksFromPlaylist(event.playlist.id).then((tracks) {
         _trackSubject.add(PlaylistLoadingSuccess(tracks));
       }).catchError((e) {
-        _trackSubject.add(PlaylistLoadingError("Playlist loading error"));
+        _trackSubject
+            .add(PlaylistLoadingError(S.current.playlistPage_playlistLoadingError));
       });
     } else if (event is UploadThumbnail) {
       final extension = p.extension(event.image.path);
       final mimeType = mime.mimeFromExtension(extension.replaceAll('.', ''));
 
       if (!supportedExtensions.contains(extension)) {
-        notificationBloc
-            .dispatch(SimpleNotification.error(content: "Unsupported extension"));
+        notificationBloc.dispatch(SimpleNotification.error(
+            content: S.current.playlistPage_unsupportedExtension));
         return;
       }
 
       playlistRepository
           .uploadThumbnail(event.playlist.id, event.image, mimeType)
-          .then((value) => notificationBloc
-              .dispatch(SimpleNotification.info(content: "Thumbnail changed")))
+          .then((value) => notificationBloc.dispatch(
+              SimpleNotification.info(content: S.current.playlistPage_thumbnailChanged)))
           .catchError((error) => notificationBloc
               .dispatch(SimpleNotification.error(content: "Problem with thumbnail")));
     }

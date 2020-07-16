@@ -1,5 +1,5 @@
 import 'package:flixage/model/queryable.dart';
-import 'package:flixage/ui/pages/authenticated/page_settings.dart';
+import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -19,22 +19,20 @@ class UserPage extends StatelessWidget {
       //onDispose: () => playlistBloc.dispose(),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Material(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  CustomImage(
-                    imageUrl: user.thumbnailUrl,
-                    width: 64,
-                    height: 64,
-                  )
-                ],
-              ),
-              Text(user.name),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                CustomImage(
+                  imageUrl: user.thumbnailUrl,
+                  width: 64,
+                  height: 64,
+                )
+              ],
+            ),
+            Text(user.name),
+          ],
         ),
       ),
     );

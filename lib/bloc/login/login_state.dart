@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flixage/util/validation/validation_result.dart';
+import 'package:flixage/util/validation/validator.dart';
 
 abstract class LoginState extends Equatable {
   LoginState();
