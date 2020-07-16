@@ -32,124 +32,117 @@ class _SearchPageState extends State<SearchPage> {
     final dio = Provider.of<Dio>(context);
     final searchBloc = SearchBloc(SearchRepository(dio));
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          SearchField(
-            onChanged: (query) => searchBloc.dispatch(
-              TextChanged(
-                query: query,
-                types: [
-                  QueryType.Track,
-                  QueryType.Album,
-                  QueryType.Artist,
-                  QueryType.User,
-                  QueryType.Playlist
-                ],
-              ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        SearchField(
+          onChanged: (query) => searchBloc.dispatch(
+            TextChanged(
+              query: query,
+              types: [
+                QueryType.Track,
+                QueryType.Album,
+                QueryType.Artist,
+                QueryType.User,
+                QueryType.Playlist
+              ],
             ),
           ),
-          StreamBuilder<SearchState>(
-            stream: searchBloc.searchState,
-            builder: (context, snapshot) {
-              final state = snapshot.data;
-              if (state is SearchStateEmpty) {
+        ),
+        StreamBuilder<SearchState>(
+          stream: searchBloc.searchState,
+          builder: (context, snapshot) {
+            final state = snapshot.data;
+            if (state is SearchStateEmpty) {
+              return Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.search, size: 96),
+                    Text(S.current.searchPage_searchInFlixage),
+                    Text(S.current.searchPage_findFavouriteMusic),
+                  ],
+                ),
+              );
+            } else if (state is SearchStateError) {
+              return Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.error, size: 96),
+                      Text(S.current.searchPage_unknownError),
+                    ],
+                  ),
+                ),
+              );
+            } else if (state is SearchStateLoading) {
+              return Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (state is SearchStateSuccess) {
+              if (state.response.isEmpty) {
                 return Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(Icons.search, size: 96),
-                      Text(S.current.searchPage_searchInFlixage),
-                      Text(S.current.searchPage_findFavouriteMusic),
+                      Text(
+                        S.current.searchPage_notFound(state.query),
+                        style:
+                            Theme.of(context).textTheme.headline5.copyWith(fontSize: 18),
+                      ),
+                      Divider(height: 8, color: Colors.transparent),
+                      Text(
+                        S.current.searchPage_tryAgain,
+                        style:
+                            Theme.of(context).textTheme.subtitle2.copyWith(fontSize: 14),
+                      ),
                     ],
-                  ),
-                );
-              } else if (state is SearchStateError) {
-                return Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.error, size: 96),
-                        Text(S.current.searchPage_unknownError),
-                      ],
-                    ),
-                  ),
-                );
-              } else if (state is SearchStateLoading) {
-                return Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else if (state is SearchStateSuccess) {
-                if (state.response.isEmpty) {
-                  return Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          S.current.searchPage_notFound(state.query),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(fontSize: 18),
-                        ),
-                        Divider(height: 8, color: Colors.transparent),
-                        Text(
-                          S.current.searchPage_tryAgain,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              .copyWith(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-
-                List<Queryable> items = [
-                  ...state.response.tracks.items,
-                  ...state.response.albums.items,
-                  ...state.response.artists.items,
-                  ...state.response.users.items,
-                  ...state.response.albums.items,
-                ];
-
-                return Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.only(left: 16, top: 16, bottom: 16),
-                    separatorBuilder: (context, index) => SizedBox(height: 16),
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      var item = items[index];
-
-                      switch (item.runtimeType) {
-                        case Track:
-                          return TrackItem(track: item, height: 56);
-                        case Artist:
-                          return ArtistItem(artist: item);
-                        case Playlist:
-                          return PlaylistItem(playlist: item, height: 56);
-                        case Album:
-                          return AlbumItem(album: item, height: 56);
-                        case User:
-                          return UserItem(user: item);
-                      }
-
-                      return null;
-                    },
                   ),
                 );
               }
 
-              return Container(width: 0, height: 0);
-            },
-          )
-        ],
-      ),
+              List<Queryable> items = [
+                ...state.response.tracks.items,
+                ...state.response.albums.items,
+                ...state.response.artists.items,
+                ...state.response.users.items,
+                ...state.response.albums.items,
+              ];
+
+              return Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                  separatorBuilder: (context, index) => SizedBox(height: 16),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    var item = items[index];
+
+                    switch (item.runtimeType) {
+                      case Track:
+                        return TrackItem(track: item, height: 56);
+                      case Artist:
+                        return ArtistItem(artist: item);
+                      case Playlist:
+                        return PlaylistItem(playlist: item, height: 56);
+                      case Album:
+                        return AlbumItem(album: item, height: 56);
+                      case User:
+                        return UserItem(user: item);
+                    }
+
+                    return null;
+                  },
+                ),
+              );
+            }
+
+            return Container(width: 0, height: 0);
+          },
+        )
+      ],
     );
   }
 }

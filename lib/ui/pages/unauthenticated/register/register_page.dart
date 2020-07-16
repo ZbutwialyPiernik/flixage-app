@@ -15,18 +15,8 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text(
-            "Dołącz już dziś do Flixage",
-            style: Theme.of(context).textTheme.headline4,
-            textAlign: TextAlign.center,
-          ),
-          RegisterForm(),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+      child: RegisterForm(),
     );
   }
 }
@@ -84,7 +74,13 @@ class RegisterForm extends StatelessWidget {
 
           return Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text(S.current.authenticationPage_username),
+              Divider(
+                height: 8,
+                color: Colors.transparent,
+              ),
               TextField(
                 controller: _usernameController,
                 readOnly: state is RegisterLoading,
@@ -92,11 +88,15 @@ class RegisterForm extends StatelessWidget {
                   errorText: (state is RegisterValidatorError)
                       ? state.usernameValidator.error
                       : null,
-                  hintText: S.current.authenticationPage_username,
                 ),
               ),
               SizedBox(
                 height: 16,
+              ),
+              Text(S.current.authenticationPage_password),
+              Divider(
+                height: 8,
+                color: Colors.transparent,
               ),
               TextField(
                 controller: _passwordController,
@@ -107,15 +107,16 @@ class RegisterForm extends StatelessWidget {
                       ? state.passwordValidator.error
                       : null,
                   border: InputBorder.none,
-                  hintText: S.current.authenticationPage_password,
                   filled: true,
-                  hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                      fontWeight: FontWeight.normal),
                 ),
               ),
               SizedBox(
                 height: 16,
+              ),
+              Text(S.current.registerPage_repeatPassword),
+              Divider(
+                height: 8,
+                color: Colors.transparent,
               ),
               TextField(
                 controller: _repeatPasswordController,
@@ -126,30 +127,31 @@ class RegisterForm extends StatelessWidget {
                       ? state.passwordValidator.error
                       : null,
                   border: InputBorder.none,
-                  hintText: S.current.registerPage_repeatPassword,
                   filled: true,
-                  hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                      fontWeight: FontWeight.normal),
                 ),
               ),
               SizedBox(
                 height: 16,
               ),
-              RaisedButton(
-                child: Text(S.current.authenticationPage_register.toUpperCase()),
-                color: Theme.of(context).primaryColor,
-                onPressed: state is RegisterLoading
-                    ? null
-                    : () => bloc.dispatch(
-                          RegisterAttempEvent(
-                            username: _usernameController.value.text,
-                            password: _passwordController.value.text,
-                            repeatPassword: _repeatPasswordController.value.text,
-                          ),
-                        ),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                shape: StadiumBorder(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text(S.current.authenticationPage_register.toUpperCase()),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: state is RegisterLoading
+                        ? null
+                        : () => bloc.dispatch(
+                              RegisterAttempEvent(
+                                username: _usernameController.value.text,
+                                password: _passwordController.value.text,
+                                repeatPassword: _repeatPasswordController.value.text,
+                              ),
+                            ),
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    shape: StadiumBorder(),
+                  ),
+                ],
               ),
             ],
           );

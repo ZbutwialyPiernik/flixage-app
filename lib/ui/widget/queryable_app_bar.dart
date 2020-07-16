@@ -83,8 +83,8 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
                     end: Alignment.bottomCenter,
                     colors: [
                       Color.alphaBlend(Colors.amber.withOpacity(0.7),
-                          Theme.of(context).backgroundColor),
-                      Theme.of(context).backgroundColor
+                          Theme.of(context).scaffoldBackgroundColor),
+                      Theme.of(context).scaffoldBackgroundColor
                     ],
                   ),
                 ),

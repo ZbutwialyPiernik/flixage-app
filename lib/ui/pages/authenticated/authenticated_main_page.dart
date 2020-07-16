@@ -94,7 +94,6 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
       scaffoldKey: scaffoldKey,
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Theme.of(context).backgroundColor,
         body: SafeArea(
           child: WillPopScope(
             onWillPop: () async => !await navigator.maybePop(),

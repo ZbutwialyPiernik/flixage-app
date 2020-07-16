@@ -113,20 +113,20 @@ class S {
     );
   }
 
-  /// `username`
+  /// `Username`
   String get authenticationPage_username {
     return Intl.message(
-      'username',
+      'Username',
       name: 'authenticationPage_username',
       desc: '',
       args: [],
     );
   }
 
-  /// `password`
+  /// `Password`
   String get authenticationPage_password {
     return Intl.message(
-      'password',
+      'Password',
       name: 'authenticationPage_password',
       desc: '',
       args: [],
@@ -253,10 +253,10 @@ class S {
     );
   }
 
-  /// `repeat password`
+  /// `Repeat password`
   String get registerPage_repeatPassword {
     return Intl.message(
-      'repeat password',
+      'Repeat password',
       name: 'registerPage_repeatPassword',
       desc: '',
       args: [],

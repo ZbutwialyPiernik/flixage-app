@@ -22,58 +22,54 @@ class LibraryPage extends StatelessWidget {
 
     return StatefulWrapper(
       onInit: () => bloc.dispatch(FetchLibrary()),
-      child: Container(
-        color: Theme.of(context).backgroundColor,
-        child: Column(
-          children: <Widget>[
-            AppBar(
-              title: Text(S.current.libraryPage_title,
-                  style: Theme.of(context).textTheme.headline6),
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              actions: <Widget>[
-                IconButton(
-                  color: Colors.white,
-                  icon: Icon(Icons.add_circle),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                      CreatePlaylistPage.route,
-                      arguments: Arguments(showBottomAppBar: false)),
-                )
-              ],
-            ),
-            StreamBuilder<List<Playlist>>(
-              stream: bloc.playlists,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Container();
-                }
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            title: Text(S.current.libraryPage_title,
+                style: Theme.of(context).textTheme.headline6),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            actions: <Widget>[
+              IconButton(
+                color: Colors.white,
+                icon: Icon(Icons.add_circle),
+                onPressed: () => Navigator.of(context).pushNamed(CreatePlaylistPage.route,
+                    arguments: Arguments(showBottomAppBar: false)),
+              )
+            ],
+          ),
+          StreamBuilder<List<Playlist>>(
+            stream: bloc.playlists,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              }
 
-                if (snapshot.data.isEmpty) {
-                  return Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[Text(S.current.libraryPage_noPlaylists)],
-                    ),
-                  );
-                }
-
-                final playlists = snapshot.data;
+              if (snapshot.data.isEmpty) {
                 return Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
-                    separatorBuilder: (context, index) => SizedBox(height: 8),
-                    itemCount: playlists.length,
-                    itemBuilder: (context, index) => PlaylistItem(
-                      playlist: playlists[index],
-                      onTap: () => Navigator.of(context).pushNamed(PlaylistPage.route,
-                          arguments: Arguments(extra: playlists[index])),
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[Text(S.current.libraryPage_noPlaylists)],
                   ),
                 );
-              },
-            ),
-          ],
-        ),
+              }
+
+              final playlists = snapshot.data;
+              return Expanded(
+                child: ListView.separated(
+                  padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                  separatorBuilder: (context, index) => SizedBox(height: 8),
+                  itemCount: playlists.length,
+                  itemBuilder: (context, index) => PlaylistItem(
+                    playlist: playlists[index],
+                    onTap: () => Navigator.of(context).pushNamed(PlaylistPage.route,
+                        arguments: Arguments(extra: playlists[index])),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -25,7 +25,7 @@ class PickPlaylistPage extends StatelessWidget {
             centerTitle: true,
             title: Text(S.current.pickPlaylistPage_addToPlaylist,
                 style: Theme.of(context).textTheme.headline6),
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           ),
           SingleChildScrollView(
             child: Column(
