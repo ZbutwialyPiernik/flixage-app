@@ -18,7 +18,7 @@
   "searchPage_search": "Wyszukaj",
   "searchPage_searchInFlixage": "Wyszukaj w Flixage",
   "searchPage_findFavouriteMusic": "Znajdź swoją ulubioną muzykę",
-  "searchPage_unknownError": "'Wystąpił nieznany błąd :('",
+  "searchPage_unknownError": "Wystąpił nieznany błąd :(",
   "searchPage_notFound": "Nie znaleziono \"{query}\"",
   "searchPage_tryAgain": "Spróbuj ponownie, sprawdzając pisownie",
   "trackItem_track": "Utwór • {name}",

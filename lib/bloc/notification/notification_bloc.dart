@@ -28,14 +28,14 @@ class SimpleNotification extends Equatable {
   SimpleNotification._(
       {this.content, this.duration, this.backgroundColor, this.fontColor});
 
-  static SimpleNotification error({content, duration: const Duration(seconds: 5)}) =>
+  static SimpleNotification error({content, duration: const Duration(seconds: 3)}) =>
       SimpleNotification._(
           content: content,
           duration: duration,
           backgroundColor: Colors.red,
           fontColor: Colors.white);
 
-  static SimpleNotification info({content, duration: const Duration(seconds: 5)}) =>
+  static SimpleNotification info({content, duration: const Duration(seconds: 3)}) =>
       SimpleNotification._(
           content: content,
           duration: duration,

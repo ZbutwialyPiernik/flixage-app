@@ -75,7 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchPage_search" : MessageLookupByLibrary.simpleMessage("Wyszukaj"),
     "searchPage_searchInFlixage" : MessageLookupByLibrary.simpleMessage("Wyszukaj w Flixage"),
     "searchPage_tryAgain" : MessageLookupByLibrary.simpleMessage("Spróbuj ponownie, sprawdzając pisownie"),
-    "searchPage_unknownError" : MessageLookupByLibrary.simpleMessage("\'Wystąpił nieznany błąd :(\'"),
+    "searchPage_unknownError" : MessageLookupByLibrary.simpleMessage("Wystąpił nieznany błąd :("),
     "settingsPage_language" : MessageLookupByLibrary.simpleMessage("Język"),
     "settingsPage_title" : MessageLookupByLibrary.simpleMessage("Ustawienia"),
     "trackItem_track" : m12,

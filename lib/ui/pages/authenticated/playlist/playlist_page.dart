@@ -1,9 +1,9 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/playlist/playlist_bloc.dart';
-import 'package:flixage/bloc/playlist/playlist_event.dart';
-import 'package:flixage/bloc/playlist/playlist_state.dart';
+import 'package:flixage/bloc/page/playlist/playlist_bloc.dart';
+import 'package:flixage/bloc/page/playlist/playlist_event.dart';
+import 'package:flixage/bloc/page/playlist/playlist_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
@@ -27,11 +27,10 @@ class PlaylistPage extends StatelessWidget {
         (ModalRoute.of(context).settings.arguments as Arguments).extra;
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
-    final notificationBloc = Provider.of<NotificationBloc>(context);
-    final dio = Provider.of<Dio>(context);
 
-    PlaylistBloc playlistBloc = PlaylistBloc(
-        playlistRepository: PlaylistRepository(dio), notificationBloc: notificationBloc);
+    final playlistBloc = PlaylistBloc(
+        playlistRepository: PlaylistRepository(Provider.of<Dio>(context)),
+        notificationBloc: Provider.of<NotificationBloc>(context));
 
     return StatefulWrapper(
       onInit: () => playlistBloc.dispatch(LoadTracks(playlist)),

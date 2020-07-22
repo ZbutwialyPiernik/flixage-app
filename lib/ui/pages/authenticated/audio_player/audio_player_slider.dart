@@ -17,7 +17,6 @@ class AudioPlayerSlider extends StatelessWidget {
       stream: bloc.currentPosition,
       builder: (context, snapshot) {
         final duration = snapshot.hasData ? snapshot.data : Duration(seconds: 0);
-        //print(duration.inMilliseconds.toString());
 
         return Column(
           children: [

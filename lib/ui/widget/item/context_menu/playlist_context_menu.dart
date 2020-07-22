@@ -1,5 +1,5 @@
-import 'package:flixage/bloc/library/library_bloc.dart';
-import 'package:flixage/bloc/library/library_event.dart';
+import 'package:flixage/bloc/page/library/library_bloc.dart';
+import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';

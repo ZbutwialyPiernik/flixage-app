@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flixage/bloc/album/album_bloc.dart';
+import 'package:flixage/bloc/page/album/album_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';

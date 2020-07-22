@@ -8,17 +8,7 @@ final usernameValidator = Validator.builder()
     .add((value) => !isAscii(value), S.current.authenticationPage_illegalCharacters)
     .build();
 
-final loginPasswordValidator = Validator.builder()
-    .add((value) => value.length < 8, S.current.authenticationPage_tooShort)
-    .add((value) => value.length > 128, S.current.authenticationPage_tooLong)
-    .add((value) => !isAscii(value), S.current.authenticationPage_illegalCharacters)
-    .add(
-        (value) =>
-            !hasDigit(value, 1) || !hasLowerCase(value, 1) || !hasUpperCase(value, 1),
-        S.current.loginPage_invalidPassword)
-    .build();
-
-final registerPasswordValidator = Validator.builder()
+final passwordValidator = Validator.builder()
     .add((value) => value.length < 8, S.current.authenticationPage_tooShort)
     .add((value) => value.length > 128, S.current.authenticationPage_tooLong)
     .add((value) => !isAscii(value), S.current.authenticationPage_illegalCharacters)

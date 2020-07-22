@@ -1,7 +1,7 @@
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/playlist/playlist_event.dart';
-import 'package:flixage/bloc/playlist/playlist_state.dart';
+import 'package:flixage/bloc/page/playlist/playlist_event.dart';
+import 'package:flixage/bloc/page/playlist/playlist_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';

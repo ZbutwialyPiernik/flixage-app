@@ -20,26 +20,15 @@ class ArtistData extends Equatable {
 
 class ArtistBloc extends LoadingBloc<Artist, ArtistData> {
   final ArtistRepository artistRepository;
-
   final NotificationBloc notificationBloc;
-
-  final PublishSubject<ArtistData> _loadingSubject = PublishSubject();
 
   ArtistBloc({@required this.artistRepository, @required this.notificationBloc});
 
   @override
-  void onEvent(artist) async {
+  Future<ArtistData> load(Artist artist) async {
     List<Track> singles = await artistRepository.getSingles(artist.id);
     List<Album> albums = await artistRepository.getAlbums(artist.id);
 
-    _loadingSubject.add(ArtistData(singles, albums));
+    return ArtistData(singles, albums);
   }
-
-  @override
-  void dispose() {
-    _loadingSubject.close();
-  }
-
-  @override
-  Stream<ArtistData> get stream => _loadingSubject.stream;
 }

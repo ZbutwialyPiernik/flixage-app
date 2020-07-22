@@ -14,7 +14,7 @@ class PlaylistItem extends StatelessWidget {
   const PlaylistItem({
     Key key,
     @required this.playlist,
-    @required this.onTap,
+    this.onTap,
     this.secondary,
     this.height = 80,
   }) : super(key: key);

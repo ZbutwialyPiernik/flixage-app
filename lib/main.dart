@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/bloc/language/language_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/authentication_root.dart';
@@ -21,65 +22,39 @@ import 'package:flixage/ui/config/custom_scroll_behaviour.dart';
 
 import 'bloc/token_store.dart';
 
-import 'package:intl/intl_standalone.dart';
-
-const languageKey = "LANGUAGE";
-const defaultLanguage = "en";
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  findSystemLocale().then((value) {
-    final logger = Logger();
+  final dio = Dio();
+  final authenticationRepository = AuthenticationRepository(dio);
+  final secureStorage = FlutterSecureStorage();
+  final tokenStore = TokenStore(secureStorage);
 
-    final dio = Dio();
-    final authenticationRepository = AuthenticationRepository(dio);
-    final secureStorage = FlutterSecureStorage();
-    final tokenStore = TokenStore(secureStorage);
+  dio.options.connectTimeout = 2 * 2000;
+  dio.options.receiveTimeout = 2 * 1000;
+  dio.options.sendTimeout = 2 * 1000;
 
-    secureStorage.read(key: languageKey).then((savedLanguage) async {
-      logger.d("Reading locale settings");
-
-      if (savedLanguage == null) {
-        final systemLanguage = (await findSystemLocale()).split("_").first;
-
-        if (S.delegate.isSupported(Locale(systemLanguage))) {
-          logger.d(
-              "System locale '$systemLanguage' is supported, settings as default language");
-
-          secureStorage.write(key: languageKey, value: systemLanguage);
-          savedLanguage = systemLanguage;
-        } else {
-          logger.d("System locale '$systemLanguage' is not supported");
-        }
-      }
-
-      final localeToLoad = savedLanguage ?? defaultLanguage;
-
-      logger.d("Loading locale '$savedLanguage'");
-
-      S.delegate.load(Locale(localeToLoad));
-    });
-
-    dio.options.connectTimeout = 2 * 2000;
-    dio.options.receiveTimeout = 2 * 1000;
-    dio.options.sendTimeout = 2 * 1000;
-
-    runApp(Main(
-      dio: dio,
-      tokenStore: tokenStore,
-      authenticationRepository: authenticationRepository,
-    ));
-  });
+  runApp(Main(
+    dio: dio,
+    tokenStore: tokenStore,
+    authenticationRepository: authenticationRepository,
+    secureStorage: secureStorage,
+  ));
 }
 
 class Main extends StatelessWidget {
   final Dio dio;
   final TokenStore tokenStore;
+  final FlutterSecureStorage secureStorage;
   final AuthenticationRepository authenticationRepository;
 
-  const Main({Key key, this.dio, this.tokenStore, this.authenticationRepository})
-      : super(key: key);
+  const Main({
+    Key key,
+    this.dio,
+    this.tokenStore,
+    this.authenticationRepository,
+    this.secureStorage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,10 +69,16 @@ class Main extends StatelessWidget {
           )..dispatch(AppStarted()),
           lazy: false,
         ),
+        BlocProvider<NotificationBloc>(
+          create: (_) => NotificationBloc(),
+        ),
+        BlocProvider<LanguageBloc>(
+          create: (_) => LanguageBloc(secureStorage)..dispatch(LoadLanguage()),
+          lazy: false,
+        ),
         Provider<AuthenticationRepository>.value(value: authenticationRepository),
         Provider<TokenStore>.value(value: tokenStore),
         Provider<Dio>.value(value: dio),
-        Provider<NotificationBloc>(create: (_) => NotificationBloc()),
       ],
       //lazy: false,
       child: MaterialApp(

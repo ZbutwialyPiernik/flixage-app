@@ -1,11 +1,9 @@
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
-import 'package:flixage/bloc/login/login_bloc.dart';
-import 'package:flixage/bloc/login/login_event.dart';
-import 'package:flixage/bloc/login/login_state.dart';
+import 'package:flixage/bloc/form_bloc.dart';
+import 'package:flixage/bloc/page/login/login_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
-import 'package:flixage/ui/widget/notification_root.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,13 +37,17 @@ class LoginForm extends StatelessWidget {
     return StatefulWrapper(
       onInit: () {
         _usernameController.addListener(() {
-          _bloc.dispatch(TextChangedEvent(
-              username: _usernameController.text, password: _passwordController.text));
+          _bloc.dispatch(TextChanged({
+            'username': _usernameController.text,
+            'password': _passwordController.text,
+          }));
         });
 
         _passwordController.addListener(() {
-          _bloc.dispatch(TextChangedEvent(
-              username: _usernameController.text, password: _passwordController.text));
+          _bloc.dispatch(TextChanged({
+            'username': _usernameController.text,
+            'password': _passwordController.text,
+          }));
         });
 
         // TODO: remove harded login for faster testing
@@ -58,8 +60,8 @@ class LoginForm extends StatelessWidget {
 
         _bloc.dispose();
       },
-      child: StreamBuilder<LoginState>(
-        stream: _bloc.state,
+      child: StreamBuilder<FormBlocState>(
+        stream: _bloc.formState,
         builder: (context, snapshot) {
           final state = snapshot.data;
 
@@ -73,10 +75,10 @@ class LoginForm extends StatelessWidget {
               ),
               TextField(
                 controller: _usernameController,
-                readOnly: state is LoginLoading,
+                readOnly: state is FormLoading,
                 decoration: InputDecoration(
-                  errorText: (state is LoginValidatorError)
-                      ? state.usernameValidator.error
+                  errorText: (state is FormValidationError)
+                      ? state.errors['username'].error
                       : null,
                   hintText: S.current.authenticationPage_username,
                 ),
@@ -92,11 +94,11 @@ class LoginForm extends StatelessWidget {
               ),
               TextFormField(
                 controller: _passwordController,
-                readOnly: state is LoginLoading,
+                readOnly: state is FormLoading,
                 obscureText: true,
                 decoration: InputDecoration(
-                  errorText: (state is LoginValidatorError)
-                      ? state.passwordValidator.error
+                  errorText: (state is FormValidationError)
+                      ? state.errors['password'].error
                       : null,
                   border: InputBorder.none,
                   filled: true,
@@ -112,13 +114,12 @@ class LoginForm extends StatelessWidget {
                   RaisedButton(
                     child: Text(S.current.authenticationPage_login.toUpperCase()),
                     color: Theme.of(context).primaryColor,
-                    onPressed: state is LoginLoading
+                    onPressed: state is FormLoading
                         ? null
-                        : () => _bloc.dispatch(
-                              LoginAttempEvent(
-                                  username: _usernameController.value.text,
-                                  password: _passwordController.value.text),
-                            ),
+                        : () => _bloc.dispatch(SubmitForm({
+                              'username': _usernameController.value.text,
+                              'password': _passwordController.value.text,
+                            })),
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                     shape: StadiumBorder(),
                   ),

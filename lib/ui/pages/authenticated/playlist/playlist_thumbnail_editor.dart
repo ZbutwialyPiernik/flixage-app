@@ -1,5 +1,5 @@
-import 'package:flixage/bloc/playlist/playlist_bloc.dart';
-import 'package:flixage/bloc/playlist/playlist_event.dart';
+import 'package:flixage/bloc/page/playlist/playlist_bloc.dart';
+import 'package:flixage/bloc/page/playlist/playlist_event.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

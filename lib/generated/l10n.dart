@@ -213,30 +213,30 @@ class S {
     );
   }
 
-  /// `Should contain one digit`
+  /// `Should contain at least one digit`
   String get registerPage_oneDigit {
     return Intl.message(
-      'Should contain one digit',
+      'Should contain at least one digit',
       name: 'registerPage_oneDigit',
       desc: '',
       args: [],
     );
   }
 
-  /// `Should contain one lower-case`
+  /// `Should contain at least one lower-case`
   String get registerPage_oneLower {
     return Intl.message(
-      'Should contain one lower-case',
+      'Should contain at least one lower-case',
       name: 'registerPage_oneLower',
       desc: '',
       args: [],
     );
   }
 
-  /// `Should contain one upper-case`
+  /// `Should contain at least one upper-case`
   String get registerPage_oneUpper {
     return Intl.message(
-      'Should contain one upper-case',
+      'Should contain at least one upper-case',
       name: 'registerPage_oneUpper',
       desc: '',
       args: [],
