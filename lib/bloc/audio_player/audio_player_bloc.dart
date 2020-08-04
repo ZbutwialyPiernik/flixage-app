@@ -64,9 +64,9 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent> {
         _playlistSubject.add(null);
       }
 
-      var accessToken = await _tokenStore.getAccessToken();
+      final accessToken = await _tokenStore.getAccessToken();
 
-      var playlist = player.Playlist(
+      final playlist = player.Playlist(
           audios: event.tracks.map((track) => toNetwork(track, accessToken)).toList(),
           startIndex: event.startIndex);
 

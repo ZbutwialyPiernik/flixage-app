@@ -22,14 +22,10 @@ class _TrackRepository implements TrackRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/tracks/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/tracks/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = Track.fromJson(_result.data);
     return Future.value(value);
@@ -50,5 +46,20 @@ class _TrackRepository implements TrackRepository {
             baseUrl: baseUrl),
         data: _data);
     return Future.value(null);
+  }
+
+  @override
+  getRecentlyAdded({offset = 0, limit = 10}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'offset': offset, 'limit': limit};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request('/tracks/recent',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = PageResponse<Track>.fromJson(_result.data, Track.fromJson);
+    return Future.value(value);
   }
 }

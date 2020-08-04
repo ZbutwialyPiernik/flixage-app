@@ -25,7 +25,7 @@ abstract class PlayableEvent extends AudioPlayerEvent {
 }
 
 class PlayTrack extends PlayableEvent {
-  PlayTrack({Track track})
+  PlayTrack({@required Track track})
       : assert(track != null),
         super([track], 0, PlayMode.normal);
 }

@@ -19,7 +19,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(monthlyListeners) => "Listeners in this month: ${monthlyListeners}";
+  static m0(monthlyListeners) => "Monthly listeners: ${monthlyListeners}";
 
   static m1(name) => "Problem during creation of playlist \'${name}\'";
 
@@ -88,7 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "playlistPage_unsupportedExtension" : MessageLookupByLibrary.simpleMessage("Unsupported extension"),
     "playlistUpdateError" : m7,
     "playlistUpdated" : m8,
-    "queryablePage_playRandomly" : MessageLookupByLibrary.simpleMessage("Play Randomly"),
+    "queryablePage_playRandomly" : MessageLookupByLibrary.simpleMessage("Shuffle play"),
     "registerPage_oneDigit" : MessageLookupByLibrary.simpleMessage("Should contain at least one digit"),
     "registerPage_oneLower" : MessageLookupByLibrary.simpleMessage("Should contain at least one lower-case"),
     "registerPage_oneUpper" : MessageLookupByLibrary.simpleMessage("Should contain at least one upper-case"),

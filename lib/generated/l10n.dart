@@ -263,10 +263,10 @@ class S {
     );
   }
 
-  /// `Play Randomly`
+  /// `Shuffle play`
   String get queryablePage_playRandomly {
     return Intl.message(
-      'Play Randomly',
+      'Shuffle play',
       name: 'queryablePage_playRandomly',
       desc: '',
       args: [],
@@ -483,10 +483,10 @@ class S {
     );
   }
 
-  /// `Listeners in this month: {monthlyListeners}`
+  /// `Monthly listeners: {monthlyListeners}`
   String albumPage_monthlyListeners(Object monthlyListeners) {
     return Intl.message(
-      'Listeners in this month: $monthlyListeners',
+      'Monthly listeners: $monthlyListeners',
       name: 'albumPage_monthlyListeners',
       desc: '',
       args: [monthlyListeners],

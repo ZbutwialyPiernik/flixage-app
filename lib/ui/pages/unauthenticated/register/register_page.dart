@@ -76,9 +76,8 @@ class RegisterForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(S.current.authenticationPage_username),
-              Divider(
+              SizedBox(
                 height: 8,
-                color: Colors.transparent,
               ),
               TextField(
                 controller: _usernameController,
@@ -93,9 +92,8 @@ class RegisterForm extends StatelessWidget {
                 height: 16,
               ),
               Text(S.current.authenticationPage_password),
-              Divider(
+              SizedBox(
                 height: 8,
-                color: Colors.transparent,
               ),
               TextField(
                 controller: _passwordController,
@@ -113,9 +111,8 @@ class RegisterForm extends StatelessWidget {
                 height: 16,
               ),
               Text(S.current.registerPage_repeatPassword),
-              Divider(
+              SizedBox(
                 height: 8,
-                color: Colors.transparent,
               ),
               TextField(
                 controller: _repeatPasswordController,

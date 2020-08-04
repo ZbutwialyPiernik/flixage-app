@@ -93,7 +93,9 @@ class _SearchPageState extends State<SearchPage> {
                         style:
                             Theme.of(context).textTheme.headline5.copyWith(fontSize: 18),
                       ),
-                      Divider(height: 8, color: Colors.transparent),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text(
                         S.current.searchPage_tryAgain,
                         style:

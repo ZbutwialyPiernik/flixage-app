@@ -5,7 +5,6 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/authentication_root.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logger/logger.dart';
 
 import 'package:provider/provider.dart';
 

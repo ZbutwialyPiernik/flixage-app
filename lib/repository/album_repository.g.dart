@@ -22,14 +22,10 @@ class _AlbumRepository implements AlbumRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/albums/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/albums/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = Album.fromJson(_result.data);
     return Future.value(value);
@@ -41,18 +37,29 @@ class _AlbumRepository implements AlbumRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request(
-        '/albums/$id/tracks',
+    final Response<List<dynamic>> _result = await _dio.request('/albums/$id/tracks',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
         .toList();
+    return Future.value(value);
+  }
+
+  @override
+  getRecentlyAdded({offset = 0, limit = 10}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'offset': offset, 'limit': limit};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request('/albums/recent',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = PageResponse<Album>.fromJson(_result.data, Album.fromJson);
     return Future.value(value);
   }
 }

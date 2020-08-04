@@ -22,14 +22,10 @@ class _UserRepository implements UserRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/users/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = User.fromJson(_result.data);
     return Future.value(value);
@@ -40,16 +36,27 @@ class _UserRepository implements UserRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/users/me',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/me',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = User.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  getRecentlyListened({offset = 0, limit = 10}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{'offset': offset, 'limit': limit};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/me/recent',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = PageResponse<Track>.fromJson(_result.data, Track.fromJson);
     return Future.value(value);
   }
 }

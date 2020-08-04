@@ -20,7 +20,7 @@ class RegisterBloc extends FormBloc {
 
   @override
   FormBlocState onValid(SubmitForm event) {
-    if (event.fields['password'] != event.fields['confirmPassword']) {
+    if (event.fields['password'] != event.fields['repeatPassword']) {
       return FormValidationError({
         'username': ValidationResult.empty(),
         'password': ValidationResult.empty(),

@@ -67,6 +67,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
   final TokenStore _tokenStore;
   final Dio _dio;
 
+  User get currentUser => _authenticationState.value is AuthenticationAuthenticated
+      ? (_authenticationState.value as AuthenticationAuthenticated).user
+      : null;
+
   Stream<AuthenticationState> get state => _authenticationState.stream;
 
   AuthenticationBloc(
@@ -114,7 +118,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
                     authentication.accessToken, authentication.refreshToken);
 
                 // When authentication is renewed we retry the reqeust
-                return await _dio.request(
+                return _dio.request(
                   error.request.path,
                   cancelToken: error.request.cancelToken,
                   data: error.request.data,

@@ -2,7 +2,6 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/queryable.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
-import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
 import 'package:flutter/material.dart';
 
 class QueryableAppBar extends StatelessWidget {

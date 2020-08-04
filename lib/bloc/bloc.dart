@@ -18,7 +18,7 @@ abstract class Bloc<E extends Equatable> {
   void onEvent(E event);
 
   @protected
-  void onError(Exception error) {
+  void onError(Object error) {
     logger.e(Level.error, "Unhandled exception in bloc ${this.toString()}: $error");
   }
 

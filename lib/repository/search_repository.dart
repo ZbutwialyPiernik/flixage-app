@@ -10,9 +10,10 @@ abstract class SearchRepository {
   factory SearchRepository(Dio dio, {String baseUrl}) = _SearchRepository;
 
   @GET("/search")
-  Future<SearchResponse> search(
-      {@Query("query") String query,
-      @Query("offset") int offset,
-      @Query("limit") int limit,
-      @Query("type") String type});
+  Future<SearchResponse> search({
+    @Query("query") String query,
+    @Query("offset") int offset = 0,
+    @Query("limit") int limit = 10,
+    @Query("type") String type,
+  });
 }

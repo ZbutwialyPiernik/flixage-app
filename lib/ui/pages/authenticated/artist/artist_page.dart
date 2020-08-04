@@ -54,7 +54,8 @@ class _ArtistPageState extends State<ArtistPage> {
               return <Widget>[
                 QueryableAppBar(
                   queryable: artist,
-                  secondaryText: S.current.albumPage_monthlyListeners(4024553),
+                  secondaryText:
+                      S.current.albumPage_monthlyListeners(artist.monthlyListeners),
                   contextMenuRoute: ArtistContextMenu.route,
                   showRandomButton: true,
                   onRandomButtonTap: () => audioPlayerBloc.dispatch(PlayTracks(

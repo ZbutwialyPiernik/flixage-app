@@ -60,7 +60,14 @@ abstract class FormBloc extends Bloc<FormEvent> {
       bool hasError = false;
 
       event.fields.forEach((key, value) {
-        final validationResult = validators[key].validate(value);
+        final validator = validators[key];
+
+        if (validator == null) {
+          errors[key] = ValidationResult.empty();
+          return;
+        }
+
+        final validationResult = validator.validate(value);
 
         errors[key] = validationResult;
 

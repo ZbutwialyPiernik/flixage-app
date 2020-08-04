@@ -6,7 +6,6 @@ import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/artist_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:rxdart/subjects.dart';
 
 class ArtistData extends Equatable {
   final List<Track> singles;

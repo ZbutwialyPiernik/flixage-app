@@ -1,6 +1,7 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';
+import 'package:flixage/ui/pages/authenticated/audio_player/audio_player_slider.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/subcomponent/audio_player_state_button.dart';
 import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
@@ -33,17 +34,17 @@ class AudioPlayerWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              StreamBuilder<Duration>(
-                stream: bloc.currentPosition,
-                builder: (context, durationSnapshot) {
-                  final duration = durationSnapshot.data ?? Duration.zero;
-
+              AudioPlayerSlider(
+                track: track,
+                playerState: bloc.playerState,
+                currentPosition: bloc.currentPosition,
+                builder: (context, track, progress) {
                   return SizedBox(
-                      width: screenWidth,
-                      height: 2,
-                      child: LinearProgressIndicator(
-                          backgroundColor: Colors.white30,
-                          value: duration.inSeconds / track.duration.inSeconds));
+                    width: screenWidth,
+                    height: 2,
+                    child: LinearProgressIndicator(
+                        backgroundColor: Colors.white30, value: progress),
+                  );
                 },
               ),
               Container(
@@ -61,15 +62,16 @@ class AudioPlayerWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(track.name,
-                                      style: TextStyle(fontWeight: FontWeight.bold)),
-                                  Text(" | "),
-                                  Text(track.artist.name)
-                                ],
-                              )),
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              children: <Widget>[
+                                Text(track.name,
+                                    style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(" | "),
+                                Text(track.artist.name)
+                              ],
+                            ),
+                          ),
                           AudioPlayerStateButton(
                             bloc: bloc,
                             iconSize: 24,

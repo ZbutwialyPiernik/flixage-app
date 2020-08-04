@@ -87,12 +87,11 @@ class PlaylistPage extends StatelessWidget {
                             itemCount: state.tracks.length,
                             itemBuilder: (context, index) => GestureDetector(
                               child: TrackItem(track: state.tracks[index]),
-                              onTap: () => audioPlayerBloc.dispatch(
-                                PlayPlaylist(
-                                    playlist: playlist,
-                                    tracks: state.tracks,
-                                    startIndex: index),
-                              ),
+                              onTap: () => audioPlayerBloc.dispatch(PlayPlaylist(
+                                playlist: playlist,
+                                tracks: state.tracks,
+                                startIndex: index,
+                              )),
                             ),
                           )
                         ],

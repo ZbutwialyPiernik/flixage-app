@@ -17,7 +17,7 @@ class _SearchRepository implements SearchRepository {
   String baseUrl;
 
   @override
-  search({query, offset, limit, type}) async {
+  search({query, offset = 0, limit = 10, type}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       'query': query,

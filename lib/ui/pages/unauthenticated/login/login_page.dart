@@ -69,9 +69,8 @@ class LoginForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(S.current.authenticationPage_username),
-              Divider(
+              SizedBox(
                 height: 8,
-                color: Colors.transparent,
               ),
               TextField(
                 controller: _usernameController,
@@ -83,14 +82,12 @@ class LoginForm extends StatelessWidget {
                   hintText: S.current.authenticationPage_username,
                 ),
               ),
-              Divider(
+              SizedBox(
                 height: 16,
-                color: Colors.transparent,
               ),
               Text(S.current.authenticationPage_password),
-              Divider(
+              SizedBox(
                 height: 8,
-                color: Colors.transparent,
               ),
               TextFormField(
                 controller: _passwordController,
@@ -104,9 +101,8 @@ class LoginForm extends StatelessWidget {
                   filled: true,
                 ),
               ),
-              Divider(
+              SizedBox(
                 height: 16,
-                color: Colors.transparent,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:flixage/generated/l10n.dart';
-import 'package:flixage/model/album.dart';
 import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';

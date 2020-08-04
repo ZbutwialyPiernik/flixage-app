@@ -5,11 +5,13 @@ part 'artist.g.dart';
 
 @JsonSerializable()
 class Artist extends Queryable {
-  Artist({id, name, thumbnailUrl}) : super(id, name, thumbnailUrl);
+  final int monthlyListeners;
+
+  Artist({id, name, thumbnailUrl, this.monthlyListeners}) : super(id, name, thumbnailUrl);
 
   static Artist fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
   Map<String, dynamic> toJson() => _$ArtistToJson(this);
 
   @override
-  List<Object> get props => [id, name, thumbnailUrl];
+  List<Object> get props => [id, name, thumbnailUrl, monthlyListeners];
 }
