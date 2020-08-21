@@ -6,6 +6,7 @@ import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
+import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,41 @@ class PlaylistTab extends StatelessWidget {
       onInit: () => bloc.dispatch(FetchLibrary()),
       child: Column(
         children: <Widget>[
-          IconButton(
-            color: Colors.white,
-            icon: Icon(Icons.add_circle),
-            onPressed: () => Navigator.of(context).pushNamed(CreatePlaylistPage.route,
-                arguments: Arguments(showBottomAppBar: false)),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pushNamed(CreatePlaylistPage.route,
+                  arguments: Arguments(showBottomAppBar: false)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 80,
+                    width: 80,
+                    color: Colors.white12,
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        "Utwórz playlistę",
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           StreamBuilder<List<Playlist>>(
             stream: bloc.playlists,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Container();
+                return LoadingWidget();
               }
 
               if (snapshot.data.isEmpty) {
@@ -43,6 +68,7 @@ class PlaylistTab extends StatelessWidget {
               }
 
               final playlists = snapshot.data;
+
               return Expanded(
                 child: ListView.separated(
                   padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),

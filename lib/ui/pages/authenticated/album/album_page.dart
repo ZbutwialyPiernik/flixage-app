@@ -25,7 +25,9 @@ class AlbumPage extends StatelessWidget {
     final notificationBloc = Provider.of<NotificationBloc>(context);
     final dio = Provider.of<Dio>(context);
     final artistBloc = AlbumBloc(
-        notificationBloc: notificationBloc, albumRepository: AlbumRepository(dio));
+      notificationBloc: notificationBloc,
+      albumRepository: AlbumRepository(dio),
+    );
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
@@ -49,7 +51,7 @@ class AlbumPage extends StatelessWidget {
               return <Widget>[
                 QueryableAppBar(
                   queryable: album,
-                  secondaryText: S.current.albumPage_monthlyListeners(4024553),
+                  secondaryText: S.current.albumPage_by(album.artist.name),
                   contextMenuRoute: AlbumContextMenu.route,
                   showRandomButton: true,
                   onRandomButtonTap: () => audioPlayerBloc
@@ -65,18 +67,19 @@ class AlbumPage extends StatelessWidget {
                 children: [
                   SizedBox(height: 48),
                   ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(left: 16, bottom: 16, top: 16),
-                      itemBuilder: (_, index) => TrackItem(
-                            track: tracks[index],
-                            prefix: Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Text((index + 1).toString()),
-                            ),
-                            secondary: Text(tracks[index].streamCount.toString()),
-                          ),
-                      separatorBuilder: (_, index) => SizedBox(height: 8),
-                      itemCount: tracks.length),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(left: 16, bottom: 16, top: 16),
+                    itemBuilder: (_, index) => TrackItem(
+                      track: tracks[index],
+                      prefix: Padding(
+                        padding: EdgeInsets.only(right: 8),
+                        child: Text((index + 1).toString()),
+                      ),
+                      secondary: Text(tracks[index].streamCount.toString()),
+                    ),
+                    separatorBuilder: (_, index) => SizedBox(height: 8),
+                    itemCount: tracks.length,
+                  ),
                 ],
               ),
             ),

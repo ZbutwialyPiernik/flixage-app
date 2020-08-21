@@ -3,6 +3,7 @@ import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/page/home/home_bloc.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/queryable.dart';
 import 'package:flixage/repository/album_repository.dart';
 import 'package:flixage/repository/artist_repository.dart';
@@ -13,7 +14,6 @@ import 'package:flixage/ui/pages/authenticated/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/settings/settings_page.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
-import 'package:flixage/ui/widget/item/context_menu/track_context_menu.dart';
 import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -35,22 +35,20 @@ class HomePage extends StatelessWidget {
       userRepository: UserRepository(dio),
     );
 
-    return SingleChildScrollView(
-      child: StatefulWrapper(
-        onInit: () => bloc.dispatch(LoadHome()),
-        onDispose: () => bloc.dispose(),
-        child: StreamBuilder<HomeData>(
-          stream: bloc.stream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return LoadingWidget();
-            }
+    return StatefulWrapper(
+      onInit: () => bloc.dispatch(LoadHome()),
+      onDispose: () => bloc.dispose(),
+      child: StreamBuilder<HomeData>(
+        stream: bloc.stream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return LoadingWidget();
+          }
 
-            final data = snapshot.data;
+          final data = snapshot.data;
 
-            if (data.recentlyListened.isEmpty) {}
-
-            return Column(
+          return SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
@@ -67,26 +65,26 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Witaj ${authenticationBloc.currentUser.name}!",
+                    S.current.homePage_welcome(authenticationBloc.currentUser.name),
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
                 if (data.recentlyListened.isNotEmpty)
                   ..._buildSection(
                     context,
-                    title: "Ostatnio odtwarzane",
+                    title: S.current.homePage_recentlyPlayed,
                     items: data.recentlyListened,
                     onTap: (track) => audioPlayer.dispatch(PlayTrack(track: track)),
                   ),
                 ..._buildSection(
                   context,
-                  title: "Ostatnio dodane",
+                  title: S.current.homePage_latestSingles,
                   items: data.recentlyAddedTracks,
                   onTap: (track) => audioPlayer.dispatch(PlayTrack(track: track)),
                 ),
                 ..._buildSection(
                   context,
-                  title: "Najnowsze albumy",
+                  title: S.current.homePage_latestAlbums,
                   items: data.recentlyAddedAlbums,
                   onTap: (album) => Navigator.of(context).pushNamed(
                     AlbumPage.route,
@@ -95,7 +93,7 @@ class HomePage extends StatelessWidget {
                 ),
                 ..._buildSection(
                   context,
-                  title: "Najnowsi artyści",
+                  title: S.current.homePage_latestArtists,
                   items: data.recentlyAddedArists,
                   onTap: (artist) => Navigator.of(context).pushNamed(
                     ArtistPage.route,
@@ -104,9 +102,9 @@ class HomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 16)
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

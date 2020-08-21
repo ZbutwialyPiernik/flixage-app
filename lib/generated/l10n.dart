@@ -273,6 +273,16 @@ class S {
     );
   }
 
+  /// `By {name}`
+  String albumPage_by(Object name) {
+    return Intl.message(
+      'By $name',
+      name: 'albumPage_by',
+      desc: '',
+      args: [name],
+    );
+  }
+
   /// `Albums`
   String get artistPage_albums {
     return Intl.message(
@@ -393,10 +403,10 @@ class S {
     );
   }
 
-  /// `'Unknown error has occured :('`
+  /// `Unknown error has occurred :(`
   String get searchPage_unknownError {
     return Intl.message(
-      '\'Unknown error has occured :(\'',
+      'Unknown error has occurred :(',
       name: 'searchPage_unknownError',
       desc: '',
       args: [],
@@ -493,10 +503,10 @@ class S {
     );
   }
 
-  /// `Problem during fechting user library`
+  /// `Problem during fetching user library`
   String get libraryFetchError {
     return Intl.message(
-      'Problem during fechting user library',
+      'Problem during fetching user library',
       name: 'libraryFetchError',
       desc: '',
       args: [],
@@ -678,6 +688,76 @@ class S {
     return Intl.message(
       'Unknown error',
       name: 'unknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get loginPage_login {
+    return Intl.message(
+      'Login',
+      name: 'loginPage_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get registerPage_register {
+    return Intl.message(
+      'Register',
+      name: 'registerPage_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome {name}!`
+  String homePage_welcome(Object name) {
+    return Intl.message(
+      'Welcome $name!',
+      name: 'homePage_welcome',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Latest albums`
+  String get homePage_latestAlbums {
+    return Intl.message(
+      'Latest albums',
+      name: 'homePage_latestAlbums',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest artists`
+  String get homePage_latestArtists {
+    return Intl.message(
+      'Latest artists',
+      name: 'homePage_latestArtists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest singles`
+  String get homePage_latestSingles {
+    return Intl.message(
+      'Latest singles',
+      name: 'homePage_latestSingles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recently played`
+  String get homePage_recentlyPlayed {
+    return Intl.message(
+      'Recently played',
+      name: 'homePage_recentlyPlayed',
       desc: '',
       args: [],
     );

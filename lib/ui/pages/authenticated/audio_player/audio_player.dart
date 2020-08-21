@@ -83,11 +83,9 @@ class AudioPlayerPage extends StatelessWidget {
                           InkWell(
                             child: Text(track.artist.name,
                                 style: TextStyle(color: Colors.white.withOpacity(0.6))),
-                            onTap: () => Navigator.pop(
-                              context,
-                              Navigator.of(context).pushNamed(ArtistPage.route,
-                                  arguments: Arguments(extra: track.artist)),
-                            ),
+                            onTap: () => Navigator.of(context).popAndPushNamed(
+                                ArtistPage.route,
+                                arguments: Arguments(extra: track.artist)),
                           ),
                         ],
                       ),
@@ -128,7 +126,8 @@ class AudioPlayerPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(durationToString(Duration(
-                                  seconds: track.duration.inSeconds * progress as int))),
+                                  seconds:
+                                      (track.duration.inSeconds * progress).toInt()))),
                               Text(
                                 durationToString(
                                     track != null ? track.duration : Duration.zero),
