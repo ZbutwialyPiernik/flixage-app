@@ -1,6 +1,6 @@
 # Flixage - Music streaming app
 
-[Flutter](https://flutter.dev) frontend app for my [project](https://github.com/ZbutwialyPiernik/flixage) done in Spring Boot.
+[Flutter](https://flutter.dev) frontend app for my [project](https://github.com/ZbutwialyPiernik/flixage).
 
 ## Building and running
 
