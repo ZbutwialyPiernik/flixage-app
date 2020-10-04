@@ -9,7 +9,6 @@ part of 'authentication_repository.dart';
 class _AuthenticationRepository implements AuthenticationRepository {
   _AuthenticationRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
   }
 
   final Dio _dio;
@@ -33,7 +32,7 @@ class _AuthenticationRepository implements AuthenticationRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Authentication.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -53,7 +52,7 @@ class _AuthenticationRepository implements AuthenticationRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Authentication.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -71,6 +70,26 @@ class _AuthenticationRepository implements AuthenticationRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
+  }
+
+  @override
+  registerUser(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/authentication/register',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Authentication.fromJson(_result.data);
+    return value;
   }
 }

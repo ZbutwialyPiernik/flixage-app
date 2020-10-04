@@ -1,33 +1,47 @@
 import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
-import 'package:flixage/bloc/notification/simple_notification.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class NotificationEvent extends Equatable {}
-
-class DisplayNotification extends NotificationEvent {
-  final SimpleNotification notification;
-
-  DisplayNotification(this.notification);
-
-  @override
-  List<Object> get props => [notification];
-}
-
-class NotificationBloc extends Bloc<NotificationEvent> {
+class NotificationBloc extends Bloc<SimpleNotification> {
   final PublishSubject<SimpleNotification> _notificationSubject = PublishSubject();
 
-  Stream<SimpleNotification> get notificationStream => _notificationSubject.stream;
+  Stream<SimpleNotification> get notifications => _notificationSubject.stream;
 
   @override
-  void onEvent(NotificationEvent event) {
-    if (event is DisplayNotification) {
-      _notificationSubject.add(event.notification);
-    }
+  void onEvent(SimpleNotification notification) {
+    _notificationSubject.add(notification);
   }
 
   @override
   void dispose() {
     _notificationSubject.close();
   }
+}
+
+class SimpleNotification extends Equatable {
+  final String content;
+  final Duration duration;
+  final Color backgroundColor;
+  final Color fontColor;
+
+  SimpleNotification._(
+      {this.content, this.duration, this.backgroundColor, this.fontColor});
+
+  static SimpleNotification error({content, duration: const Duration(seconds: 3)}) =>
+      SimpleNotification._(
+          content: content,
+          duration: duration,
+          backgroundColor: Colors.red,
+          fontColor: Colors.white);
+
+  static SimpleNotification info({content, duration: const Duration(seconds: 3)}) =>
+      SimpleNotification._(
+          content: content,
+          duration: duration,
+          backgroundColor: Colors.blue,
+          fontColor: Colors.white);
+
+  @override
+  List<Object> get props => [content, duration, backgroundColor, fontColor];
 }

@@ -1,20 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:flixage/model/track.dart';
-import 'package:flixage/repository/track_repository.dart';
+import 'package:flixage/model/search_response.dart';
+import 'package:flixage/repository/search_repository.dart';
 import 'package:logger/logger.dart';
+import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:flixage/bloc/bloc.dart';
 
 abstract class SearchEvent extends Equatable {}
 
-enum QueryType { audio, playlist, album }
+enum QueryType { Track, Album, Artist, User, Playlist }
 
 class TextChanged extends SearchEvent {
   final String query;
-  final QueryType queryType;
+  final List<QueryType> types;
 
-  TextChanged({this.query, this.queryType = QueryType.audio});
+  TextChanged({@required this.query, @required this.types});
 
   @override
   List<Object> get props => [query];
@@ -35,12 +36,13 @@ class SearchStateLoading extends SearchState {
 }
 
 class SearchStateSuccess extends SearchState {
-  final List<Track> tracks;
+  final SearchResponse response;
+  final String query;
 
-  SearchStateSuccess({this.tracks});
+  SearchStateSuccess({this.response, this.query});
 
   @override
-  List<Object> get props => [tracks];
+  List<Object> get props => [response, query];
 }
 
 class SearchStateError extends SearchState {
@@ -58,9 +60,9 @@ class SearchBloc extends Bloc<SearchEvent> {
   final BehaviorSubject<SearchState> searchState =
       BehaviorSubject.seeded(SearchStateEmpty());
 
-  final TrackRepository _trackRepository;
+  final SearchRepository _searchRepository;
 
-  SearchBloc(this._trackRepository);
+  SearchBloc(this._searchRepository);
 
   @override
   void dispose() {
@@ -75,21 +77,18 @@ class SearchBloc extends Bloc<SearchEvent> {
         return;
       }
 
-      switch (event.queryType) {
-        case QueryType.audio:
-          searchState.add(SearchStateLoading());
+      searchState.add(SearchStateLoading());
 
-          _trackRepository.searchAudio(query: event.query, limit: 10).then((tracks) {
-            searchState.add(SearchStateSuccess(tracks: tracks));
-          }).catchError((error) {
-            log.e(error);
-            searchState.add(SearchStateError(error: error.toString()));
-          });
-          break;
-        default:
-          log.e("not implemented yet");
-          break;
-      }
+      _searchRepository
+          .search(
+              query: event.query,
+              limit: 3,
+              type: event.types.map((type) => type.toString().split('.').last).join(','))
+          .then((response) {
+        searchState.add(SearchStateSuccess(response: response, query: event.query));
+      }).catchError((error) {
+        searchState.add(SearchStateError(error: error.toString()));
+      });
     }
   }
 }

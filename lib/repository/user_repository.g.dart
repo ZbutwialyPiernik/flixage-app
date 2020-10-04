@@ -9,7 +9,6 @@ part of 'user_repository.dart';
 class _UserRepository implements UserRepository {
   _UserRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:3000';
   }
 
   final Dio _dio;
@@ -17,22 +16,18 @@ class _UserRepository implements UserRepository {
   String baseUrl;
 
   @override
-  getUserById({id}) async {
+  getById(id) async {
+    ArgumentError.checkNotNull(id, 'id');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/users/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = User.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -40,16 +35,27 @@ class _UserRepository implements UserRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/users/me',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/me',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = User.fromJson(_result.data);
-    return Future.value(value);
+    return value;
+  }
+
+  @override
+  getRecentlyListened({offset = 0, limit = 10}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'offset': offset, r'limit': limit};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request('/users/me/recent',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = PageResponse<Track>.fromJson(_result.data, Track.fromJson);
+    return value;
   }
 }

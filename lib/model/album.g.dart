@@ -11,10 +11,9 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
     json['id'] as String,
     json['name'] as String,
     json['thumbnailUrl'] as String,
-    (json['artists'] as List)
-        ?.map((e) =>
-            e == null ? null : Artist.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    json['artist'] == null
+        ? null
+        : Artist.fromJson(json['artist'] as Map<String, dynamic>),
   );
 }
 
@@ -22,5 +21,5 @@ Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'thumbnailUrl': instance.thumbnailUrl,
-      'artists': instance.artists,
+      'artist': instance.artist,
     };
