@@ -9,7 +9,6 @@ part of 'album_repository.dart';
 class _AlbumRepository implements AlbumRepository {
   _AlbumRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -28,7 +27,7 @@ class _AlbumRepository implements AlbumRepository {
             method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = Album.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -45,13 +44,13 @@ class _AlbumRepository implements AlbumRepository {
     var value = _result.data
         .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
         .toList();
-    return Future.value(value);
+    return value;
   }
 
   @override
   getRecentlyAdded({offset = 0, limit = 10}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{'offset': offset, 'limit': limit};
+    final queryParameters = <String, dynamic>{r'offset': offset, r'limit': limit};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request('/albums/recent',
@@ -60,6 +59,6 @@ class _AlbumRepository implements AlbumRepository {
             method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = PageResponse<Album>.fromJson(_result.data, Album.fromJson);
-    return Future.value(value);
+    return value;
   }
 }

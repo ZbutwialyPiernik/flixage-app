@@ -9,7 +9,6 @@ part of 'search_repository.dart';
 class _SearchRepository implements SearchRepository {
   _SearchRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -20,10 +19,10 @@ class _SearchRepository implements SearchRepository {
   search({query, offset = 0, limit = 10, type}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      'query': query,
-      'offset': offset,
-      'limit': limit,
-      'type': type
+      r'query': query,
+      r'offset': offset,
+      r'limit': limit,
+      r'type': type
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -36,6 +35,6 @@ class _SearchRepository implements SearchRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = SearchResponse.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 }

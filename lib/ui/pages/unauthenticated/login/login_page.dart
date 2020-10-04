@@ -67,6 +67,7 @@ class LoginForm extends StatelessWidget {
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(S.current.authenticationPage_username),
               SizedBox(

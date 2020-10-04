@@ -9,7 +9,6 @@ part of 'authentication_repository.dart';
 class _AuthenticationRepository implements AuthenticationRepository {
   _AuthenticationRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -33,7 +32,7 @@ class _AuthenticationRepository implements AuthenticationRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Authentication.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -53,7 +52,7 @@ class _AuthenticationRepository implements AuthenticationRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Authentication.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -71,7 +70,7 @@ class _AuthenticationRepository implements AuthenticationRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
   }
 
   @override
@@ -91,6 +90,6 @@ class _AuthenticationRepository implements AuthenticationRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Authentication.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 }

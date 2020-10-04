@@ -5,7 +5,7 @@ import 'package:retrofit/http.dart';
 
 part 'search_repository.g.dart';
 
-@RestApi(baseUrl: API_SERVER)
+@RestApi()
 abstract class SearchRepository {
   factory SearchRepository(Dio dio, {String baseUrl}) = _SearchRepository;
 

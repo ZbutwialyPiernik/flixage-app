@@ -1,5 +1,5 @@
 import 'package:flixage/model/queryable.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
 import 'package:flutter/material.dart';

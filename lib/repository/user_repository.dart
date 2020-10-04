@@ -8,7 +8,7 @@ import 'package:flixage/model/user.dart';
 
 part 'user_repository.g.dart';
 
-@RestApi(baseUrl: API_SERVER)
+@RestApi()
 abstract class UserRepository {
   factory UserRepository(Dio dio, {String baseUrl}) = _UserRepository;
 

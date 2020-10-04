@@ -72,8 +72,8 @@ class RegisterForm extends StatelessWidget {
           final state = snapshot.data;
 
           return Column(
-            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(S.current.authenticationPage_username),
               SizedBox(

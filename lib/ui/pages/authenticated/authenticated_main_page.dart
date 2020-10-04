@@ -6,7 +6,7 @@ import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';
 import 'package:flixage/ui/pages/authenticated/home/home_page.dart';
 import 'package:flixage/ui/pages/authenticated/library/library_page.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/pick_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
@@ -54,7 +54,11 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
     ArtistContextMenu.route: (_) => ArtistContextMenu()
   };
 
-  final initialRoutes = {0: HomePage.route, 1: SearchPage.route, 2: LibraryPage.route};
+  final initialRoutes = [
+    HomePage.route,
+    SearchPage.route,
+    LibraryPage.route,
+  ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final log = Logger();
 
@@ -63,9 +67,9 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
 
   @override
   void initState() {
+    super.initState();
     _showBottomBar = StreamController();
     _currentIndex = 0;
-    super.initState();
   }
 
   @override
@@ -76,14 +80,14 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
 
   @override
   void didPop(Route route, Route previousRoute) {
-    _showBottomBar.add(_determineBottomBarVisibility(previousRoute.settings));
     super.didPop(route, previousRoute);
+    _showBottomBar.add(_determineBottomBarVisibility(previousRoute.settings));
   }
 
   @override
   void didPush(Route route, Route previousRoute) {
-    _showBottomBar.add(_determineBottomBarVisibility(route.settings));
     super.didPush(route, previousRoute);
+    _showBottomBar.add(_determineBottomBarVisibility(route.settings));
   }
 
   @override
@@ -107,15 +111,9 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
 
                 return PageRouteBuilder(
                   pageBuilder: (c, a1, a2) => routeBuilder(context),
-                  transitionsBuilder: (c, anim, a2, child) =>
-                      FadeTransition(opacity: anim, child: child),
-                  transitionDuration: Duration(milliseconds: 200),
                   settings: settings,
                   opaque: _determineOpaque(settings),
-                ); // MaterialPageRoute(
-                //settings: settings,
-                //builder: builder,
-                //);
+                );
               },
             ),
           ),
@@ -142,15 +140,15 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
                       items: [
                         BottomNavigationBarItem(
                           icon: Icon(Icons.home),
-                          title: Text(S.current.buttomAppBar_home),
+                          label: S.current.buttomAppBar_home,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.search),
-                          title: Text(S.current.buttomAppBar_search),
+                          label: S.current.buttomAppBar_search,
                         ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.library_music),
-                          title: Text(S.current.bottomAppBar_library),
+                          label: S.current.bottomAppBar_library,
                         )
                       ],
                     ),
@@ -158,7 +156,6 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
                 )
               : SizedBox(
                   height: 0,
-                  width: 0,
                 ),
         ),
       ),

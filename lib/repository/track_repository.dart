@@ -7,7 +7,7 @@ import 'package:flixage/util/constants.dart';
 
 part 'track_repository.g.dart';
 
-@RestApi(baseUrl: API_SERVER)
+@RestApi()
 abstract class TrackRepository {
   factory TrackRepository(Dio dio, {String baseUrl}) = _TrackRepository;
 

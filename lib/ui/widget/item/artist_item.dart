@@ -1,7 +1,7 @@
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
 import 'package:flutter/cupertino.dart';

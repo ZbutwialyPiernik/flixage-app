@@ -3,7 +3,7 @@ import 'package:flixage/model/track.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/audio_player_slider.dart';
 import 'package:flixage/ui/pages/authenticated/audio_player/subcomponent/audio_player_state_button.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

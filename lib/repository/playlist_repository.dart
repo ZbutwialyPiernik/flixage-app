@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
-import 'package:flixage/util/constants.dart';
 import 'package:retrofit/http.dart';
 
 part 'playlist_repository.g.dart';
 
-@RestApi(baseUrl: API_SERVER)
+@RestApi()
 abstract class PlaylistRepository {
   factory PlaylistRepository(Dio dio, {String baseUrl}) = _PlaylistRepository;
 
@@ -38,7 +37,6 @@ abstract class PlaylistRepository {
   Future<void> removeTrack(@Path("id") String id, @Body() Map<String, dynamic> tracks);
 
   // User oriented
-
   @GET("/users/{userId}/playlists")
   Future<List<Playlist>> getUserPlaylists(@Path("userId") String userId);
 

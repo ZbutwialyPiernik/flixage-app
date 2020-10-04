@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flixage/bloc/page/user/user_bloc.dart';
 import 'package:flixage/model/user.dart';
 import 'package:flixage/repository/playlist_repository.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';

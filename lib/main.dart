@@ -4,7 +4,9 @@ import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/authentication_root.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
+import 'package:flixage/util/constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:logger/logger.dart';
 
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,8 @@ import 'package:flixage/ui/config/custom_scroll_behaviour.dart';
 
 import 'bloc/token_store.dart';
 
+final Logger logger = Logger();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,9 +33,12 @@ void main() {
   final secureStorage = FlutterSecureStorage();
   final tokenStore = TokenStore(secureStorage);
 
-  dio.options.connectTimeout = 2 * 2000;
-  dio.options.receiveTimeout = 2 * 1000;
-  dio.options.sendTimeout = 2 * 1000;
+  logger.i("Base url is: $API_SERVER");
+
+  dio.options.baseUrl = API_SERVER;
+  dio.options.connectTimeout = 10 * 2000;
+  dio.options.receiveTimeout = 10 * 1000;
+  dio.options.sendTimeout = 10 * 1000;
 
   runApp(Main(
     dio: dio,
@@ -56,7 +63,7 @@ class Main extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return MultiProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(
@@ -79,7 +86,6 @@ class Main extends StatelessWidget {
         Provider<TokenStore>.value(value: tokenStore),
         Provider<Dio>.value(value: dio),
       ],
-      //lazy: false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [

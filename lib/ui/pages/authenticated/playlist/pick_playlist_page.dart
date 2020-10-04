@@ -2,7 +2,7 @@ import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';

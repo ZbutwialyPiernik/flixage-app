@@ -6,7 +6,7 @@ import 'package:flixage/model/authentication.dart';
 
 part 'authentication_repository.g.dart';
 
-@RestApi(baseUrl: API_SERVER)
+@RestApi()
 abstract class AuthenticationRepository {
   factory AuthenticationRepository(Dio dio, {String baseUrl}) = _AuthenticationRepository;
 

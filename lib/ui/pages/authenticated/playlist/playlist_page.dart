@@ -7,7 +7,7 @@ import 'package:flixage/bloc/page/playlist/playlist_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';

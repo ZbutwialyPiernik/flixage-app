@@ -8,7 +8,7 @@ import 'package:flixage/model/album.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/artist_repository.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/album_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';

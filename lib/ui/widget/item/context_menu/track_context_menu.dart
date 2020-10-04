@@ -3,7 +3,7 @@ import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/pick_playlist_page.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';

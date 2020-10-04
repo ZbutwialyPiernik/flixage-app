@@ -9,7 +9,6 @@ part of 'playlist_repository.dart';
 class _PlaylistRepository implements PlaylistRepository {
   _PlaylistRepository(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://10.0.2.2:8080/api';
   }
 
   final Dio _dio;
@@ -32,7 +31,7 @@ class _PlaylistRepository implements PlaylistRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Playlist.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -52,7 +51,7 @@ class _PlaylistRepository implements PlaylistRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Playlist.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -73,7 +72,7 @@ class _PlaylistRepository implements PlaylistRepository {
             baseUrl: baseUrl),
         data: _data);
     final value = Playlist.fromJson(_result.data);
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -92,12 +91,12 @@ class _PlaylistRepository implements PlaylistRepository {
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
-            headers: <String, dynamic>{'Content-Type': contentType},
+            headers: <String, dynamic>{r'Content-Type': contentType},
             extra: _extra,
             contentType: contentType,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
   }
 
   @override
@@ -118,7 +117,7 @@ class _PlaylistRepository implements PlaylistRepository {
     var value = _result.data
         .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
         .toList();
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -135,7 +134,7 @@ class _PlaylistRepository implements PlaylistRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
   }
 
   @override
@@ -154,7 +153,7 @@ class _PlaylistRepository implements PlaylistRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
   }
 
   @override
@@ -173,7 +172,7 @@ class _PlaylistRepository implements PlaylistRepository {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    return Future.value(null);
+    return null;
   }
 
   @override
@@ -194,7 +193,7 @@ class _PlaylistRepository implements PlaylistRepository {
     var value = _result.data
         .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
         .toList();
-    return Future.value(value);
+    return value;
   }
 
   @override
@@ -214,6 +213,6 @@ class _PlaylistRepository implements PlaylistRepository {
     var value = _result.data
         .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
         .toList();
-    return Future.value(value);
+    return value;
   }
 }

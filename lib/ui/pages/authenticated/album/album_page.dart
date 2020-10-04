@@ -6,7 +6,7 @@ import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/album.dart';
 import 'package:flixage/repository/album_repository.dart';
-import 'package:flixage/ui/pages/authenticated/arguments.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/item/context_menu/album_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
