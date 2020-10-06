@@ -4,6 +4,7 @@
 
 ## Building and running
 
+<<<<<<< HEAD
 After pulling project for first time you won't be able to compile, you need to generate files for first time using
 
 ```
@@ -11,6 +12,8 @@ flutter pub get
 flutter pub run build_runner build
 ```
 
+=======
+>>>>>>> origin/master
 If you're using enumlator and you host api server on same machine, then everything is ready at start.
 
 ```
