@@ -1,0 +1,13 @@
+import 'package:flixage/model/artist.dart';
+import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';
+import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
+import 'package:flutter/material.dart';
+
+class ArtistContextMenu extends ContextMenu<Artist> {
+  static const String route = "contextMenu/artist";
+
+  @override
+  List<ContextMenuItem<Artist>> createActions(BuildContext context, Artist item) {
+    return [];
+  }
+}
