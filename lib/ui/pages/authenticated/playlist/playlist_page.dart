@@ -77,6 +77,7 @@ class PlaylistPage extends StatelessWidget {
                     )
                   : SingleChildScrollView(
                       controller: PrimaryScrollController.of(context),
+                      padding: EdgeInsets.only(left: 8, top: 48, bottom: 16, right: 8),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.center,

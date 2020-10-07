@@ -1,4 +1,6 @@
-import 'package:flixage/ui/pages/authenticated/library/playlist_tab.dart';
+import 'package:flixage/ui/pages/authenticated/library/playlist_list.dart';
+import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -27,7 +29,12 @@ class LibraryPage extends StatelessWidget {
           Expanded(
             child: TabBarView(
               children: [
-                PlaylistTab(),
+                PlaylistList(
+                  onItemTap: (playlist) => Navigator.of(context).pushNamed(
+                    PlaylistPage.route,
+                    arguments: Arguments(extra: playlist),
+                  ),
+                ),
                 //Text("XDD"),
                 //Text("XXXX"),
               ],

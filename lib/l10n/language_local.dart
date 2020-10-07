@@ -195,8 +195,12 @@ final _isoLangs = {
 
 String getDisplayLanguage(key) {
   if (_isoLangs.containsKey(key)) {
-    return _isoLangs[key]['nativeName'];
+    return _capitalize(_isoLangs[key]['nativeName']);
   } else {
     throw Exception("Incorrect language key");
   }
+}
+
+String _capitalize(String s) {
+  return "${s[0].toUpperCase()}${s.substring(1)}";
 }

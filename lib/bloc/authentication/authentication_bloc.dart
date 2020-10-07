@@ -190,7 +190,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
 
       _userRepository.getCurrentUser().then((user) async {
         log.d('Downloaded user info, logged in user: ${user.name}');
-        await Future.delayed(Duration(seconds: 6));
         _authenticationState.add(AuthenticationAuthenticated(user));
       }).catchError((error) {
         log.e('Problem during downloading of user info');

@@ -136,67 +136,70 @@ class AudioPlayerPage extends StatelessWidget {
                       );
                     },
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      StreamBuilder<PlayMode>(
-                        stream: bloc.playMode,
-                        builder: (context, snapshot) {
-                          return IconButton(
-                            iconSize: 24,
-                            icon: Icon(Icons.shuffle),
-                            color: snapshot.data == PlayMode.random
-                                ? Theme.of(context).accentColor
-                                : null,
-                            onPressed: () => bloc.dispatch(new TogglePlayMode()),
-                          );
-                        },
-                      ),
-                      IconButton(
-                          padding: EdgeInsets.all(0),
-                          iconSize: 32,
-                          icon: Icon(Icons.skip_previous),
-                          onPressed: () => bloc.dispatch(PlayPreviousEvent())),
-                      AudioPlayerStateButton(
-                          bloc: bloc,
-                          iconSize: 64,
-                          playIcon: Icons.play_circle_filled,
-                          pauseIcon: Icons.pause_circle_filled),
-                      IconButton(
-                          padding: EdgeInsets.all(0),
-                          iconSize: 32,
-                          icon: Icon(Icons.skip_next),
-                          onPressed: () => bloc.dispatch(PlayNextEvent())),
-                      StreamBuilder<LoopMode>(
-                        stream: bloc.loopMode,
-                        builder: (context, snapshot) {
-                          Icon icon;
-                          switch (snapshot.data) {
-                            case LoopMode.single:
-                              icon = Icon(Icons.repeat_one,
-                                  color: Theme.of(context).accentColor);
-                              break;
-                            case LoopMode.playlist:
-                              icon = Icon(Icons.repeat,
-                                  color: Theme.of(context).accentColor);
-                              break;
-                            default:
-                              icon = Icon(Icons.repeat);
-                              break;
-                          }
-
-                          return IconButton(
-                            iconSize: 24,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        StreamBuilder<PlayMode>(
+                          stream: bloc.playMode,
+                          builder: (context, snapshot) {
+                            return IconButton(
+                              iconSize: 24,
+                              icon: Icon(Icons.shuffle),
+                              color: snapshot.data == PlayMode.random
+                                  ? Theme.of(context).accentColor
+                                  : null,
+                              onPressed: () => bloc.dispatch(new TogglePlayMode()),
+                            );
+                          },
+                        ),
+                        IconButton(
                             padding: EdgeInsets.all(0),
-                            icon: icon,
-                            onPressed: () => bloc.dispatch(
-                              new TogglePlaybackMode(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                            iconSize: 32,
+                            icon: Icon(Icons.skip_previous),
+                            onPressed: () => bloc.dispatch(PlayPreviousEvent())),
+                        AudioPlayerStateButton(
+                            bloc: bloc,
+                            iconSize: 64,
+                            playIcon: Icons.play_circle_filled,
+                            pauseIcon: Icons.pause_circle_filled),
+                        IconButton(
+                            padding: EdgeInsets.all(0),
+                            iconSize: 32,
+                            icon: Icon(Icons.skip_next),
+                            onPressed: () => bloc.dispatch(PlayNextEvent())),
+                        StreamBuilder<LoopMode>(
+                          stream: bloc.loopMode,
+                          builder: (context, snapshot) {
+                            Icon icon;
+                            switch (snapshot.data) {
+                              case LoopMode.single:
+                                icon = Icon(Icons.repeat_one,
+                                    color: Theme.of(context).accentColor);
+                                break;
+                              case LoopMode.playlist:
+                                icon = Icon(Icons.repeat,
+                                    color: Theme.of(context).accentColor);
+                                break;
+                              default:
+                                icon = Icon(Icons.repeat);
+                                break;
+                            }
+
+                            return IconButton(
+                              iconSize: 24,
+                              padding: EdgeInsets.all(0),
+                              icon: icon,
+                              onPressed: () => bloc.dispatch(
+                                new TogglePlaybackMode(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

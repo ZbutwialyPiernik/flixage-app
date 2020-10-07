@@ -24,6 +24,9 @@ dependencies:
   equatable: ^1.1.1
   # Animations
   animated_text_kit: ^2.2.0
+  # Widgets
+  settings_ui: ^0.4.0
+  adaptive_dialog: ^0.8.0+1
   # Images
   cached_network_image: ^2.2.0+1
   image_picker: ^0.6.6+1

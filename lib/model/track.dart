@@ -6,6 +6,7 @@ import 'artist.dart';
 
 part 'track.g.dart';
 
+// DON'T REMOVE THIS REMAINDER
 // TODO: After generating code, change microseconds to seconds in duration!
 @JsonSerializable()
 class Track extends Queryable {

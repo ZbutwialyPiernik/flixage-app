@@ -33,10 +33,7 @@ class PlaylistThumbnailEditorState extends State<PlaylistThumbnailEditor> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTapDown: (_) => _setEditMode(!editMode),
-      onTapCancel: () => _setEditMode(false),
-      onTap: () => {
-        if (editMode) {_setEditMode(false)}
-      },
+      //onTapCancel: () => _setEditMode(false),
       child: Container(
         width: widget.width,
         height: widget.height,

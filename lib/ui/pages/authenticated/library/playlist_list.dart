@@ -12,7 +12,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PlaylistTab extends StatelessWidget {
+class PlaylistList extends StatelessWidget {
+  final Function(Playlist) onItemTap;
+
+  const PlaylistList({Key key, this.onItemTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<LibraryBloc>(context);
@@ -64,8 +68,7 @@ class PlaylistTab extends StatelessWidget {
 
     return PlaylistItem(
       playlist: playlists[index - 1],
-      onTap: () => Navigator.of(context)
-          .pushNamed(PlaylistPage.route, arguments: Arguments(extra: playlists[index])),
+      onTap: () => onItemTap(playlists[index - 1]),
     );
   }
 

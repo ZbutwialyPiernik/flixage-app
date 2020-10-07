@@ -54,11 +54,12 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
     ArtistContextMenu.route: (_) => ArtistContextMenu()
   };
 
-  final initialRoutes = [
+  final bottomBarRoutes = [
     HomePage.route,
     SearchPage.route,
     LibraryPage.route,
   ];
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final log = Logger();
 
@@ -101,7 +102,7 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
             onWillPop: () async => !await navigator.maybePop(),
             child: Navigator(
               observers: [this],
-              initialRoute: initialRoutes[0],
+              initialRoute: bottomBarRoutes[0],
               onGenerateRoute: (settings) {
                 final routeBuilder = routes[settings.name];
 
@@ -113,7 +114,7 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
                   pageBuilder: (c, a1, a2) => routeBuilder(context),
                   transitionsBuilder: (c, anim, a2, child) =>
                       FadeTransition(opacity: anim, child: child),
-                  transitionDuration: Duration(milliseconds: 200),
+                  transitionDuration: Duration(milliseconds: 400),
                   settings: settings,
                   opaque: _determineOpaque(settings),
                 );
@@ -138,7 +139,7 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
                       onTap: (index) => setState(() {
                         _currentIndex = index;
                         navigator.pushNamedAndRemoveUntil(
-                            initialRoutes[_currentIndex], (route) => false);
+                            bottomBarRoutes[_currentIndex], (route) => false);
                       }),
                       items: [
                         BottomNavigationBarItem(

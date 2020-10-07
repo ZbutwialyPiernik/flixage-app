@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flixage/bloc/language/language_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
-import 'package:flixage/ui/authentication_root.dart';
+import 'package:flixage/ui/pages/authentication_root.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
 import 'package:flixage/util/constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -33,7 +33,7 @@ void main() {
   final secureStorage = FlutterSecureStorage();
   final tokenStore = TokenStore(secureStorage);
 
-  logger.i("Base url is: $API_SERVER");
+  logger.d("Base url is: $API_SERVER");
 
   dio.options.baseUrl = API_SERVER;
   dio.options.connectTimeout = 7 * 1000;
