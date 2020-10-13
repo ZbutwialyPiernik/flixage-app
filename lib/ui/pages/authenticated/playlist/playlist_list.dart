@@ -4,7 +4,6 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
-import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
 import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
@@ -13,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistList extends StatelessWidget {
-  final Function(Playlist) onItemTap;
+  final Function(Playlist playlist) onItemTap;
 
   const PlaylistList({Key key, this.onItemTap}) : super(key: key);
 

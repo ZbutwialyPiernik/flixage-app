@@ -21,8 +21,7 @@ abstract class PlaylistRepository {
   Future<Playlist> update(@Path("id") String id, @Body() Playlist playlist);
 
   @POST("/playlists/{id}/thumbnail")
-  Future<void> uploadThumbnail(@Path("id") String id, @Part() File file,
-      @Header("Content-Type") String contentType);
+  Future<void> uploadThumbnail(@Path("id") String id, @Part() File file);
 
   @GET("/playlists/{id}/tracks")
   Future<List<Track>> getTracksFromPlaylist(@Path("id") String id);

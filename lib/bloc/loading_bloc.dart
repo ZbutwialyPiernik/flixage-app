@@ -1,8 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class LoadingBloc<T extends Equatable, D extends Equatable> extends Bloc<T> {
+abstract class LoadingBloc<T, D> extends Bloc<T> {
   final BehaviorSubject<D> _subject = BehaviorSubject();
 
   Stream<D> get stream => _subject.stream;
@@ -13,7 +12,9 @@ abstract class LoadingBloc<T extends Equatable, D extends Equatable> extends Blo
 
   @override
   void onEvent(T event) {
-    load(event).then((data) => _subject.add(data));
+    load(event)
+        .then((data) => _subject.add(data))
+        .catchError((e) => _subject.addError(e));
   }
 
   @override

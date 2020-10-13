@@ -25,11 +25,6 @@ class LoggedIn extends AuthenticationEvent {
 
   @override
   List<Object> get props => [authentication];
-
-  @override
-  String toString() => """LoggedIn 
-  accessToken: ${authentication.accessToken}
-  refreshToken: ${authentication.refreshToken}""";
 }
 
 class Logout extends AuthenticationEvent {}

@@ -1,7 +1,7 @@
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
-import 'package:flixage/ui/pages/authenticated/library/playlist_list.dart';
+import 'package:flixage/ui/pages/authenticated/playlist/playlist_list.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

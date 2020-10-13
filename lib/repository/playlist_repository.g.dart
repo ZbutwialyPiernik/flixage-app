@@ -76,10 +76,9 @@ class _PlaylistRepository implements PlaylistRepository {
   }
 
   @override
-  uploadThumbnail(id, file, contentType) async {
+  uploadThumbnail(id, file) async {
     ArgumentError.checkNotNull(id, 'id');
     ArgumentError.checkNotNull(file, 'file');
-    ArgumentError.checkNotNull(contentType, 'contentType');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = FormData();
@@ -91,9 +90,8 @@ class _PlaylistRepository implements PlaylistRepository {
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
-            headers: <String, dynamic>{r'Content-Type': contentType},
+            headers: <String, dynamic>{},
             extra: _extra,
-            contentType: contentType,
             baseUrl: baseUrl),
         data: _data);
     return null;

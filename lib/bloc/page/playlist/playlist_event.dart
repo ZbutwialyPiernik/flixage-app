@@ -8,21 +8,5 @@ abstract class PlaylistEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadTracks extends PlaylistEvent {
-  final Playlist playlist;
 
-  LoadTracks(this.playlist);
 
-  @override
-  List<Object> get props => [playlist];
-}
-
-class UploadThumbnail extends PlaylistEvent {
-  final File image;
-  final Playlist playlist;
-
-  UploadThumbnail({this.image, this.playlist});
-
-  @override
-  List<Object> get props => [image, playlist];
-}

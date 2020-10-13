@@ -34,8 +34,8 @@ class LibraryBloc extends Bloc<LibraryEvent> {
         notificationBloc.dispatch(
             SimpleNotification.info(content: S.current.playlistCreated(playlist.name)));
       }).catchError((e) {
-        notificationBloc
-            .dispatch(SimpleNotification.error(content: S.current.playlistCreateError));
+        notificationBloc.dispatch(
+            SimpleNotification.error(content: S.current.playlistCreateError(event.name)));
       });
     } else if (event is UpdatePlaylist) {
       playlistRepository.update(event.playlist.id, event.playlist).then((playlist) {
@@ -47,7 +47,7 @@ class LibraryBloc extends Bloc<LibraryEvent> {
             SimpleNotification.info(content: S.current.playlistUpdated(playlist.name)));
       }).catchError((e) {
         notificationBloc
-            .dispatch(SimpleNotification.error(content: S.current.playlistUpdateError));
+            .dispatch(SimpleNotification.error(content: S.current.playlistUpdateError(event.playlist.name)));
       });
     } else if (event is DeletePlaylist) {
       playlistRepository.delete(event.playlist.id).then((_) {

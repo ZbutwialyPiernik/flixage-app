@@ -2,11 +2,11 @@ import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/page/playlist/playlist_bloc.dart';
-import 'package:flixage/bloc/page/playlist/playlist_event.dart';
-import 'package:flixage/bloc/page/playlist/playlist_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
+import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/playlist_repository.dart';
+import 'package:flixage/ui/pages/authenticated/playlist/playlist_thumbnail.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
@@ -19,6 +19,8 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistPage extends StatelessWidget {
+  final scrollController = ScrollController();
+
   static const route = '/playlist';
 
   @override
@@ -28,82 +30,86 @@ class PlaylistPage extends StatelessWidget {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    final playlistBloc = PlaylistBloc(
-        playlistRepository: PlaylistRepository(Provider.of<Dio>(context)),
-        notificationBloc: Provider.of<NotificationBloc>(context));
+    final playlistBloc =
+        PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context)));
+
+    final notificationBloc = Provider.of<NotificationBloc>(context);
 
     return StatefulWrapper(
-      onInit: () => playlistBloc.dispatch(LoadTracks(playlist)),
+      onInit: () => playlistBloc.dispatch(LoadPlaylist(playlist)),
       onDispose: () => playlistBloc.dispose(),
-      child: StreamBuilder<PlaylistLoadingState>(
-        stream: playlistBloc.trackStream,
+      child: StreamBuilder<List<Track>>(
+        stream: playlistBloc.stream,
         builder: (context, snapshot) {
-          final state = snapshot.data;
+          final tracks = snapshot.data;
 
-          if (state is PlaylistLoadingSuccess)
-            return NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return <Widget>[
-                  QueryableAppBar(
-                    queryable: playlist,
-                    secondaryText: S.current.playlistPage_author(playlist.owner.name),
-                    contextMenuRoute: PlaylistContextMenu.route,
-                    showRandomButton: true,
-                    onRandomButtonTap: () => audioPlayerBloc.dispatch(
-                      PlayPlaylist(
-                          playlist: playlist,
-                          playMode: PlayMode.random,
-                          tracks: state.tracks),
-                    ),
-                  ),
-                ];
-              },
-              body: state.tracks.isEmpty
-                  ? Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              S.current.playlistPage_emptyPlaylist,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .copyWith(fontSize: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : SingleChildScrollView(
-                      controller: PrimaryScrollController.of(context),
-                      padding: EdgeInsets.only(left: 8, top: 48, bottom: 16, right: 8),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ListView.separated(
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => SizedBox(height: 2),
-                            itemCount: state.tracks.length,
-                            itemBuilder: (context, index) => GestureDetector(
-                              child: TrackItem(track: state.tracks[index]),
-                              onTap: () => audioPlayerBloc.dispatch(PlayPlaylist(
-                                playlist: playlist,
-                                tracks: state.tracks,
-                                startIndex: index,
-                              )),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+          if (!snapshot.hasData) {
+            return Expanded(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
+          }
 
-          return Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+          Widget body;
+
+          if (snapshot.hasError) {
+            notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
+
+            body = Container();
+          }
+
+          if (tracks.isEmpty) {
+            body = Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      S.current.playlistPage_emptyPlaylist,
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            body = ListView.separated(
+              shrinkWrap: true,
+              controller: scrollController,
+              padding: EdgeInsets.only(left: 8, top: 24, bottom: 8),
+              separatorBuilder: (context, index) => SizedBox(height: 2),
+              itemCount: tracks.length,
+              itemBuilder: (context, index) => GestureDetector(
+                child: TrackItem(track: tracks[index]),
+                onTap: () => audioPlayerBloc.dispatch(PlayPlaylist(
+                  playlist: playlist,
+                  tracks: tracks,
+                  startIndex: index,
+                )),
+              ),
+            );
+          }
+
+          return NestedScrollView(
+            controller: scrollController,
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return <Widget>[
+                QueryableAppBar(
+                  queryable: playlist,
+                  secondaryText: S.current.playlistPage_author(playlist.owner.name),
+                  contextMenuRoute: PlaylistContextMenu.route,
+                  showRandomButton: true,
+                  onRandomButtonTap: () => audioPlayerBloc.dispatch(
+                    PlayPlaylist(
+                        playlist: playlist, playMode: PlayMode.random, tracks: tracks),
+                  ),
+                  imageBuilder: (url, size) =>
+                      PlaylistThumbnail(playlist: playlist, size: size),
+                ),
+              ];
+            },
+            body: body,
           );
         },
       ),

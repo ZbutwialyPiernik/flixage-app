@@ -1,8 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
-abstract class Bloc<E extends Equatable> {
+abstract class Bloc<E> {
   static final Logger logger = Logger();
 
   void dispatch(E event) {

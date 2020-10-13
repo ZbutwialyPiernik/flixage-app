@@ -6,7 +6,7 @@
   "buttomAppBar_search": "Search",
   "bottomAppBar_library": "Library",
   "authenticationPage_login": "Login",
-  "authenticationPage_register": "Register",
+  "authenticationPage_register": "Don't have an account? Register now",
   "authenticationPage_username": "Username",
   "authenticationPage_password": "Password",
   "authenticationPage_tooShort": "Too short",
@@ -71,5 +71,7 @@
   "homePage_latestAlbums": "Latest albums",
   "homePage_latestArtists": "Latest artists",
   "homePage_latestSingles": "Latest singles",
-  "homePage_recentlyPlayed": "Recently played"
+  "homePage_recentlyPlayed": "Recently played",
+  "loginPage_serversUnavailable": "Couldn't connect to server",
+  "loginPage_authenticationServiceUnvaiable": "Authentication service unavailable"
 }

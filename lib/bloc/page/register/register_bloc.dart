@@ -13,10 +13,8 @@ class RegisterBloc extends FormBloc {
 
   final AuthenticationBloc _authenticationBloc;
   final AuthenticationRepository _authenticationRepository;
-  final NotificationBloc notificationBloc;
 
-  RegisterBloc(
-      this._authenticationBloc, this._authenticationRepository, this.notificationBloc);
+  RegisterBloc(this._authenticationBloc, this._authenticationRepository);
 
   @override
   Future<FormBlocState> onValid(SubmitForm event) async {
@@ -42,25 +40,21 @@ class RegisterBloc extends FormBloc {
         if (e.request != null) {
           switch (e.response?.statusCode) {
             case 409:
-              notificationBloc.dispatch(SimpleNotification.error(
-                  content: S.current.registerPage_usernameTaken));
+              return FormError(S.current.registerPage_usernameTaken);
               break;
             case 400:
               log.e(
                   "Register validator is not properly implemented, server should not throw 400");
-              notificationBloc
-                  .dispatch(SimpleNotification.error(content: S.current.unknownError));
+              return FormError(S.current.unknownError);
 
               break;
             default:
               log.e(e);
-              notificationBloc
-                  .dispatch(SimpleNotification.error(content: S.current.unknownError));
+              return FormError(S.current.unknownError);
           }
         } else {
           log.e(e);
-          notificationBloc
-              .dispatch(SimpleNotification.error(content: S.current.unknownError));
+          return FormError(S.current.unknownError);
         }
       }
 

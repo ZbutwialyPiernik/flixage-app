@@ -4,6 +4,7 @@ import 'package:flixage/bloc/page/login/login_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
+import 'package:flixage/ui/pages/unauthenticated/register/register_page.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,8 +32,8 @@ class LoginForm extends StatelessWidget {
     final notificationBloc = Provider.of<NotificationBloc>(context);
     final authenticationRepository = Provider.of<AuthenticationRepository>(context);
 
-    final LoginBloc _bloc = LoginBloc(Provider.of<AuthenticationBloc>(context),
-        authenticationRepository, notificationBloc);
+    final LoginBloc _bloc =
+        LoginBloc(Provider.of<AuthenticationBloc>(context), authenticationRepository);
 
     return StatefulWrapper(
       onInit: () {
@@ -65,6 +66,10 @@ class LoginForm extends StatelessWidget {
         builder: (context, snapshot) {
           final state = snapshot.data;
           final isFormDisabled = state is FormLoading || state is FormSubmitSuccess;
+
+          if (state is FormError) {
+            notificationBloc.dispatch(SimpleNotification.error(content: state.error));
+          }
 
           return Stack(
             children: [
@@ -106,26 +111,39 @@ class LoginForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 16,
+                    height: 32,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      RaisedButton(
-                        child: Text(S.current.authenticationPage_login.toUpperCase()),
-                        color: Theme.of(context).primaryColor,
-                        onPressed: isFormDisabled
-                            ? null
-                            : () => _bloc.dispatch(SubmitForm({
-                                  'username': _usernameController.value.text,
-                                  'password': _passwordController.value.text,
-                                })),
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                        shape: StadiumBorder(),
-                      ),
-                    ],
+                  Center(
+                    child: RaisedButton(
+                      child: Text(S.current.authenticationPage_login.toUpperCase()),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: isFormDisabled
+                          ? null
+                          : () => _bloc.dispatch(SubmitForm({
+                                'username': _usernameController.value.text,
+                                'password': _passwordController.value.text,
+                              })),
+                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                      shape: StadiumBorder(),
+                    ),
                   ),
                 ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: GestureDetector(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      S.current.authenticationPage_register,
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .copyWith(fontSize: 16, decoration: TextDecoration.underline),
+                    ),
+                  ),
+                  onTap: () => Navigator.of(context).pushNamed(RegisterPage.route),
+                ),
               ),
             ],
           );

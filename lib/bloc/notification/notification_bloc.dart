@@ -25,22 +25,34 @@ class SimpleNotification extends Equatable {
   final Color backgroundColor;
   final Color fontColor;
 
-  SimpleNotification._(
-      {this.content, this.duration, this.backgroundColor, this.fontColor});
+  SimpleNotification._({
+    this.content,
+    this.duration,
+    this.backgroundColor,
+    this.fontColor,
+  });
 
-  static SimpleNotification error({content, duration: const Duration(seconds: 3)}) =>
+  static SimpleNotification error({
+    String content,
+    Duration duration: const Duration(seconds: 3),
+  }) =>
       SimpleNotification._(
-          content: content,
-          duration: duration,
-          backgroundColor: Colors.red,
-          fontColor: Colors.white);
+        content: content,
+        duration: duration,
+        backgroundColor: Colors.red,
+        fontColor: Colors.white,
+      );
 
-  static SimpleNotification info({content, duration: const Duration(seconds: 3)}) =>
+  static SimpleNotification info({
+    String content,
+    Duration duration: const Duration(seconds: 3),
+  }) =>
       SimpleNotification._(
-          content: content,
-          duration: duration,
-          backgroundColor: Colors.blue,
-          fontColor: Colors.white);
+        content: content,
+        duration: duration,
+        backgroundColor: Colors.blue,
+        fontColor: Colors.white,
+      );
 
   @override
   List<Object> get props => [content, duration, backgroundColor, fontColor];

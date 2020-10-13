@@ -103,10 +103,10 @@ class S {
     );
   }
 
-  /// `Register`
+  /// `Don't have an account? Register now`
   String get authenticationPage_register {
     return Intl.message(
-      'Register',
+      'Don\'t have an account? Register now',
       name: 'authenticationPage_register',
       desc: '',
       args: [],
@@ -758,6 +758,26 @@ class S {
     return Intl.message(
       'Recently played',
       name: 'homePage_recentlyPlayed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't connect to server`
+  String get loginPage_serversUnavailable {
+    return Intl.message(
+      'Couldn\'t connect to server',
+      name: 'loginPage_serversUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authentication service unavailable`
+  String get loginPage_authenticationServiceUnvaiable {
+    return Intl.message(
+      'Authentication service unavailable',
+      name: 'loginPage_authenticationServiceUnvaiable',
       desc: '',
       args: [],
     );

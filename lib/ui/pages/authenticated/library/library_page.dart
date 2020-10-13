@@ -1,4 +1,6 @@
-import 'package:flixage/ui/pages/authenticated/library/playlist_list.dart';
+import 'package:flixage/ui/pages/authenticated/artist/artist_list.dart';
+import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
+import 'package:flixage/ui/pages/authenticated/playlist/playlist_list.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ class LibraryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 1,
+      length: 2,
       child: Column(
         children: [
           TabBar(
@@ -22,8 +24,8 @@ class LibraryPage extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             tabs: [
               Tab(text: 'Playlists'),
+              Tab(text: 'Artists'),
               //Tab(text: 'Albums'),
-              //Tab(text: 'Artists'),
             ],
           ),
           Expanded(
@@ -35,8 +37,12 @@ class LibraryPage extends StatelessWidget {
                     arguments: Arguments(extra: playlist),
                   ),
                 ),
-                //Text("XDD"),
-                //Text("XXXX"),
+                ArtistList(
+                  onItemTap: (artist) => Navigator.of(context).pushNamed(
+                    ArtistPage.route,
+                    arguments: Arguments(extra: artist),
+                  ),
+                )
               ],
             ),
           ),

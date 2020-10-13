@@ -4,18 +4,25 @@ import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
 import 'package:flutter/material.dart';
 
+typedef Widget ImageBuilder(String url, Size size);
+
+final ImageBuilder defaultBuilder = (String url, Size size) =>
+    CustomImage(imageUrl: url, width: size.width, height: size.height);
+
 class QueryableAppBar extends StatelessWidget {
   final Queryable queryable;
   final String secondaryText;
   final bool showRandomButton;
   final Function onRandomButtonTap;
   final String contextMenuRoute;
+  final ImageBuilder imageBuilder;
 
   const QueryableAppBar({
     Key key,
     @required this.queryable,
     @required this.secondaryText,
     @required this.contextMenuRoute,
+    this.imageBuilder,
     this.showRandomButton,
     this.onRandomButtonTap,
   })  : assert(showRandomButton != null ? onRandomButtonTap != null : true),
@@ -34,15 +41,11 @@ class QueryableAppBar extends StatelessWidget {
           secondaryText: secondaryText,
           showRandomButton: showRandomButton,
           onRandomButtonTap: onRandomButtonTap,
-          contextMenuRoute: contextMenuRoute),
+          contextMenuRoute: contextMenuRoute,
+          imageBuilder: imageBuilder ?? defaultBuilder),
     );
   }
 }
-
-//IconButton(
-//  icon: Icon(Icons.more_vert),
-//  onPressed: () => {},
-//)
 
 class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
   final Queryable queryable;
@@ -50,6 +53,7 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
   final String contextMenuRoute;
   final bool showRandomButton;
   final Function onRandomButtonTap;
+  final ImageBuilder imageBuilder;
 
   _QueryableAppBarDelegate({
     @required this.queryable,
@@ -57,13 +61,12 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
     @required this.showRandomButton,
     @required this.onRandomButtonTap,
     @required this.contextMenuRoute,
+    @required this.imageBuilder,
   });
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double scrollableSize = maxExtent - minExtent;
-
-    final isVisible = false;
 
     return Container(
       height: maxExtent,
@@ -100,8 +103,7 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
                         ((maxExtent - shrinkOffset) / maxExtent).clamp(0.8, 1).toDouble(),
                     child: Column(
                       children: [
-                        CustomImage(
-                            imageUrl: queryable.thumbnailUrl, width: 152, height: 152),
+                        imageBuilder(queryable.thumbnailUrl, Size.square(152)),
                         SizedBox(height: 16),
                         Text(
                           queryable.name,

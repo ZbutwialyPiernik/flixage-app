@@ -30,8 +30,8 @@ class RegisterForm extends StatelessWidget {
     final notificationBloc = Provider.of<NotificationBloc>(context);
     final authenticationRepository = Provider.of<AuthenticationRepository>(context);
 
-    final bloc = RegisterBloc(Provider.of<AuthenticationBloc>(context),
-        authenticationRepository, notificationBloc);
+    final bloc =
+        RegisterBloc(Provider.of<AuthenticationBloc>(context), authenticationRepository);
 
     return StatefulWrapper(
       onInit: () {
@@ -70,6 +70,10 @@ class RegisterForm extends StatelessWidget {
         stream: bloc.formState,
         builder: (context, snapshot) {
           final state = snapshot.data;
+
+          if (state is FormError) {
+            notificationBloc.dispatch(SimpleNotification.error(content: state.error));
+          }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,25 +133,22 @@ class RegisterForm extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text(S.current.authenticationPage_register.toUpperCase()),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: state is FormLoading
-                        ? null
-                        : () => bloc.dispatch(
-                              SubmitForm({
-                                'username': _usernameController.value.text,
-                                'password': _passwordController.value.text,
-                                'repeatPassword': _repeatPasswordController.value.text,
-                              }),
-                            ),
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    shape: StadiumBorder(),
-                  ),
-                ],
+              Center(
+                child: RaisedButton(
+                  child: Text(S.current.registerPage_register),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: state is FormLoading
+                      ? null
+                      : () => bloc.dispatch(
+                            SubmitForm({
+                              'username': _usernameController.value.text,
+                              'password': _passwordController.value.text,
+                              'repeatPassword': _repeatPasswordController.value.text,
+                            }),
+                          ),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                  shape: StadiumBorder(),
+                ),
               ),
             ],
           );

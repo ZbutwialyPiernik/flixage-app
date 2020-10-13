@@ -50,12 +50,29 @@ class _UserRepository implements UserRepository {
     final queryParameters = <String, dynamic>{r'offset': offset, r'limit': limit};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('/users/me/recent',
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/users/me/recentlyListened',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = PageResponse<Track>.fromJson(_result.data, Track.fromJson);
+    return value;
+  }
+
+  @override
+  getMostListened({offset = 0, limit = 10}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'offset': offset, r'limit': limit};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/users/me/mostListened',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    final value = PageResponse<Artist>.fromJson(_result.data, Artist.fromJson);
     return value;
   }
 }

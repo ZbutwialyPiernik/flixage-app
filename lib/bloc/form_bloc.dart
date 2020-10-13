@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/util/validation/validator.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,6 +20,12 @@ class FormValidationError extends FormBlocState {
   final Map<String, ValidationResult> errors;
 
   FormValidationError(this.errors);
+}
+
+class FormError extends FormBlocState {
+  final String error;
+
+  FormError(this.error);
 }
 
 class FormEvent extends Equatable {
@@ -81,7 +88,9 @@ abstract class FormBloc extends Bloc<FormEvent> {
       } else {
         _formSubject.add(FormLoading());
 
-        onValid(event).then((value) => _formSubject.add(value));
+        onValid(event)
+            .then((value) => _formSubject.add(value))
+            .catchError((e) => _formSubject.add(FormError(S.current.unknownError)));
       }
     }
   }

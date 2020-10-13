@@ -15,10 +15,8 @@ class LoginBloc extends FormBloc {
 
   final AuthenticationBloc _authenticationBloc;
   final AuthenticationRepository _authenticationRepository;
-  final NotificationBloc notificationBloc;
 
-  LoginBloc(
-      this._authenticationBloc, this._authenticationRepository, this.notificationBloc);
+  LoginBloc(this._authenticationBloc, this._authenticationRepository);
 
   @override
   Future<FormBlocState> onValid(SubmitForm event) async {
@@ -36,26 +34,21 @@ class LoginBloc extends FormBloc {
         if (e.request != null) {
           switch (e.response?.statusCode) {
             case 401:
-              notificationBloc.dispatch(SimpleNotification.error(
-                  content: S.current.loginPage_invalidCredentials));
-              break;
+              return FormError(S.current.loginPage_invalidCredentials);
             case 400:
               log.e(
                   "Login validator is not properly implemented, server should not throw 400");
-              break;
+              return FormError(S.current.unknownError);
+            case 503:
+              return FormError(S.current.loginPage_authenticationServiceUnvaiable);
             default:
               log.e(e);
-              notificationBloc
-                  .dispatch(SimpleNotification.error(content: S.current.unknownError));
+              return FormError(S.current.unknownError);
           }
-        } else {
-          log.e(e);
-          notificationBloc
-              .dispatch(SimpleNotification.error(content: S.current.unknownError));
         }
       }
 
-      return FormInitialized();
+      return FormError(S.current.unknownError);
     }
   }
 

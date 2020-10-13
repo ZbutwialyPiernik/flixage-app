@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/page_response.dart';
 import 'package:flixage/model/track.dart';
 import 'package:retrofit/retrofit.dart';
@@ -17,8 +18,14 @@ abstract class UserRepository {
   @GET("/users/me")
   Future<User> getCurrentUser();
 
-  @GET("/users/me/recent")
+  @GET("/users/me/recentlyListened")
   Future<PageResponse<Track>> getRecentlyListened({
+    @Query("offset") int offset = 0,
+    @Query("limit") int limit = 10,
+  });
+
+  @GET("/users/me/mostListened")
+  Future<PageResponse<Artist>> getMostListened({
     @Query("offset") int offset = 0,
     @Query("limit") int limit = 10,
   });
