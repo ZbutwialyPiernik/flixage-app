@@ -27,11 +27,11 @@ class TokenStore {
     _refreshToken = refreshToken;
   }
 
-  Future<String> getAccessToken() async {
-    return _accessToken ?? await _storage.read(key: ACCESS_TOKEN_KEY);
+  Future<String> getAccessToken() {
+    return Future.value(_accessToken) ?? _storage.read(key: ACCESS_TOKEN_KEY);
   }
 
-  Future<String> getRefreshToken() async {
-    return _refreshToken ?? await _storage.read(key: REFRESH_TOKEN_KEY);
+  Future<String> getRefreshToken() {
+    return Future.value(_refreshToken) ?? _storage.read(key: REFRESH_TOKEN_KEY);
   }
 }
