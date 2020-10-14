@@ -21,9 +21,7 @@ class TextChanged extends SearchEvent {
   List<Object> get props => [query];
 }
 
-abstract class SearchState extends Equatable {
-  SearchState();
-}
+abstract class SearchState extends Equatable {}
 
 class SearchStateEmpty extends SearchState {
   @override
