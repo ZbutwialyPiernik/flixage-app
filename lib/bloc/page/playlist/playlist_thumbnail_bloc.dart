@@ -7,7 +7,6 @@ import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
-//import 'package:mime_type/mime_type.dart' as mime;
 
 class UploadThumbnail extends Equatable {
   final File image;
@@ -36,7 +35,6 @@ class PlaylistThumbnailBloc extends LoadingBloc<UploadThumbnail, ThumbnailUpload
   @override
   Future<ThumbnailUploaded> load(UploadThumbnail event) async {
     final extension = p.extension(event.image.path);
-    //final mimeType = mime.mimeFromExtension(extension.replaceAll('.', ''));
 
     if (!supportedExtensions.contains(extension)) {
       return Future.error(S.current.playlistPage_unsupportedExtension);

@@ -1,7 +1,5 @@
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
-import 'package:flixage/bloc/language/language_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
-import 'package:flixage/l10n/language_local.dart';
 import 'package:flixage/ui/pages/authenticated/settings/language_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

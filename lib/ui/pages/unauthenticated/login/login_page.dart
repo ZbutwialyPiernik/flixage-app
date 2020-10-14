@@ -6,6 +6,7 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/ui/pages/unauthenticated/register/register_page.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,9 +52,11 @@ class LoginForm extends StatelessWidget {
           }));
         });
 
-        // TODO: remove harded login for faster testing
-        _usernameController.text = "admin";
-        _passwordController.text = "Passw0rd";
+        // Only in non-realise mode for faster logging as default admin user
+        if (!kReleaseMode) {
+          _usernameController.text = "admin";
+          _passwordController.text = "Passw0rd";
+        }
       },
       onDispose: () {
         _usernameController.dispose();

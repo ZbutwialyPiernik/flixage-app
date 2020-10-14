@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/form_bloc.dart';
-import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/util/validation/common_validators.dart';

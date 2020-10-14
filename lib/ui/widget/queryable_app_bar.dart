@@ -73,8 +73,6 @@ class _QueryableAppBarDelegate extends SliverPersistentHeaderDelegate {
       child: Stack(
         children: [
           _pinnedBackground(context, shrinkOffset, scrollableSize),
-          // Wrapping with scroll view to prevent pixel overflow
-          // TODO: find better way to omit this hack
           SingleChildScrollView(
             physics: NeverScrollableScrollPhysics(),
             child: Column(

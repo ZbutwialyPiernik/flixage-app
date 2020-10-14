@@ -1,15 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
-import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/page/playlist/playlist_event.dart';
-import 'package:flixage/bloc/page/playlist/playlist_state.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 
 class LoadPlaylist extends Equatable {
   final Playlist playlist;
