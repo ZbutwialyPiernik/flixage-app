@@ -48,17 +48,17 @@ class AuthenticationInterceptor extends Interceptor {
 
       var refreshToken = await tokenStore.getRefreshToken();
 
-      Completer completer = new Completer();
+      try {
+        final authentication =
+            await authenticationRepository.renewToken({"refreshToken": refreshToken});
 
-      authenticationRepository
-          .renewToken({"refreshToken": refreshToken}).then((authentication) async {
         await tokenStore.saveTokens(
             authentication.accessToken, authentication.refreshToken);
 
         dio.unlock();
 
         // When authentication is renewed we retry the reqeust
-        completer.complete(dio.request(
+        return await dio.request(
           error.request.path,
           cancelToken: error.request.cancelToken,
           data: error.request.data,
@@ -66,15 +66,12 @@ class AuthenticationInterceptor extends Interceptor {
           onSendProgress: error.request.onSendProgress,
           queryParameters: error.request.queryParameters,
           options: error.request,
-        ));
-      }).catchError((e) async {
+        );
+      } catch (e) {
         // After unsucessfull retry to logout we flush tokens and redirect to Login Page
         tokenStore.flushTokens().then((value) => authenticationBloc.dispatch(Logout()));
-
-        completer.completeError(error);
-      });
-
-      return await completer.future;
+        return error;
+      }
     } else {
       return error;
     }
