@@ -25,9 +25,10 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
 
   @override
   void dispose() {
-    super.dispose();
     if (widget.onDispose != null) {
       widget.onDispose();
     }
+
+    super.dispose();
   }
 }

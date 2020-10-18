@@ -46,7 +46,7 @@ class AuthenticationInterceptor extends Interceptor {
     if (error.response != null && error.response.statusCode == HttpStatus.unauthorized) {
       dio.lock();
 
-      var refreshToken = await tokenStore.getRefreshToken();
+      final refreshToken = await tokenStore.getRefreshToken();
 
       try {
         final authentication =
@@ -70,6 +70,7 @@ class AuthenticationInterceptor extends Interceptor {
       } catch (e) {
         // After unsucessfull retry to logout we flush tokens and redirect to Login Page
         tokenStore.flushTokens().then((value) => authenticationBloc.dispatch(Logout()));
+
         return error;
       }
     } else {

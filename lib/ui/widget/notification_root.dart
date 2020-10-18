@@ -44,6 +44,7 @@ class _NotificationRootState extends State<NotificationRoot> {
   @override
   void dispose() {
     subscription?.cancel();
+
     super.dispose();
   }
 }

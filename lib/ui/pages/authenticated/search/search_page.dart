@@ -200,6 +200,7 @@ class _SearchFieldState extends State<SearchField> with SingleTickerProviderStat
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
+
     super.dispose();
   }
 }

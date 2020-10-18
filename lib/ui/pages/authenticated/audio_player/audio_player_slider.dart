@@ -67,9 +67,10 @@ class _AudioPlayerSliderState extends State<AudioPlayerSlider>
 
   @override
   void dispose() {
-    super.dispose();
     playerStateListener.cancel();
     currentPositionListener.cancel();
     animationController.dispose();
+
+    super.dispose();
   }
 }
