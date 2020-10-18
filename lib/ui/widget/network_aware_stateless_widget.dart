@@ -1,5 +1,5 @@
 import 'package:flixage/bloc/networt_status_bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 typedef Widget NetworkBuilder(BuildContext context, NetworkStatus status);

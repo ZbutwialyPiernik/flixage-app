@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/language/language_bloc.dart';
+import 'package:flixage/bloc/networt_status_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/pages/authentication_root.dart';
@@ -21,31 +22,48 @@ import 'bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/ui/config/theme.dart';
 import 'package:flixage/ui/config/custom_scroll_behaviour.dart';
 
+import 'bloc/authentication/logging_interceptor.dart';
 import 'bloc/token_store.dart';
 
 final Logger logger = Logger();
 
+final int defaultConnectTimeout = const Duration(seconds: 2).inMilliseconds;
+final int defaultReceiveTimeout = const Duration(seconds: 5).inMilliseconds;
+final int defaultSendTimeout = const Duration(seconds: 5).inMilliseconds;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dio = Dio();
-  final authenticationRepository = AuthenticationRepository(dio);
+  logger.d("Base url is: $API_SERVER");
+
+  // Dio used for authenticated requests, if tokens expires, then this instance
+  // gets locked and unauthenticated dio sends request to refresh token, then
+  // authenticated dio retries the original request.
+  final authenticatedDio = Dio();
+  final unauthenticatedDio = Dio();
+
+  _setupDio("Authenticated", authenticatedDio);
+  _setupDio("Unauthenticated", unauthenticatedDio);
+
+  final authenticationRepository = AuthenticationRepository(unauthenticatedDio);
   final secureStorage = FlutterSecureStorage();
   final tokenStore = TokenStore(secureStorage);
 
-  logger.d("Base url is: $API_SERVER");
-
-  dio.options.baseUrl = API_SERVER;
-  dio.options.connectTimeout = 7 * 1000;
-  dio.options.receiveTimeout = 10 * 1000;
-  dio.options.sendTimeout = 10 * 1000;
-
   runApp(Main(
-    dio: dio,
+    dio: authenticatedDio,
     tokenStore: tokenStore,
     authenticationRepository: authenticationRepository,
     secureStorage: secureStorage,
   ));
+}
+
+_setupDio(String name, Dio dio) {
+  dio.options.baseUrl = API_SERVER;
+  dio.options.connectTimeout = defaultConnectTimeout;
+  dio.options.receiveTimeout = defaultReceiveTimeout;
+  dio.options.sendTimeout = defaultSendTimeout;
+
+  dio.interceptors.add(LoggingInterceptor(name));
 }
 
 class Main extends StatelessWidget {
@@ -69,8 +87,8 @@ class Main extends StatelessWidget {
         BlocProvider<AuthenticationBloc>(
           create: (_) => AuthenticationBloc(
             authenticationRepository,
-            UserRepository(dio),
             dio,
+            UserRepository(dio),
             tokenStore,
           )..dispatch(AppStarted()),
           lazy: false,
@@ -85,6 +103,7 @@ class Main extends StatelessWidget {
         Provider<AuthenticationRepository>.value(value: authenticationRepository),
         Provider<TokenStore>.value(value: tokenStore),
         Provider<Dio>.value(value: dio),
+        Provider<NetworkStatusBloc>(create: (_) => NetworkStatusBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

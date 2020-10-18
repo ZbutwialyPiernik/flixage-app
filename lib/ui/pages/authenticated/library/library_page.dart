@@ -3,6 +3,7 @@ import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_list.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
+import 'package:flixage/ui/widget/default_network_aware_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -31,16 +32,20 @@ class LibraryPage extends StatelessWidget {
           Expanded(
             child: TabBarView(
               children: [
-                PlaylistList(
-                  onItemTap: (playlist) => Navigator.of(context).pushNamed(
-                    PlaylistPage.route,
-                    arguments: Arguments(extra: playlist),
+                DefaultNetworkAwarePage(
+                  child: PlaylistList(
+                    onItemTap: (playlist) => Navigator.of(context).pushNamed(
+                      PlaylistPage.route,
+                      arguments: Arguments(extra: playlist),
+                    ),
                   ),
                 ),
-                ArtistList(
-                  onItemTap: (artist) => Navigator.of(context).pushNamed(
-                    ArtistPage.route,
-                    arguments: Arguments(extra: artist),
+                DefaultNetworkAwarePage(
+                  child: ArtistList(
+                    onItemTap: (artist) => Navigator.of(context).pushNamed(
+                      ArtistPage.route,
+                      arguments: Arguments(extra: artist),
+                    ),
                   ),
                 )
               ],
