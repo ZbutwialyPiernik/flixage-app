@@ -19,9 +19,9 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistPage extends StatelessWidget {
-  final scrollController = ScrollController();
-
   static const route = '/playlist';
+
+  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +60,15 @@ class PlaylistPage extends StatelessWidget {
           }
 
           if (tracks.isEmpty) {
-            body = Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      S.current.playlistPage_emptyPlaylist,
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
-                    ),
-                  ],
-                ),
+            body = Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    S.current.playlistPage_emptyPlaylist,
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
+                  ),
+                ],
               ),
             );
           } else {

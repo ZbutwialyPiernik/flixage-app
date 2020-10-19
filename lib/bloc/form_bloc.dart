@@ -22,12 +22,6 @@ class FormValidationError extends FormBlocState {
   FormValidationError(this.errors);
 }
 
-class FormError extends FormBlocState {
-  final String error;
-
-  FormError(this.error);
-}
-
 class FormEvent extends Equatable {
   @override
   List<Object> get props => [];
@@ -90,7 +84,7 @@ abstract class FormBloc extends Bloc<FormEvent> {
 
         onValid(event)
             .then((value) => _formSubject.add(value))
-            .catchError((e) => _formSubject.add(FormError(S.current.unknownError)));
+            .catchError((e) => _formSubject.addError(S.current.common_unknownError));
       }
     }
   }

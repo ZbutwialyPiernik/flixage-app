@@ -69,10 +69,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "bottomAppBar_library" : MessageLookupByLibrary.simpleMessage("Library"),
     "buttomAppBar_home" : MessageLookupByLibrary.simpleMessage("Home"),
     "buttomAppBar_search" : MessageLookupByLibrary.simpleMessage("Search"),
+    "common_unknownError" : MessageLookupByLibrary.simpleMessage("Unknown error"),
     "createPlaylistPage_namePlaylist" : MessageLookupByLibrary.simpleMessage("Name your playlist"),
-    "homePage_latestAlbums" : MessageLookupByLibrary.simpleMessage("Latest albums"),
+    "dio_connectionTimeout" : MessageLookupByLibrary.simpleMessage("Nie udało się połączyć z serwerem"),
+    "dio_receiveTimeout" : MessageLookupByLibrary.simpleMessage("Przekroczono limit czasu oczekiwania"),
+    "dio_requestTimeout" : MessageLookupByLibrary.simpleMessage("Przekroczono limit czasu oczekiwania"),
     "homePage_latestArtists" : MessageLookupByLibrary.simpleMessage("Latest artists"),
     "homePage_latestSingles" : MessageLookupByLibrary.simpleMessage("Latest singles"),
+    "homePage_newReleases" : MessageLookupByLibrary.simpleMessage("New releases"),
     "homePage_recentlyPlayed" : MessageLookupByLibrary.simpleMessage("Recently played"),
     "homePage_welcome" : m2,
     "libraryFetchError" : MessageLookupByLibrary.simpleMessage("Problem during fetching user library"),
@@ -124,7 +128,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "trackContextMenu_showAlbum" : MessageLookupByLibrary.simpleMessage("Show album"),
     "trackContextMenu_showArtist" : MessageLookupByLibrary.simpleMessage("Show artist"),
     "trackItem_track" : m14,
-    "unknownError" : MessageLookupByLibrary.simpleMessage("Unknown error"),
     "userItem_user" : MessageLookupByLibrary.simpleMessage("User")
   };
 }

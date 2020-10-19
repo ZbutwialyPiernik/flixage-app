@@ -27,7 +27,6 @@ class HomePage extends StatelessWidget {
     final dio = Provider.of<Dio>(context);
 
     final audioPlayer = Provider.of<AudioPlayerBloc>(context);
-    final authenticationBloc = Provider.of<AuthenticationBloc>(context);
     final bloc = HomeBloc(
       albumRepository: AlbumRepository(dio),
       artistRepository: ArtistRepository(dio),
@@ -38,59 +37,66 @@ class HomePage extends StatelessWidget {
     return StatefulWrapper(
       onInit: () => bloc.dispatch(LoadHome()),
       onDispose: () => bloc.dispose(),
-      child: StreamBuilder<HomeData>(
-        stream: bloc.stream,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return LoadingWidget();
-          }
+      child: Column(
+        children: [
+          AppBar(
+            title: Text("Flixage"),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SettingsPage.route);
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            child: _buildPageContent(bloc, audioPlayer),
+          ),
+        ],
+      ),
+    );
+  }
 
-          final data = snapshot.data;
+  Widget _buildPageContent(HomeBloc bloc, AudioPlayerBloc audioPlayer) {
+    return StreamBuilder<HomeData>(
+      stream: bloc.stream,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return LoadingWidget();
+        }
 
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.settings),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(SettingsPage.route);
-                      },
-                    ),
-                  ],
+        final data = snapshot.data;
+
+        return SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              if (data.recentlyListened.isNotEmpty)
+                ..._buildSection(
+                  context,
+                  title: S.current.homePage_recentlyPlayed,
+                  items: data.recentlyListened,
+                  onTap: (track) => audioPlayer.dispatch(PlayTrack(track: track)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    S.current.homePage_welcome(authenticationBloc.currentUser.name),
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
+              ..._buildSection(
+                context,
+                title: S.current.homePage_newReleases,
+                items: data.recentlyAddedAlbums,
+                onTap: (album) => Navigator.of(context).pushNamed(
+                  AlbumPage.route,
+                  arguments: Arguments(extra: album),
                 ),
-                if (data.recentlyListened.isNotEmpty)
-                  ..._buildSection(
-                    context,
-                    title: S.current.homePage_recentlyPlayed,
-                    items: data.recentlyListened,
-                    onTap: (track) => audioPlayer.dispatch(PlayTrack(track: track)),
-                  ),
+              ),
+              /*
                 ..._buildSection(
                   context,
                   title: S.current.homePage_latestSingles,
                   items: data.recentlyAddedTracks,
                   onTap: (track) => audioPlayer.dispatch(PlayTrack(track: track)),
-                ),
-                ..._buildSection(
-                  context,
-                  title: S.current.homePage_latestAlbums,
-                  items: data.recentlyAddedAlbums,
-                  onTap: (album) => Navigator.of(context).pushNamed(
-                    AlbumPage.route,
-                    arguments: Arguments(extra: album),
-                  ),
-                ),
+                ),*/
+              /*
                 ..._buildSection(
                   context,
                   title: S.current.homePage_latestArtists,
@@ -99,13 +105,11 @@ class HomePage extends StatelessWidget {
                     ArtistPage.route,
                     arguments: Arguments(extra: artist),
                   ),
-                ),
-                SizedBox(height: 16)
-              ],
-            ),
-          );
-        },
-      ),
+                ),*/
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -117,7 +121,7 @@ class HomePage extends StatelessWidget {
   }) {
     return [
       Padding(
-        padding: const EdgeInsets.only(left: 8, top: 24, bottom: 16, right: 8),
+        padding: const EdgeInsets.only(left: 8, top: 16, bottom: 16, right: 8),
         child: Text(
           title,
           style: Theme.of(context).textTheme.headline5,

@@ -71,9 +71,6 @@ class RegisterForm extends StatelessWidget {
         builder: (context, snapshot) {
           final state = snapshot.data;
 
-          if (state is FormError) {
-            notificationBloc.dispatch(SimpleNotification.error(content: state.error));
-          }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

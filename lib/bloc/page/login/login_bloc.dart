@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
+import 'package:flixage/bloc/dio_util.dart';
 import 'package:flixage/bloc/form_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
@@ -30,24 +31,25 @@ class LoginBloc extends FormBloc {
       return FormSubmitSuccess();
     } catch (e) {
       if (e is DioError) {
-        if (e.request != null) {
+        if (e.type == DioErrorType.RESPONSE) {
           switch (e.response?.statusCode) {
             case 401:
-              return FormError(S.current.loginPage_invalidCredentials);
+              return Future.error(S.current.loginPage_invalidCredentials);
             case 400:
+              // This exception should newer occur, unless validators are invalid
               log.e(
-                  "Login validator is not properly implemented, server should not throw 400");
-              return FormError(S.current.unknownError);
+                  "Login validator is not properly implemented, server should not throw 400",
+                  e);
+              return Future.error(S.current.common_unknownError);
             case 503:
-              return FormError(S.current.loginPage_authenticationServiceUnvaiable);
+              return Future.error(S.current.loginPage_authenticationServiceUnvaiable);
             default:
-              log.e(e);
-              return FormError(S.current.unknownError);
           }
         }
       }
 
-      return FormError(S.current.unknownError);
+      return Future.error(
+          mapCommonErrors(e, defaultValue: S.current.common_unknownError));
     }
   }
 

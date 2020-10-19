@@ -72,8 +72,8 @@ class LoginForm extends StatelessWidget {
           final state = snapshot.data;
           final isFormDisabled = state is FormLoading || state is FormSubmitSuccess;
 
-          if (state is FormError) {
-            notificationBloc.dispatch(SimpleNotification.error(content: state.error));
+          if (snapshot.hasError) {
+            notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
           }
 
           return SnackbarNetworkAwareWidget(

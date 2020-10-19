@@ -33,6 +33,46 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Przekroczono limit czasu oczekiwania`
+  String get dio_requestTimeout {
+    return Intl.message(
+      'Przekroczono limit czasu oczekiwania',
+      name: 'dio_requestTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nie udało się połączyć z serwerem`
+  String get dio_connectionTimeout {
+    return Intl.message(
+      'Nie udało się połączyć z serwerem',
+      name: 'dio_connectionTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Przekroczono limit czasu oczekiwania`
+  String get dio_receiveTimeout {
+    return Intl.message(
+      'Przekroczono limit czasu oczekiwania',
+      name: 'dio_receiveTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error`
+  String get common_unknownError {
+    return Intl.message(
+      'Unknown error',
+      name: 'common_unknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settingsPage_title {
     return Intl.message(
@@ -683,16 +723,6 @@ class S {
     );
   }
 
-  /// `Unknown error`
-  String get unknownError {
-    return Intl.message(
-      'Unknown error',
-      name: 'unknownError',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Login`
   String get loginPage_login {
     return Intl.message(
@@ -723,11 +753,11 @@ class S {
     );
   }
 
-  /// `Latest albums`
-  String get homePage_latestAlbums {
+  /// `New releases`
+  String get homePage_newReleases {
     return Intl.message(
-      'Latest albums',
-      name: 'homePage_latestAlbums',
+      'New releases',
+      name: 'homePage_newReleases',
       desc: '',
       args: [],
     );

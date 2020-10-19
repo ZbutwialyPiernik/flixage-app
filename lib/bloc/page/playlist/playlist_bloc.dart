@@ -30,7 +30,7 @@ class PlaylistBloc extends LoadingBloc<LoadPlaylist, List<Track>> {
 
       return tracks;
     } catch (e) {
-      Future.error(S.current.playlistPage_playlistLoadingError);
+      return Future.error(S.current.playlistPage_playlistLoadingError);
     }
   }
 }

@@ -1,4 +1,8 @@
 {
+  "dio_requestTimeout": "Przekroczono limit czasu oczekiwania",
+  "dio_connectionTimeout": "Nie udało się połączyć z serwerem",
+  "dio_receiveTimeout": "Przekroczono limit czasu oczekiwania",
+  "common_unknownError": "Unknown error",
   "settingsPage_title": "Ustawienia",
   "settingsPage_language": "Język",
   "buttomAppBar_home": "Home",
@@ -68,9 +72,8 @@
   "trackContextMenu_addToPlaylist": "Dodaj do playlisty",
   "trackContextMenu_showAlbum": "Pokaż album",
   "trackContextMenu_showArtist": "Pokaż artystę",
-  "unknownError": "Nieznany błąd",
   "homePage_welcome": "Witaj {name}!",
-  "homePage_latestAlbums": "Najnowsze albumy",
+  "homePage_newReleases": "Nowe wydania",
   "homePage_latestArtists": "Najnowsi artyści",
   "homePage_latestSingles": "Najnowsze single",
   "homePage_recentlyPlayed": "Ostatnio odtwarzane"
