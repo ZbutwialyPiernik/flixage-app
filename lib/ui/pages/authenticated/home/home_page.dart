@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
-import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/page/home/home_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/queryable.dart';
@@ -11,7 +10,6 @@ import 'package:flixage/repository/track_repository.dart';
 import 'package:flixage/repository/user_repository.dart';
 import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/pages/authenticated/artist/artist_page.dart';
 import 'package:flixage/ui/pages/authenticated/settings/settings_page.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
 import 'package:flixage/ui/widget/loading_widget.dart';

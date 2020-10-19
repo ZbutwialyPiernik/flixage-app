@@ -7,7 +7,6 @@ import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/util/validation/common_validators.dart';
 import 'package:flixage/util/validation/validator.dart';
 import 'package:logger/logger.dart';
-import 'package:retrofit/dio.dart';
 
 class RegisterBloc extends FormBloc {
   static final log = Logger();

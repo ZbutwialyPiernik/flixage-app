@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flixage/ui/widget/cached_network_image/dio_cache_manager.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+// ignore: implementation_imports
 import 'package:flutter_cache_manager/src/web/mime_converter.dart';
 import 'package:path/path.dart' as path;
 

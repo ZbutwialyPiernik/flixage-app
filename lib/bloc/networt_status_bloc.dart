@@ -1,5 +1,4 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:flixage/bloc/bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart' as player;
 import 'package:flixage/bloc/audio_player/audio_player_counter.dart';
@@ -33,15 +34,21 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent> {
   AudioPlayerBloc(TrackRepository trackRepository, this._audioPlayer, this._tokenStore)
       : this._audioPlayerCounter = AudioPlayerCounter(_audioPlayer, trackRepository) {
     //_tokenStore.getAccessToken().then((token) =>
-    //    _audioPlayer.networkSettings.defaultHeaders["Authorization"] = "Bearer " + token);
+    //_audioPlayer.networkSettings.defaultHeaders["Authorization"] = "Bearer " + token);
 
+    //TODO: wait till 2.0.11 and update default headers
     _audioPlayer.onErrorDo = (handler) async {
-      var oldAudio = handler.playlist.audios[handler.playlistIndex];
-      var newAudio = oldAudio.copyWith(
-          headers: {"Authorization": "Bearer " + await _tokenStore.getAccessToken()});
+      if (handler.error.errorType == player.AssetsAudioPlayerErrorType.Network) {
+        var oldAudio = handler.playlist.audios[handler.playlistIndex];
+        var newAudio = oldAudio.copyWith(headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + await _tokenStore.getAccessToken()
+        });
 
-      handler.playlist.audios[handler.playlistIndex] = newAudio;
-      dispatch(ChangePlayerState(playerState: player.PlayerState.pause));
+        handler.playlist.audios[handler.playlistIndex] = newAudio;
+        dispatch(ChangePlayerState(playerState: player.PlayerState.play));
+      } else {
+        dispatch(ChangePlayerState(playerState: player.PlayerState.pause));
+      }
     };
   }
 
@@ -127,7 +134,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent> {
 
   player.Audio toNetwork(Track track, String accessToken) => player.Audio.network(
       API_SERVER + "/tracks/${track.id}/stream",
-      headers: {"Authorization": "Bearer " + accessToken},
+      headers: {HttpHeaders.authorizationHeader: "Bearer " + accessToken},
       metas: player.Metas(artist: track.artist.name, title: track.name, id: track.id));
 
   @override
