@@ -4,6 +4,7 @@ import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/page/register/register_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
+import 'package:flixage/ui/widget/form_page.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +13,7 @@ class RegisterPage extends StatelessWidget {
   static const route = "register";
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-      child: RegisterForm(),
-    );
-  }
+  Widget build(BuildContext context) => FormPage(child: RegisterForm());
 }
 
 class RegisterForm extends StatelessWidget {
@@ -79,7 +75,7 @@ class RegisterForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(S.current.authenticationPage_username),
+              Text(S.current.common_username),
               SizedBox(
                 height: 8,
               ),
@@ -95,7 +91,7 @@ class RegisterForm extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              Text(S.current.authenticationPage_password),
+              Text(S.current.common_password),
               SizedBox(
                 height: 8,
               ),

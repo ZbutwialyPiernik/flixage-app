@@ -35,30 +35,30 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Przekroczono limit czasu oczekiwania`
+  /// `Request timeout`
   String get dio_requestTimeout {
     return Intl.message(
-      'Przekroczono limit czasu oczekiwania',
+      'Request timeout',
       name: 'dio_requestTimeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Nie udało się połączyć z serwerem`
+  /// `Failed to connect to the server`
   String get dio_connectionTimeout {
     return Intl.message(
-      'Nie udało się połączyć z serwerem',
+      'Failed to connect to the server',
       name: 'dio_connectionTimeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Przekroczono limit czasu oczekiwania`
+  /// `Timed out`
   String get dio_receiveTimeout {
     return Intl.message(
-      'Przekroczono limit czasu oczekiwania',
+      'Timed out',
       name: 'dio_receiveTimeout',
       desc: '',
       args: [],
@@ -70,6 +70,56 @@ class S {
     return Intl.message(
       'Unknown error',
       name: 'common_unknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Too short`
+  String get common_validation_tooShort {
+    return Intl.message(
+      'Too short',
+      name: 'common_validation_tooShort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Too long`
+  String get common_validation_tooLong {
+    return Intl.message(
+      'Too long',
+      name: 'common_validation_tooLong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Illegal characters`
+  String get common_validation_illegalCharacters {
+    return Intl.message(
+      'Illegal characters',
+      name: 'common_validation_illegalCharacters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get common_username {
+    return Intl.message(
+      'Username',
+      name: 'common_username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get common_password {
+    return Intl.message(
+      'Password',
+      name: 'common_password',
       desc: '',
       args: [],
     );
@@ -100,6 +150,16 @@ class S {
     return Intl.message(
       'Logout',
       name: 'settingsPage_logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get settingsPage_section_account {
+    return Intl.message(
+      'Account',
+      name: 'settingsPage_section_account',
       desc: '',
       args: [],
     );
@@ -150,46 +210,6 @@ class S {
     return Intl.message(
       'Don\'t have an account? Register now',
       name: 'authenticationPage_register',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Username`
-  String get authenticationPage_username {
-    return Intl.message(
-      'Username',
-      name: 'authenticationPage_username',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Password`
-  String get authenticationPage_password {
-    return Intl.message(
-      'Password',
-      name: 'authenticationPage_password',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Too short`
-  String get authenticationPage_tooShort {
-    return Intl.message(
-      'Too short',
-      name: 'authenticationPage_tooShort',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Too long`
-  String get authenticationPage_tooLong {
-    return Intl.message(
-      'Too long',
-      name: 'authenticationPage_tooLong',
       desc: '',
       args: [],
     );
@@ -246,50 +266,50 @@ class S {
   }
 
   /// `Passwords does not match`
-  String get registerPage_passwordDoesNotMatch {
+  String get registerPage_validation_passwordDoesNotMatch {
     return Intl.message(
       'Passwords does not match',
-      name: 'registerPage_passwordDoesNotMatch',
+      name: 'registerPage_validation_passwordDoesNotMatch',
       desc: '',
       args: [],
     );
   }
 
   /// `Should contain at least one digit`
-  String get registerPage_oneDigit {
+  String get registerPage_validation_oneDigit {
     return Intl.message(
       'Should contain at least one digit',
-      name: 'registerPage_oneDigit',
+      name: 'registerPage_validation_oneDigit',
       desc: '',
       args: [],
     );
   }
 
   /// `Should contain at least one lower-case`
-  String get registerPage_oneLower {
+  String get registerPage_validation_oneLower {
     return Intl.message(
       'Should contain at least one lower-case',
-      name: 'registerPage_oneLower',
+      name: 'registerPage_validation_oneLower',
       desc: '',
       args: [],
     );
   }
 
   /// `Should contain at least one upper-case`
-  String get registerPage_oneUpper {
+  String get registerPage_validation_oneUpper {
     return Intl.message(
       'Should contain at least one upper-case',
-      name: 'registerPage_oneUpper',
+      name: 'registerPage_validation_oneUpper',
       desc: '',
       args: [],
     );
   }
 
   /// `Username is already taken`
-  String get registerPage_usernameTaken {
+  String get registerPage_validation_usernameTaken {
     return Intl.message(
       'Username is already taken',
-      name: 'registerPage_usernameTaken',
+      name: 'registerPage_validation_usernameTaken',
       desc: '',
       args: [],
     );

@@ -39,6 +39,7 @@ class HomePage extends StatelessWidget {
         children: [
           AppBar(
             title: Text("Flixage"),
+            automaticallyImplyLeading: false,
             actions: [
               IconButton(
                 icon: Icon(Icons.settings),

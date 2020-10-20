@@ -22,8 +22,8 @@ class RegisterBloc extends FormBloc {
       return FormValidationError({
         'username': ValidationResult.empty(),
         'password': ValidationResult.empty(),
-        'repeatPassword':
-            ValidationResult(error: S.current.registerPage_passwordDoesNotMatch)
+        'repeatPassword': ValidationResult(
+            error: S.current.registerPage_validation_passwordDoesNotMatch)
       });
     }
 
@@ -41,7 +41,7 @@ class RegisterBloc extends FormBloc {
         if (e.type == DioErrorType.RESPONSE) {
           switch (e.response?.statusCode) {
             case 409:
-              return Future.error(S.current.registerPage_usernameTaken);
+              return Future.error(S.current.registerPage_validation_usernameTaken);
               break;
             case 400:
               log.e(
@@ -53,6 +53,8 @@ class RegisterBloc extends FormBloc {
         return Future.error(
             mapCommonErrors(e, defaultValue: S.current.common_unknownError));
       }
+
+      return Future.error(S.current.common_unknownError);
     }
   }
 

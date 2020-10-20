@@ -3,18 +3,18 @@ import 'package:flixage/util/validation/validator.dart';
 import 'package:validators/validators.dart';
 
 final usernameValidator = Validator.builder()
-    .add((value) => value.length < 5, S.current.authenticationPage_tooShort)
-    .add((value) => value.length > 32, S.current.authenticationPage_tooLong)
-    .add((value) => !isAscii(value), S.current.authenticationPage_illegalCharacters)
+    .add((value) => value.length < 5, S.current.common_validation_tooShort)
+    .add((value) => value.length > 32, S.current.common_validation_tooLong)
+    .add((value) => !isAscii(value), S.current.common_validation_illegalCharacters)
     .build();
 
 final passwordValidator = Validator.builder()
-    .add((value) => value.length < 8, S.current.authenticationPage_tooShort)
-    .add((value) => value.length > 128, S.current.authenticationPage_tooLong)
+    .add((value) => value.length < 8, S.current.common_validation_tooShort)
+    .add((value) => value.length > 128, S.current.common_validation_tooLong)
     .add((value) => !isAscii(value), S.current.authenticationPage_illegalCharacters)
-    .add((value) => !hasDigit(value, 1), S.current.registerPage_oneDigit)
-    .add((value) => !hasLowerCase(value, 1), S.current.registerPage_oneLower)
-    .add((value) => !hasUpperCase(value, 1), S.current.registerPage_oneUpper)
+    .add((value) => !hasDigit(value, 1), S.current.registerPage_validation_oneDigit)
+    .add((value) => !hasLowerCase(value, 1), S.current.registerPage_validation_oneLower)
+    .add((value) => !hasUpperCase(value, 1), S.current.registerPage_validation_oneUpper)
     .build();
 
 /// Checks if [value] contains AT LEAST [number] of uppercase character
