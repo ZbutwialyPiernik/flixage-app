@@ -62,7 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "authenticationPage_illegalCharacters" : MessageLookupByLibrary.simpleMessage("Niepoprawne znaki"),
     "authenticationPage_login" : MessageLookupByLibrary.simpleMessage("Zaloguj"),
     "authenticationPage_password" : MessageLookupByLibrary.simpleMessage("Hasło"),
-    "authenticationPage_register" : MessageLookupByLibrary.simpleMessage("Nie masz konta? Zarejestruj już dziś"),
+    "authenticationPage_register" : MessageLookupByLibrary.simpleMessage("Nie masz konta? Zarejestruj się już dziś"),
     "authenticationPage_tooLong" : MessageLookupByLibrary.simpleMessage("Za długie"),
     "authenticationPage_tooShort" : MessageLookupByLibrary.simpleMessage("Za krótkie"),
     "authenticationPage_username" : MessageLookupByLibrary.simpleMessage("Nazwa użytkownika"),

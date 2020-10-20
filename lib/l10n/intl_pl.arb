@@ -48,7 +48,7 @@
   "authenticationPage_illegalCharacters": "Niepoprawne znaki",
   "authenticationPage_login": "Zaloguj",
   "authenticationPage_password": "Hasło",
-  "authenticationPage_register": "Nie masz konta? Zarejestruj już dziś",
+  "authenticationPage_register": "Nie masz konta? Zarejestruj się już dziś",
   "authenticationPage_tooLong": "Za długie",
   "authenticationPage_tooShort": "Za krótkie",
   "authenticationPage_username": "Nazwa użytkownika",
