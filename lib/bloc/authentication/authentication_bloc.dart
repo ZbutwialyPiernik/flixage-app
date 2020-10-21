@@ -81,9 +81,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
       final refreshToken = await _tokenStore.getRefreshToken();
 
       if (refreshToken != null && accessToken != null) {
-        _authenticationRepository
-            .renewToken({'accessToken': accessToken, 'refreshToken': refreshToken}).then(
-                (authentication) {
+        _authenticationRepository.renewToken({
+          TokenStore.ACCESS_TOKEN_KEY: accessToken,
+          TokenStore.REFRESH_TOKEN_KEY: refreshToken
+        }).then((authentication) {
           dispatch(LoggedIn(authentication));
         }).catchError((e) {
           _authenticationState.add(AuthenticationUnauthenticated());
@@ -109,7 +110,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
     } else if (event is Logout) {
       var refreshToken = await _tokenStore.getRefreshToken();
       _authenticationRepository
-          .invalidateToken({'refreshToken': refreshToken}).catchError(
+          .invalidateToken({TokenStore.REFRESH_TOKEN_KEY: refreshToken}).catchError(
               (e) => log.e("Error during logout", e));
 
       _tokenStore

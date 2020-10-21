@@ -49,9 +49,7 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          Expanded(
-            child: _buildPageContent(bloc, audioPlayer),
-          ),
+          _buildPageContent(bloc, audioPlayer),
         ],
       ),
     );

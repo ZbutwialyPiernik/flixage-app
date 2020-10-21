@@ -84,7 +84,7 @@ abstract class FormBloc extends Bloc<FormEvent> {
 
         onValid(event)
             .then((value) => _formSubject.add(value))
-            .catchError((e) => _formSubject.addError(S.current.common_unknownError));
+            .catchError((e) => _formSubject.addError(e));
       }
     }
   }

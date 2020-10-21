@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 final theme = ThemeData(
   brightness: Brightness.dark,
   fontFamily: 'Roboto',
+  appBarTheme: AppBarTheme(brightness: Brightness.dark),
   scaffoldBackgroundColor: Color.fromRGBO(18, 18, 18, 1),
   bottomAppBarColor: Color.fromRGBO(33, 33, 33, 1),
   primaryColor: Colors.amber[800],
