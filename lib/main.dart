@@ -27,7 +27,7 @@ import 'bloc/token_store.dart';
 
 final Logger logger = Logger();
 
-final int defaultConnectTimeout = const Duration(seconds: 2).inMilliseconds;
+final int defaultConnectTimeout = const Duration(seconds: 5).inMilliseconds;
 final int defaultReceiveTimeout = const Duration(seconds: 5).inMilliseconds;
 final int defaultSendTimeout = const Duration(seconds: 5).inMilliseconds;
 

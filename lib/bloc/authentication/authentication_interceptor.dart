@@ -49,8 +49,8 @@ class AuthenticationInterceptor extends Interceptor {
       final refreshToken = await tokenStore.getRefreshToken();
 
       try {
-        final authentication =
-            await authenticationRepository.renewToken({"refreshToken": refreshToken});
+        final authentication = await authenticationRepository
+            .renewToken({TokenStore.REFRESH_TOKEN_KEY: refreshToken});
 
         await tokenStore.saveTokens(
             authentication.accessToken, authentication.refreshToken);

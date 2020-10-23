@@ -26,6 +26,7 @@ class LibraryPage extends StatelessWidget {
             tabs: [
               Tab(text: 'Playlists'),
               Tab(text: 'Artists'),
+              Tab(text: 'Followed')
               //Tab(text: 'Albums'),
             ],
           ),
@@ -47,7 +48,8 @@ class LibraryPage extends StatelessWidget {
                       arguments: Arguments(extra: artist),
                     ),
                   ),
-                )
+                ),
+                Text("Followed")
               ],
             ),
           ),

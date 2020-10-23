@@ -7,13 +7,14 @@ import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/pick_playlist_page.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
+import 'package:flixage/ui/widget/item/context_menu/queryable_context_menu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flixage/model/track.dart';
 
 import 'package:provider/provider.dart';
 
-class TrackContextMenu extends ContextMenu<Track> {
+class TrackContextMenu extends QueryableContextMenu<Track> {
   static const String route = "contextMenu/track";
 
   @override

@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistList extends StatelessWidget {
+  final EdgeInsets listPadding = const EdgeInsets.only(left: 16, top: 16, bottom: 16);
+
   final Function(Playlist playlist) onItemTap;
 
   const PlaylistList({Key key, this.onItemTap}) : super(key: key);
@@ -33,11 +35,16 @@ class PlaylistList extends StatelessWidget {
 
               if (snapshot.data.isEmpty) {
                 return Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Stack(
                     children: <Widget>[
-                      _buildCreatePlaylistButton(context),
-                      Text(S.current.libraryPage_noPlaylists)
+                      Padding(
+                        padding: listPadding,
+                        child: _buildCreatePlaylistButton(context),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(S.current.libraryPage_noPlaylists),
+                      )
                     ],
                   ),
                 );
@@ -47,7 +54,7 @@ class PlaylistList extends StatelessWidget {
 
               return Expanded(
                 child: ListView.separated(
-                    padding: EdgeInsets.only(left: 16, top: 8, bottom: 8),
+                    padding: listPadding,
                     separatorBuilder: (context, index) => SizedBox(height: 8),
                     itemCount: playlists.length + 1,
                     itemBuilder: (context, index) =>

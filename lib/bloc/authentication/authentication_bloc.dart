@@ -80,20 +80,28 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
       final accessToken = await _tokenStore.getAccessToken();
       final refreshToken = await _tokenStore.getRefreshToken();
 
+      log.d("Retrying authentication with refresh token $refreshToken");
+
       if (refreshToken != null && accessToken != null) {
-        _authenticationRepository.renewToken({
+        await _authenticationRepository.renewToken({
           TokenStore.ACCESS_TOKEN_KEY: accessToken,
           TokenStore.REFRESH_TOKEN_KEY: refreshToken
         }).then((authentication) {
+          log.d(
+              "Successful reauthentication with tokens ${authentication.accessToken} and ${authentication.refreshToken}");
+
           dispatch(LoggedIn(authentication));
         }).catchError((e) {
+          log.d("Unsuccesful reauthentication");
+
           _authenticationState.add(AuthenticationUnauthenticated());
         });
       } else {
         _authenticationState.add(AuthenticationUnauthenticated());
       }
     } else if (event is LoggedIn) {
-      log.d('Saving JWT tokens');
+      log.d(
+          'Saving JWT tokens ${event.authentication.accessToken} and ${event.authentication.refreshToken}');
 
       await _tokenStore.saveTokens(
           event.authentication.accessToken, event.authentication.refreshToken);

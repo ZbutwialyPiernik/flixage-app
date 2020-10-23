@@ -17,6 +17,7 @@ import 'package:flixage/ui/widget/audio_player/audio_player_widget.dart';
 import 'package:flixage/ui/widget/item/context_menu/album_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
+import 'package:flixage/ui/widget/item/context_menu/playlist_share_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/track_context_menu.dart';
 import 'package:flixage/ui/widget/notification_root.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,8 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
     AlbumContextMenu.route: (_) => AlbumContextMenu(),
     TrackContextMenu.route: (_) => TrackContextMenu(),
     PlaylistContextMenu.route: (_) => PlaylistContextMenu(),
-    ArtistContextMenu.route: (_) => ArtistContextMenu()
+    ArtistContextMenu.route: (_) => ArtistContextMenu(),
+    PlaylistShareContextMenu.route: (_) => PlaylistShareContextMenu()
   };
 
   final bottomBarRoutes = [
