@@ -50,7 +50,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         StreamBuilder<SearchState>(
-          stream: searchBloc.searchState,
+          stream: searchBloc.state,
           builder: (context, snapshot) {
             final state = snapshot.data;
             if (state is SearchStateEmpty) {

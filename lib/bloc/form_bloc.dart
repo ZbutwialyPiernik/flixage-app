@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
-import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/util/validation/validator.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -39,13 +38,13 @@ class SubmitForm extends FormEvent {
   SubmitForm(this.fields) : assert(fields != null);
 }
 
-abstract class FormBloc extends Bloc<FormEvent> {
+abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
   @protected
   final BehaviorSubject<FormBlocState> _formSubject = BehaviorSubject();
 
   Map<String, Validator> get validators;
 
-  Stream<FormBlocState> get formState => _formSubject.stream;
+  Stream<FormBlocState> get state => _formSubject.stream;
 
   @protected
   Future<FormBlocState> onValid(SubmitForm event);

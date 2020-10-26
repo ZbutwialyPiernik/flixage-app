@@ -7,7 +7,7 @@ import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
-class LibraryBloc extends Bloc<LibraryEvent> {
+class LibraryBloc extends Bloc<LibraryEvent, List<Playlist>> {
   static final log = Logger();
 
   final BehaviorSubject<List<Playlist>> _playlistsSubject = BehaviorSubject();
@@ -15,13 +15,14 @@ class LibraryBloc extends Bloc<LibraryEvent> {
   final PlaylistRepository playlistRepository;
   final NotificationBloc notificationBloc;
 
-  Stream<List<Playlist>> get playlists => _playlistsSubject.stream;
+  @override
+  Stream<List<Playlist>> get state => _playlistsSubject.stream;
 
   LibraryBloc(this.playlistRepository, this.notificationBloc);
 
   @override
   void onEvent(LibraryEvent event) async {
-    if (event is FetchLibrary) {
+    if (event is LoadLibrary) {
       playlistRepository.getCurrentUserPlaylists().then((playlists) {
         _playlistsSubject.add(playlists);
       }).catchError((error) {
@@ -46,8 +47,8 @@ class LibraryBloc extends Bloc<LibraryEvent> {
         notificationBloc.dispatch(
             SimpleNotification.info(content: S.current.playlistUpdated(playlist.name)));
       }).catchError((e) {
-        notificationBloc
-            .dispatch(SimpleNotification.error(content: S.current.playlistUpdateError(event.playlist.name)));
+        notificationBloc.dispatch(SimpleNotification.error(
+            content: S.current.playlistUpdateError(event.playlist.name)));
       });
     } else if (event is DeletePlaylist) {
       playlistRepository.delete(event.playlist.id).then((_) {

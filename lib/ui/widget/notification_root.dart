@@ -25,7 +25,7 @@ class _NotificationRootState extends State<NotificationRoot> {
     final bloc = Provider.of<NotificationBloc>(context);
 
     if (subscription == null)
-      subscription = bloc.notifications.listen((notification) {
+      subscription = bloc.state.listen((notification) {
         widget.scaffoldKey.currentState.showSnackBar(
           SnackBar(
             duration: notification.duration,

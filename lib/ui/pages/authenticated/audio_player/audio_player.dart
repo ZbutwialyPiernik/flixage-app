@@ -92,7 +92,7 @@ class AudioPlayerPage extends StatelessWidget {
                   ),
                   AudioPlayerSlider(
                     track: track,
-                    playerState: bloc.playerState,
+                    playerState: bloc.state,
                     currentPosition: bloc.currentPosition,
                     builder: (context, track, progress) {
                       return Column(

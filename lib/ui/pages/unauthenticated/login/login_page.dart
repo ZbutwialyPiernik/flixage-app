@@ -86,7 +86,7 @@ class LoginForm extends StatelessWidget {
         _bloc.dispose();
       },
       child: StreamBuilder<FormBlocState>(
-        stream: _bloc.formState,
+        stream: _bloc.state,
         builder: (context, snapshot) {
           final state = snapshot.data;
           final isFormDisabled = state is FormLoading || state is FormSubmitSuccess;

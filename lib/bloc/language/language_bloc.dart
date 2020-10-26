@@ -26,7 +26,7 @@ class ChangeLanguage extends LanguageEvent {
 
 class LoadLanguage extends LanguageEvent {}
 
-class LanguageBloc extends Bloc<LanguageEvent> {
+class LanguageBloc extends Bloc<LanguageEvent, Locale> {
   static const _languageKey = "LANGUAGE";
   static const _defaultLanguage = "en";
 
@@ -37,7 +37,7 @@ class LanguageBloc extends Bloc<LanguageEvent> {
   final BehaviorSubject<Locale> _languageSubject =
       BehaviorSubject.seeded(Locale(Intl.getCurrentLocale()));
 
-  Stream<Locale> get currentLocale => _languageSubject.stream;
+  Stream<Locale> get state => _languageSubject.stream;
 
   LanguageBloc(this._storage);
 

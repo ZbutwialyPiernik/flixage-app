@@ -26,7 +26,7 @@ class CreatePlaylistPage extends StatelessWidget {
       },
       onDispose: () => _nameController.dispose(),
       child: StreamBuilder<FormBlocState>(
-        stream: bloc.formState,
+        stream: bloc.state,
         builder: (context, snapshot) {
           final state = snapshot.data;
 

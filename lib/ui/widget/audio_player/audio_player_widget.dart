@@ -36,7 +36,7 @@ class AudioPlayerWidget extends StatelessWidget {
             children: <Widget>[
               AudioPlayerSlider(
                 track: track,
-                playerState: bloc.playerState,
+                playerState: bloc.state,
                 currentPosition: bloc.currentPosition,
                 builder: (context, track, progress) {
                   return SizedBox(

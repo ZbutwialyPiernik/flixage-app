@@ -49,21 +49,22 @@ class AuthenticationUnauthenticated extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent> {
+class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   static final log = Logger();
 
-  final BehaviorSubject<AuthenticationState> _authenticationState =
+  final BehaviorSubject<AuthenticationState> _authenticationSubject =
       BehaviorSubject.seeded(AuthenticationUninitialized());
 
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
   final TokenStore _tokenStore;
 
-  User get currentUser => _authenticationState.value is AuthenticationAuthenticated
-      ? (_authenticationState.value as AuthenticationAuthenticated).user
+  User get currentUser => _authenticationSubject.value is AuthenticationAuthenticated
+      ? (_authenticationSubject.value as AuthenticationAuthenticated).user
       : null;
 
-  Stream<AuthenticationState> get state => _authenticationState.stream;
+  @override
+  Stream<AuthenticationState> get state => _authenticationSubject.stream;
 
   AuthenticationBloc(
       this._authenticationRepository, Dio dio, this._userRepository, this._tokenStore) {
@@ -94,10 +95,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
         }).catchError((e) {
           log.d("Unsuccesful reauthentication");
 
-          _authenticationState.add(AuthenticationUnauthenticated());
+          _authenticationSubject.add(AuthenticationUnauthenticated());
         });
       } else {
-        _authenticationState.add(AuthenticationUnauthenticated());
+        _authenticationSubject.add(AuthenticationUnauthenticated());
       }
     } else if (event is LoggedIn) {
       log.d(
@@ -110,10 +111,10 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
 
       _userRepository.getCurrentUser().then((user) async {
         log.d('Downloaded user info, logged in user: ${user.name}');
-        _authenticationState.add(AuthenticationAuthenticated(user));
+        _authenticationSubject.add(AuthenticationAuthenticated(user));
       }).catchError((error) {
         log.e('Problem during downloading of user info');
-        _authenticationState.add(AuthenticationUnauthenticated());
+        _authenticationSubject.add(AuthenticationUnauthenticated());
       });
     } else if (event is Logout) {
       var refreshToken = await _tokenStore.getRefreshToken();
@@ -123,12 +124,12 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent> {
 
       _tokenStore
           .flushTokens()
-          .then((value) => _authenticationState.add(AuthenticationUnauthenticated()));
+          .then((value) => _authenticationSubject.add(AuthenticationUnauthenticated()));
     }
   }
 
   @override
   void dispose() {
-    _authenticationState.close();
+    _authenticationSubject.close();
   }
 }

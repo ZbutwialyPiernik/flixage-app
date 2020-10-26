@@ -52,30 +52,33 @@ class SearchStateError extends SearchState {
   List<Object> get props => [error];
 }
 
-class SearchBloc extends Bloc<SearchEvent> {
+class SearchBloc extends Bloc<SearchEvent, SearchState> {
   static final log = Logger();
 
-  final BehaviorSubject<SearchState> searchState =
+  final BehaviorSubject<SearchState> _searchSubject =
       BehaviorSubject.seeded(SearchStateEmpty());
 
   final SearchRepository _searchRepository;
+
+  @override
+  Stream<SearchState> get state => _searchSubject.stream;
 
   SearchBloc(this._searchRepository);
 
   @override
   void dispose() {
-    searchState.close();
+    _searchSubject.close();
   }
 
   @override
   void onEvent(SearchEvent event) {
     if (event is TextChanged) {
       if (event.query.trim().isEmpty) {
-        searchState.add(SearchStateEmpty());
+        _searchSubject.add(SearchStateEmpty());
         return;
       }
 
-      searchState.add(SearchStateLoading());
+      _searchSubject.add(SearchStateLoading());
 
       _searchRepository
           .search(
@@ -83,9 +86,9 @@ class SearchBloc extends Bloc<SearchEvent> {
               limit: 3,
               type: event.types.map((type) => type.toString().split('.').last).join(','))
           .then((response) {
-        searchState.add(SearchStateSuccess(response: response, query: event.query));
+        _searchSubject.add(SearchStateSuccess(response: response, query: event.query));
       }).catchError((error) {
-        searchState.add(SearchStateError(error: error.toString()));
+        _searchSubject.add(SearchStateError(error: error.toString()));
       });
     }
   }

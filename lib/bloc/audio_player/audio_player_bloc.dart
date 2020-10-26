@@ -13,14 +13,15 @@ import 'package:rxdart/rxdart.dart';
 
 import 'audio_player_event.dart';
 
-class AudioPlayerBloc extends Bloc<AudioPlayerEvent> {
+class AudioPlayerBloc extends Bloc<AudioPlayerEvent, player.PlayerState> {
   final BehaviorSubject<Track> _audioSubject = BehaviorSubject<Track>();
   final BehaviorSubject<Playlist> _playlistSubject = BehaviorSubject<Playlist>();
   final BehaviorSubject<PlayMode> _playModeSubject =
       BehaviorSubject<PlayMode>.seeded(PlayMode.normal);
 
+  @override
+  Stream<player.PlayerState> get state => _audioPlayer.playerState;
   Stream<player.LoopMode> get loopMode => _audioPlayer.loopMode;
-  Stream<player.PlayerState> get playerState => _audioPlayer.playerState;
   Stream<Track> get audio => _audioSubject.stream;
   Stream<Duration> get currentPosition => _audioPlayer.currentPosition;
   Stream<PlayMode> get playMode => _playModeSubject.stream;
@@ -33,22 +34,19 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent> {
 
   AudioPlayerBloc(TrackRepository trackRepository, this._audioPlayer, this._tokenStore)
       : this._audioPlayerCounter = AudioPlayerCounter(_audioPlayer, trackRepository) {
-    //_tokenStore.getAccessToken().then((token) =>
-    //_audioPlayer.networkSettings.defaultHeaders["Authorization"] = "Bearer " + token);
+    _tokenStore.getAccessToken().then((token) => _audioPlayer.networkSettings
+        .defaultHeaders[HttpHeaders.authorizationHeader] = "Bearer " + token);
 
-    //TODO: wait till 2.0.11 and update default headers
     _audioPlayer.onErrorDo = (handler) async {
-      if (handler.error.errorType == player.AssetsAudioPlayerErrorType.Network) {
-        var oldAudio = handler.playlist.audios[handler.playlistIndex];
+      /*var oldAudio = handler.playlist.audios[handler.playlistIndex];
         var newAudio = oldAudio.copyWith(headers: {
           HttpHeaders.authorizationHeader: "Bearer " + await _tokenStore.getAccessToken()
         });
 
         handler.playlist.audios[handler.playlistIndex] = newAudio;
-        dispatch(ChangePlayerState(playerState: player.PlayerState.play));
-      } else {
-        dispatch(ChangePlayerState(playerState: player.PlayerState.pause));
-      }
+        dispatch(ChangePlayerState(playerState: player.PlayerState.play));*/
+
+      dispatch(ChangePlayerState(playerState: player.PlayerState.pause));
     };
   }
 

@@ -13,7 +13,7 @@ class LanguageTile extends SettingsTile {
     final bloc = Provider.of<LanguageBloc>(context);
 
     return StreamBuilder<Locale>(
-      stream: bloc.currentLocale,
+      stream: bloc.state,
       builder: (_, snapshot) => snapshot.hasData
           ? SettingsTile(
               title: S.current.settingsPage_language,

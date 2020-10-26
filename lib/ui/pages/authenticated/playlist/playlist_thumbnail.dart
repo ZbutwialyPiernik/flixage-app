@@ -32,7 +32,7 @@ class _PlaylistThumbnailState extends State<PlaylistThumbnail> {
         playlistRepository: PlaylistRepository(Provider.of<Dio>(context)));
 
     return StreamBuilder<ThumbnailUploaded>(
-      stream: bloc.stream,
+      stream: bloc.state,
       builder: (context, snapshot) {
         return Stack(
           children: [

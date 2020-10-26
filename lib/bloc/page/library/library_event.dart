@@ -7,7 +7,7 @@ abstract class LibraryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchLibrary extends LibraryEvent {}
+class LoadLibrary extends LibraryEvent {}
 
 class CreatePlaylist extends LibraryEvent {
   final String name;

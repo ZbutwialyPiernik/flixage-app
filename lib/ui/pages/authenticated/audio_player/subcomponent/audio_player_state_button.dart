@@ -21,7 +21,7 @@ class AudioPlayerStateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<PlayerState>(
-      stream: bloc.playerState,
+      stream: bloc.state,
       builder: (context, state) {
         IconData icon = state.data == PlayerState.play ? pauseIcon : playIcon;
 

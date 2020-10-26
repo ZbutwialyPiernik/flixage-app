@@ -8,10 +8,10 @@ import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_thumbnail.dart';
 import 'package:flixage/ui/widget/arguments.dart';
+import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';
-import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,87 +30,81 @@ class PlaylistPage extends StatelessWidget {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    final playlistBloc =
-        PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context)));
+    return BlocBuilder<PlaylistBloc, List<Track>>(
+      create: (context) =>
+          PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
+      init: (context, bloc) => bloc.dispatch(LoadPlaylist(playlist)),
+      builder: (context, snapshot) {
+        final tracks = snapshot.data;
 
-    final notificationBloc = Provider.of<NotificationBloc>(context);
-
-    return StatefulWrapper(
-      onInit: () => playlistBloc.dispatch(LoadPlaylist(playlist)),
-      onDispose: () => playlistBloc.dispose(),
-      child: StreamBuilder<List<Track>>(
-        stream: playlistBloc.stream,
-        builder: (context, snapshot) {
-          final tracks = snapshot.data;
-
-          if (!snapshot.hasData) {
-            return Expanded(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-
-          Widget body;
-
-          if (snapshot.hasError) {
-            notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
-
-            body = Container();
-          }
-
-          if (tracks.isEmpty) {
-            body = Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    S.current.playlistPage_emptyPlaylist,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            body = ListView.separated(
-              shrinkWrap: true,
-              controller: scrollController,
-              padding: EdgeInsets.only(left: 8, top: 24, bottom: 8),
-              separatorBuilder: (context, index) => SizedBox(height: 2),
-              itemCount: tracks.length,
-              itemBuilder: (context, index) => GestureDetector(
-                child: TrackItem(track: tracks[index]),
-                onTap: () => audioPlayerBloc.dispatch(PlayPlaylist(
-                  playlist: playlist,
-                  tracks: tracks,
-                  startIndex: index,
-                )),
-              ),
-            );
-          }
-
-          return NestedScrollView(
-            controller: scrollController,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return <Widget>[
-                QueryableAppBar(
-                  queryable: playlist,
-                  secondaryText: S.current.playlistPage_author(playlist.owner.name),
-                  contextMenuRoute: PlaylistContextMenu.route,
-                  showRandomButton: true,
-                  onRandomButtonTap: () => audioPlayerBloc.dispatch(
-                    PlayPlaylist(
-                        playlist: playlist, playMode: PlayMode.random, tracks: tracks),
-                  ),
-                  imageBuilder: (url, size) =>
-                      PlaylistThumbnail(playlist: playlist, size: size),
-                ),
-              ];
-            },
-            body: body,
+        if (!snapshot.hasData) {
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
-        },
-      ),
+        }
+
+        Widget body;
+
+        if (snapshot.hasError) {
+          Provider.of<NotificationBloc>(context)
+              .dispatch(SimpleNotification.error(content: snapshot.error));
+
+          body = Container();
+        }
+
+        if (tracks.isEmpty) {
+          body = Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  S.current.playlistPage_emptyPlaylist,
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 24),
+                ),
+              ],
+            ),
+          );
+        } else {
+          body = ListView.separated(
+            shrinkWrap: true,
+            controller: scrollController,
+            padding: EdgeInsets.only(left: 8, top: 24, bottom: 8),
+            separatorBuilder: (context, index) => SizedBox(height: 2),
+            itemCount: tracks.length,
+            itemBuilder: (context, index) => GestureDetector(
+              child: TrackItem(track: tracks[index]),
+              onTap: () => audioPlayerBloc.dispatch(PlayPlaylist(
+                playlist: playlist,
+                tracks: tracks,
+                startIndex: index,
+              )),
+            ),
+          );
+        }
+
+        return NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return <Widget>[
+              QueryableAppBar(
+                queryable: playlist,
+                secondaryText: S.current.playlistPage_author(playlist.owner.name),
+                contextMenuRoute: PlaylistContextMenu.route,
+                showRandomButton: true,
+                onRandomButtonTap: () => audioPlayerBloc.dispatch(
+                  PlayPlaylist(
+                      playlist: playlist, playMode: PlayMode.random, tracks: tracks),
+                ),
+                imageBuilder: (url, size) =>
+                    PlaylistThumbnail(playlist: playlist, size: size),
+              ),
+            ];
+          },
+          body: body,
+        );
+      },
     );
   }
 }

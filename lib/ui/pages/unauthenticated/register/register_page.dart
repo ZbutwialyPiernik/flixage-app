@@ -63,7 +63,7 @@ class RegisterForm extends StatelessWidget {
         bloc.dispose();
       },
       child: StreamBuilder<FormBlocState>(
-        stream: bloc.formState,
+        stream: bloc.state,
         builder: (context, snapshot) {
           final state = snapshot.data;
 

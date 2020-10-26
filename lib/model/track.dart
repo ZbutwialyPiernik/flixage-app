@@ -17,17 +17,17 @@ class Track extends Queryable {
   final bool saved;
   final int streamCount;
 
-  Track(
-      {String id,
-      String name,
-      String thumbnailUrl,
-      this.streamCount,
-      this.fileUrl,
-      this.album,
-      this.artist,
-      this.duration,
-      this.saved})
-      : super(id, name, thumbnailUrl);
+  Track({
+    String id,
+    String name,
+    String thumbnailUrl,
+    this.streamCount,
+    this.fileUrl,
+    this.album,
+    this.artist,
+    this.duration,
+    this.saved,
+  }) : super(id, name, thumbnailUrl);
 
   static Track fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);
   Map<String, dynamic> toJson() => _$TrackToJson(this);

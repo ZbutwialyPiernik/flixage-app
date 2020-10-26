@@ -1,7 +1,13 @@
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
-abstract class Bloc<E> {
+abstract class BaseBloc<S> {
+  Stream<S> get state;
+
+  void dispose();
+}
+
+abstract class Bloc<E, S> extends BaseBloc<S> {
   static final Logger logger = Logger();
 
   void dispatch(E event) {
@@ -20,6 +26,4 @@ abstract class Bloc<E> {
   void onError(Object error) {
     logger.e(Level.error, "Unhandled exception in bloc ${this.toString()}: $error");
   }
-
-  void dispose();
 }

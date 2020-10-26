@@ -3,10 +3,11 @@ import 'package:flixage/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
-class NotificationBloc extends Bloc<SimpleNotification> {
+class NotificationBloc extends Bloc<SimpleNotification, SimpleNotification> {
   final PublishSubject<SimpleNotification> _notificationSubject = PublishSubject();
 
-  Stream<SimpleNotification> get notifications => _notificationSubject.stream;
+  @override
+  Stream<SimpleNotification> get state => _notificationSubject.stream;
 
   @override
   void onEvent(SimpleNotification notification) {
