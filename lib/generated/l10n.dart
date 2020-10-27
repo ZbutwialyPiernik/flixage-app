@@ -105,6 +105,16 @@ class S {
     );
   }
 
+  /// `You're offline`
+  String get common_offline {
+    return Intl.message(
+      'You\'re offline',
+      name: 'common_offline',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Username`
   String get common_username {
     return Intl.message(

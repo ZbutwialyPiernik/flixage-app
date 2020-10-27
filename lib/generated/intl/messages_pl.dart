@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "bottomAppBar_library" : MessageLookupByLibrary.simpleMessage("Biblioteka"),
     "buttomAppBar_home" : MessageLookupByLibrary.simpleMessage("Home"),
     "buttomAppBar_search" : MessageLookupByLibrary.simpleMessage("Wyszukaj"),
+    "common_offline" : MessageLookupByLibrary.simpleMessage("Brak połączenia z internetem"),
     "common_password" : MessageLookupByLibrary.simpleMessage("Hasło"),
     "common_unknownError" : MessageLookupByLibrary.simpleMessage("Nieznany błąd"),
     "common_username" : MessageLookupByLibrary.simpleMessage("Nazwa użytkownika"),

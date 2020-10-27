@@ -10,7 +10,7 @@ class NetworkStatusBloc {
   final BehaviorSubject<NetworkStatus> _networkStatusSubject =
       BehaviorSubject<NetworkStatus>();
 
-  Stream<NetworkStatus> get networkStatus => _networkStatusSubject.stream;
+  Stream<NetworkStatus> get status => _networkStatusSubject.stream;
 
   final _connectivity = Connectivity();
 

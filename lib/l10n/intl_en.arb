@@ -6,6 +6,7 @@
   "common_validation_tooShort": "Too short",
   "common_validation_tooLong": "Too long",
   "common_validation_illegalCharacters": "Illegal characters",
+  "common_offline": "You're offline",
   "common_username": "Username",
   "common_password": "Password",
   "settingsPage_title": "Settings",

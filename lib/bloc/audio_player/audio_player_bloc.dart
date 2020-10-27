@@ -139,6 +139,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, player.PlayerState> {
   void dispose() {
     _playlistSubject.close();
     _audioSubject.close();
+    _audioPlayerCounter.dispose();
     _audioPlayer.dispose();
   }
 }

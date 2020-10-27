@@ -6,6 +6,7 @@
   "common_validation_tooShort": "Zbyt krótkie",
   "common_validation_tooLong": "Zbyt długie",
   "common_validation_illegalCharacters": "Nieprawidłowe znaki",
+  "common_offline": "Brak połączenia z internetem",
   "common_username": "Nazwa użytkownika",
   "common_password": "Hasło",
   "settingsPage_title": "Ustawienia",

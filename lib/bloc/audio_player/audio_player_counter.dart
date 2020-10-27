@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flixage/repository/track_repository.dart';
 import 'package:logger/logger.dart';
@@ -14,8 +16,10 @@ class AudioPlayerCounter {
   int lastPosition = 0;
   bool hasSent = false;
 
+  StreamSubscription<Playing> listener;
+
   AudioPlayerCounter(this._audioPlayer, this._trackRepository) {
-    _audioPlayer.current.listen((event) {
+    listener = _audioPlayer.current.listen((event) {
       currentAudio = event?.audio ?? null;
       listeningDuration = 0;
       lastPosition = 0;
@@ -44,5 +48,9 @@ class AudioPlayerCounter {
 
       lastPosition = event.inSeconds;
     });
+  }
+
+  dispose() {
+    listener.cancel();
   }
 }

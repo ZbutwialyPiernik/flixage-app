@@ -7,7 +7,7 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/ui/pages/unauthenticated/register/register_page.dart';
 import 'package:flixage/ui/widget/form_page.dart';
-import 'package:flixage/ui/widget/snackbar_network_aware_widget.dart';
+import 'package:flixage/ui/widget/network_aware_widget.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,28 +19,56 @@ class LoginPage extends StatelessWidget {
   LoginPage({Key key}) : super(key: key);
 
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        FormPage(
-          child: LoginForm(),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: GestureDetector(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              child: Text(
-                S.current.authenticationPage_register,
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    .copyWith(fontSize: 16, decoration: TextDecoration.underline),
+    return NetworkAwareWidget(
+      builder: (context, status) {
+        final isOnline = status == NetworkStatus.Online;
+
+        return Stack(
+          children: [
+            if (!isOnline)
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: 40,
+                  color: Colors.redAccent,
+                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text(S.current.common_offline,
+                        style: Theme.of(context).textTheme.subtitle1),
+                    SizedBox(width: 8),
+                    SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  ]),
+                ),
+              ),
+            FormPage(
+              child: LoginForm(networkStatus: status),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: FlatButton(
+                    child: Text(
+                      S.current.authenticationPage_register,
+                      style: Theme.of(context).textTheme.button.copyWith(
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          color: isOnline ? Colors.white : Colors.white54),
+                    ),
+                    onPressed: isOnline
+                        ? () => Navigator.of(context).pushNamed(RegisterPage.route)
+                        : null),
               ),
             ),
-            onTap: () => Navigator.of(context).pushNamed(RegisterPage.route),
-          ),
-        )
-      ],
+          ],
+        );
+      },
     );
   }
 }
@@ -48,6 +76,10 @@ class LoginPage extends StatelessWidget {
 class LoginForm extends StatelessWidget {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final NetworkStatus networkStatus;
+
+  LoginForm({Key key, @required this.networkStatus}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,16 +121,15 @@ class LoginForm extends StatelessWidget {
         stream: _bloc.state,
         builder: (context, snapshot) {
           final state = snapshot.data;
-          final isFormDisabled = state is FormLoading || state is FormSubmitSuccess;
+          final isFormDisabled = state is FormLoading ||
+              state is FormSubmitSuccess ||
+              networkStatus == NetworkStatus.Offline;
 
           if (snapshot.hasError) {
             notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
           }
 
-          return SnackbarNetworkAwareWidget(
-            child: (context, status) => _buildForm(
-                context, _bloc, state, isFormDisabled || status == NetworkStatus.Offline),
-          );
+          return _buildForm(context, _bloc, state, isFormDisabled);
         },
       ),
     );
@@ -159,5 +190,11 @@ class LoginForm extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(EnumProperty<NetworkStatus>('networkStatus', networkStatus));
   }
 }
