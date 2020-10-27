@@ -18,7 +18,7 @@ class ArtistItem extends StatelessWidget {
       item: artist,
       roundedImage: true,
       contextMenuRoute: ArtistContextMenu.route,
-      onTap: () => Navigator.pushNamed(context, ArtistPage.route,
+      onTap: (artist) => Navigator.pushNamed(context, ArtistPage.route,
           arguments: Arguments(extra: artist)),
       secondary: Text(S.current.artistItem_artist),
     );

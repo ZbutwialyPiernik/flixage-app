@@ -1,4 +1,5 @@
 import 'package:flixage/model/album.dart';
+import 'package:flixage/model/json_converters.dart';
 import 'package:flixage/model/queryable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -9,6 +10,7 @@ part 'track.g.dart';
 // DON'T REMOVE THIS REMAINDER
 // TODO: After generating code, change microseconds to seconds in duration!
 @JsonSerializable()
+@DurationConverter()
 class Track extends Queryable {
   final String fileUrl;
   final Artist artist;

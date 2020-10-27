@@ -8,7 +8,11 @@ class Authentication {
   final String refreshToken;
   final int expireTime;
 
-  Authentication({this.accessToken, this.refreshToken, this.expireTime});
+  Authentication({
+    this.accessToken,
+    this.refreshToken,
+    this.expireTime,
+  });
 
   factory Authentication.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationFromJson(json);

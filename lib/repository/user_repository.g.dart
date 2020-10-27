@@ -75,4 +75,52 @@ class _UserRepository implements UserRepository {
     final value = PageResponse<Artist>.fromJson(_result.data, Artist.fromJson);
     return value;
   }
+
+  @override
+  followedPlaylist() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<List<dynamic>> _result = await _dio.request(
+        '/users/me/followedPlaylists',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    var value = _result.data
+        .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  followPlaylist(shareCode) async {
+    ArgumentError.checkNotNull(shareCode, 'shareCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    await _dio.request<void>('users/me/followedPlaylists/$shareCode',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
+        data: _data);
+    return null;
+  }
+
+  @override
+  unfollowPlaylist(shareCode) async {
+    ArgumentError.checkNotNull(shareCode, 'shareCode');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    await _dio.request<void>('users/me/followedPlaylists/$shareCode',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    return null;
+  }
 }

@@ -7,7 +7,12 @@ part 'artist.g.dart';
 class Artist extends Queryable {
   final int monthlyListeners;
 
-  Artist({id, name, thumbnailUrl, this.monthlyListeners}) : super(id, name, thumbnailUrl);
+  Artist({
+    String id,
+    String name,
+    String thumbnailUrl,
+    this.monthlyListeners,
+  }) : super(id, name, thumbnailUrl);
 
   static Artist fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
   Map<String, dynamic> toJson() => _$ArtistToJson(this);

@@ -8,8 +8,12 @@ part 'album.g.dart';
 class Album extends Queryable {
   final Artist artist;
 
-  Album(String id, String name, String thumbnailUrl, this.artist)
-      : super(id, name, thumbnailUrl);
+  Album(
+    String id,
+    String name,
+    String thumbnailUrl,
+    this.artist,
+  ) : super(id, name, thumbnailUrl);
 
   @override
   List<Object> get props => [id, name, thumbnailUrl, artist];

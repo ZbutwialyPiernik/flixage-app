@@ -18,10 +18,7 @@ flutter run --dart-define FLIXAGE_API_SERVER=[HERE YOUR ADDRESS]
 
 ## Important
 
-There are few things to remember when working with this project, code generation does not handle generics properly and non-primitive types, after generating project you will have few problems with code.
-
-1. In track by default Duration is deserialized by microseconds, not miliseconds like in API.
-2. Due to problems with generics you need to give reference to deserializing method (Json generator is not able to deduce type), example is SearchResponse class.
+There are few things to remember when working with this project, after generating code with _pub_ you will have one problem with generics. You need to give reference to deserializing method (Json generator is not able to deduce type), example is SearchResponse class.
 
 ```
 // you need to add this manually                              \/

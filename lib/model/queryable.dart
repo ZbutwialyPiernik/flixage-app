@@ -5,5 +5,9 @@ abstract class Queryable extends Equatable {
   final String name;
   final String thumbnailUrl;
 
-  Queryable(this.id, this.name, this.thumbnailUrl);
+  Queryable(
+    this.id,
+    this.name,
+    this.thumbnailUrl,
+  );
 }

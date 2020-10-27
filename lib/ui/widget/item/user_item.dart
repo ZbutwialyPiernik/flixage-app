@@ -14,7 +14,7 @@ class UserItem extends StatelessWidget {
     return QueryableItem<User>(
       item: user,
       roundedImage: true,
-      onTap: () => Navigator.pushNamed(context, UserPage.route, arguments: user),
+      onTap: (user) => Navigator.pushNamed(context, UserPage.route, arguments: user),
       secondary: Text(S.current.userItem_user),
     );
   }

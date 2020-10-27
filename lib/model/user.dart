@@ -5,7 +5,11 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User extends Queryable {
-  User({String id, String name, String thumbnailUrl}) : super(id, name, thumbnailUrl);
+  User({
+    String id,
+    String name,
+    String thumbnailUrl,
+  }) : super(id, name, thumbnailUrl);
 
   static User fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

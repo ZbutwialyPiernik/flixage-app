@@ -9,7 +9,7 @@ class PlaylistItem extends StatelessWidget {
   final Playlist playlist;
   final double height;
   final Widget secondary;
-  final Function onTap;
+  final Function(Playlist) onTap;
 
   const PlaylistItem({
     Key key,

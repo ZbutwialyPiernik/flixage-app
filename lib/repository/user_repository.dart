@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/page_response.dart';
+import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -29,4 +30,13 @@ abstract class UserRepository {
     @Query("offset") int offset = 0,
     @Query("limit") int limit = 10,
   });
+
+  @GET("/users/me/followedPlaylists")
+  Future<List<Playlist>> followedPlaylist();
+
+  @PUT("users/me/followedPlaylists/{shareCode}")
+  Future<void> followPlaylist(@Path() String shareCode);
+
+  @DELETE("users/me/followedPlaylists/{shareCode}")
+  Future<void> unfollowPlaylist(@Path() String shareCode);
 }

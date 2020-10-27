@@ -5,7 +5,7 @@ import 'package:flixage/ui/widget/item/context_menu/context_menu_button.dart';
 import 'package:flutter/material.dart';
 
 class QueryableItem<T extends Queryable> extends StatelessWidget {
-  final Function onTap;
+  final Function(T) onTap;
   final Widget primary;
   final Widget secondary;
   final Widget leading;
@@ -35,7 +35,7 @@ class QueryableItem<T extends Queryable> extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: onTap,
+      onTap: () => onTap(item),
       onLongPress: () => {
         if (contextMenuRoute != null)
           Navigator.of(context)

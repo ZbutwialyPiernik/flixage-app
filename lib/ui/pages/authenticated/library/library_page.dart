@@ -76,7 +76,9 @@ class _LibraryPageState extends State<LibraryPage> {
                 arguments: Arguments(extra: playlist),
               ),
             ),
-            emptyBuilder: (context) => Text(S.current.libraryPage_noPlaylists),
+            emptyBuilder: (context) => Align(
+                alignment: Alignment.center,
+                child: Text(S.current.libraryPage_noPlaylists)),
           );
         },
       ),
@@ -92,7 +94,10 @@ class _LibraryPageState extends State<LibraryPage> {
           return QueryableList<Artist>(
             items: state.data,
             itemBuilder: (context, artist) => ArtistItem(artist: artist),
-            emptyBuilder: (context) => Text("Nie odsłuchałeś jeszcze żadnego utworu"),
+            emptyBuilder: (context) => Align(
+              alignment: Alignment.center,
+              child: Text("Nie odsłuchałeś jeszcze żadnego utworu"),
+            ),
           );
         },
       ),

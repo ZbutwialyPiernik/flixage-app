@@ -54,10 +54,9 @@ class UserPage extends StatelessWidget {
                       itemBuilder: (context, index) => PlaylistItem(
                         playlist: data.playlists[index],
                         height: 64,
-                        onTap: () => Navigator.of(context).pushNamed(
+                        onTap: (playlist) => Navigator.of(context).pushNamed(
                             PlaylistContextMenu.route,
-                            arguments:
-                                Arguments(extra: data.playlists[index], opaque: false)),
+                            arguments: Arguments(extra: playlist, opaque: false)),
                       ),
                     ),
                   )
