@@ -21,7 +21,7 @@ class PlaylistItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QueryableItem(
+    return QueryableItem<Playlist>(
       height: 80,
       item: playlist,
       contextMenuRoute: PlaylistContextMenu.route,

@@ -22,7 +22,7 @@ class TrackItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = Provider.of<AudioPlayerBloc>(context);
 
-    return QueryableItem(
+    return QueryableItem<Track>(
       onTap: () => bloc.dispatch(PlayTrack(track: track)),
       item: track,
       height: height,

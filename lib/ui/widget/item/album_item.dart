@@ -16,7 +16,7 @@ class AlbumItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QueryableItem(
+    return QueryableItem<Album>(
       item: album,
       height: height,
       contextMenuRoute: AlbumContextMenu.route,

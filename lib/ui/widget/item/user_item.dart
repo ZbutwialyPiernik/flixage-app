@@ -11,7 +11,7 @@ class UserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QueryableItem(
+    return QueryableItem<User>(
       item: user,
       roundedImage: true,
       onTap: () => Navigator.pushNamed(context, UserPage.route, arguments: user),

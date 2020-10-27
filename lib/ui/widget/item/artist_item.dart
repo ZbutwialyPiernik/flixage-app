@@ -14,7 +14,7 @@ class ArtistItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QueryableItem(
+    return QueryableItem<Artist>(
       item: artist,
       roundedImage: true,
       contextMenuRoute: ArtistContextMenu.route,
