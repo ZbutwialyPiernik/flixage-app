@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
   final B Function(BuildContext context) create;
-  final Widget Function(BuildContext context, AsyncSnapshot<S> state) builder;
+  final Widget Function(BuildContext context, B bloc, AsyncSnapshot<S> state) builder;
   final Function(BuildContext context, B bloc) init;
 
   const BlocBuilder({
@@ -39,7 +39,7 @@ class _BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S
   Widget build(BuildContext context) {
     return StreamBuilder<S>(
       stream: bloc.state,
-      builder: widget.builder,
+      builder: (context, snapshot) => widget.builder(context, bloc, snapshot),
     );
   }
 

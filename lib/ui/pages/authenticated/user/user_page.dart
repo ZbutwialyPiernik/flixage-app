@@ -31,7 +31,7 @@ class UserPage extends StatelessWidget {
           create: (context) =>
               UserBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
           init: (context, bloc) => bloc.dispatch(user),
-          builder: (context, snapshot) {
+          builder: (context, _, snapshot) {
             if (!snapshot.hasData) {
               return LoadingWidget();
             }

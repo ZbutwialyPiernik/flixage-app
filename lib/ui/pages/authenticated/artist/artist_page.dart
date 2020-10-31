@@ -37,7 +37,7 @@ class _ArtistPageState extends State<ArtistPage> {
         artistRepository: ArtistRepository(Provider.of<Dio>(context)),
       ),
       init: (context, bloc) => bloc.dispatch(artist),
-      builder: (context, snapshot) {
+      builder: (context, _, snapshot) {
         if (!snapshot.hasData)
           return Expanded(
             child: Center(

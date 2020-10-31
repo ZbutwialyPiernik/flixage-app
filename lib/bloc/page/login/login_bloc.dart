@@ -5,11 +5,11 @@ import 'package:flixage/bloc/form_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/repository/authentication_repository.dart';
 import 'package:flixage/util/validation/common_validators.dart';
-import 'package:flixage/util/validation/validator.dart';
 import 'package:logger/logger.dart';
 
 class LoginBloc extends FormBloc {
-  // One upper, one lower, one number, no whitespace
+  static const String usernameKey = 'username';
+  static const String passwordKey = 'password';
 
   static final log = Logger();
 
@@ -22,9 +22,11 @@ class LoginBloc extends FormBloc {
   Future<FormBlocState> onValid(SubmitForm event) async {
     try {
       final authentication = await _authenticationRepository.authenticate({
-        'username': event.fields['username'],
-        'password': event.fields['password'],
+        usernameKey: event.fields[usernameKey],
+        passwordKey: event.fields[passwordKey],
       });
+
+      await Future.delayed(Duration(seconds: 3));
 
       _authenticationBloc.dispatch(LoggedIn(authentication));
 
@@ -54,8 +56,14 @@ class LoginBloc extends FormBloc {
   }
 
   @override
-  Map<String, Validator> get validators => {
-        'username': usernameValidator,
-        'password': passwordValidator,
-      };
+  List<FormBlocField> get fields => [
+        FormBlocField(
+            key: usernameKey,
+            label: S.current.common_username,
+            validator: usernameValidator),
+        FormBlocField(
+            key: passwordKey,
+            label: S.current.common_password,
+            validator: passwordValidator),
+      ];
 }

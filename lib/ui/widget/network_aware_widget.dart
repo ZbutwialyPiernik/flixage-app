@@ -1,6 +1,6 @@
 import 'package:flixage/bloc/networt_status_bloc.dart';
+import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 typedef Widget NetworkBuilder(BuildContext context, NetworkStatus status);
 
@@ -10,11 +10,9 @@ class NetworkAwareWidget extends StatelessWidget {
   NetworkAwareWidget({this.builder}) : assert(builder != null);
 
   Widget build(BuildContext context) {
-    final bloc = Provider.of<NetworkStatusBloc>(context);
-
-    return StreamBuilder(
-      stream: bloc.status,
-      builder: (context, state) => builder(context, state.data ?? NetworkStatus.Offline),
+    return BlocBuilder<NetworkStatusBloc, NetworkStatus>(
+      builder: (context, _, state) =>
+          builder(context, state.data ?? NetworkStatus.Offline),
     );
   }
 }

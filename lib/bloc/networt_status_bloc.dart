@@ -1,21 +1,27 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
+import 'package:flixage/bloc/bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 enum NetworkStatus { Online, Offline }
 
-class NetworkStatusBloc {
+class NetworkStatusBloc extends BaseBloc<NetworkStatus> {
   final logger = Logger();
 
   final BehaviorSubject<NetworkStatus> _networkStatusSubject =
       BehaviorSubject<NetworkStatus>();
 
-  Stream<NetworkStatus> get status => _networkStatusSubject.stream;
+  @override
+  Stream<NetworkStatus> get state => _networkStatusSubject.stream;
 
   final _connectivity = Connectivity();
 
+  StreamSubscription<ConnectivityResult> _listener;
+
   NetworkStatusBloc() {
-    _connectivity.onConnectivityChanged.listen((status) {
+    _listener = _connectivity.onConnectivityChanged.listen((status) {
       logger.d("Network status changed: $status");
 
       _networkStatusSubject.add(_mapStatus(status));
@@ -30,5 +36,10 @@ class NetworkStatusBloc {
     return status == ConnectivityResult.mobile || status == ConnectivityResult.wifi
         ? NetworkStatus.Online
         : NetworkStatus.Offline;
+  }
+
+  @override
+  void dispose() {
+    _listener.cancel();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flixage/ui/widget/overlay_network_aware_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 class FormPage extends StatelessWidget {
@@ -7,7 +8,7 @@ class FormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return OverlayNetworkAwarePage(
       child: Center(
         child: SingleChildScrollView(
           child: Padding(

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/util/validation/validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -38,13 +39,30 @@ class SubmitForm extends FormEvent {
   SubmitForm(this.fields) : assert(fields != null);
 }
 
+class FormBlocField extends Equatable {
+  final String key;
+  final String label;
+  final Validator validator;
+  final bool obscuredText;
+
+  FormBlocField({
+    this.key,
+    this.label,
+    this.validator,
+    this.obscuredText = false,
+  });
+
+  @override
+  List<Object> get props => [key, label];
+}
+
 abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
   @protected
   final BehaviorSubject<FormBlocState> _formSubject = BehaviorSubject();
 
-  Map<String, Validator> get validators;
-
   Stream<FormBlocState> get state => _formSubject.stream;
+
+  List<FormBlocField> get fields;
 
   @protected
   Future<FormBlocState> onValid(SubmitForm event);
@@ -60,7 +78,7 @@ abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
       bool hasError = false;
 
       event.fields.forEach((key, value) {
-        final validator = validators[key];
+        final validator = getField(key).validator;
 
         if (validator == null) {
           errors[key] = ValidationResult.empty();
@@ -87,6 +105,8 @@ abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
       }
     }
   }
+
+  FormBlocField getField(String key) => fields.firstWhere((field) => field.key == key);
 
   @override
   void dispose() {

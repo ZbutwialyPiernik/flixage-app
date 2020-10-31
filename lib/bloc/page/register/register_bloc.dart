@@ -9,6 +9,10 @@ import 'package:flixage/util/validation/validator.dart';
 import 'package:logger/logger.dart';
 
 class RegisterBloc extends FormBloc {
+  static const _usernameKey = 'username';
+  static const _passwordKey = 'password';
+  static const _repeatPasswordKey = 'repeatPassword';
+
   static final log = Logger();
 
   final AuthenticationBloc _authenticationBloc;
@@ -18,19 +22,19 @@ class RegisterBloc extends FormBloc {
 
   @override
   Future<FormBlocState> onValid(SubmitForm event) async {
-    if (event.fields['password'] != event.fields['repeatPassword']) {
+    if (event.fields[_passwordKey] != event.fields[_repeatPasswordKey]) {
       return FormValidationError({
-        'username': ValidationResult.empty(),
-        'password': ValidationResult.empty(),
-        'repeatPassword': ValidationResult(
+        _usernameKey: ValidationResult.empty(),
+        _passwordKey: ValidationResult.empty(),
+        _repeatPasswordKey: ValidationResult(
             error: S.current.registerPage_validation_passwordDoesNotMatch)
       });
     }
 
     try {
       final authentication = await _authenticationRepository.registerUser({
-        'username': event.fields['username'],
-        'password': event.fields['password'],
+        _usernameKey: event.fields[_usernameKey],
+        _passwordKey: event.fields[_passwordKey],
       });
 
       _authenticationBloc.dispatch(LoggedIn(authentication));
@@ -59,8 +63,22 @@ class RegisterBloc extends FormBloc {
   }
 
   @override
-  Map<String, Validator> get validators => {
-        'username': usernameValidator,
-        'password': passwordValidator,
-      };
+  List<FormBlocField> get fields => [
+        FormBlocField(
+          key: _usernameKey,
+          label: S.current.common_username,
+          validator: usernameValidator,
+        ),
+        FormBlocField(
+          key: _passwordKey,
+          label: S.current.common_password,
+          validator: passwordValidator,
+          obscuredText: true,
+        ),
+        FormBlocField(
+          key: _repeatPasswordKey,
+          label: S.current.registerPage_repeatPassword,
+          obscuredText: true,
+        ),
+      ];
 }

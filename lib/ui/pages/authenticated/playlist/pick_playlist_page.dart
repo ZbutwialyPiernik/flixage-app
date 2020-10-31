@@ -15,7 +15,7 @@ class PickPlaylistPage extends StatelessWidget {
     return BlocBuilder<LibraryBloc, List<Playlist>>(
       create: (context) => Provider.of<LibraryBloc>(context),
       init: (context, bloc) => bloc.dispatch(LoadLibrary()),
-      builder: (context, snapshot) => Column(
+      builder: (context, _, snapshot) => Column(
         children: <Widget>[
           AppBar(
             centerTitle: true,

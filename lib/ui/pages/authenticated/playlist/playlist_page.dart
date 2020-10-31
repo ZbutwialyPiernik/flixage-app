@@ -34,7 +34,7 @@ class PlaylistPage extends StatelessWidget {
       create: (context) =>
           PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
       init: (context, bloc) => bloc.dispatch(LoadPlaylist(playlist)),
-      builder: (context, snapshot) {
+      builder: (context, _, snapshot) {
         final tracks = snapshot.data;
 
         if (!snapshot.hasData) {
