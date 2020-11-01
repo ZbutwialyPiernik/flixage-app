@@ -28,17 +28,30 @@ class Overlay extends StatefulWidget {
 }
 
 class _OverlayState extends State<Overlay> with SingleTickerProviderStateMixin {
-  AnimationController controller;
+  static const double bannerHeight = 40;
+
+  AnimationController _controller;
+  Animation<double> _tween;
 
   StreamSubscription<NetworkStatus> _subscription;
-
   NetworkStatus _status;
 
   @override
   void initState() {
     super.initState();
 
-    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+      ..addListener(() => setState(() {}));
+    _tween = Tween<double>(
+      begin: 0,
+      end: 1,
+    )
+        .chain(
+          CurveTween(
+            curve: Curves.fastOutSlowIn,
+          ),
+        )
+        .animate(_controller);
   }
 
   @override
@@ -51,7 +64,7 @@ class _OverlayState extends State<Overlay> with SingleTickerProviderStateMixin {
         return;
       }
 
-      status == NetworkStatus.Offline ? controller.forward() : controller.reverse();
+      status == NetworkStatus.Offline ? _controller.forward() : _controller.reverse();
       _status = status;
     });
   }
@@ -63,39 +76,30 @@ class _OverlayState extends State<Overlay> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    if ((!controller.isAnimating) && controller. ) return Container();
+    Logger().d(_controller.status);
+
+    if (_controller.status == AnimationStatus.dismissed &&
+        _status == NetworkStatus.Online) return Container();
 
     return Stack(
       children: [
-        /*
-        Expanded(
-          child: AnimatedOpacity(
-            opacity: _status == NetworkStatus.Online ? 0 : 0.5,
-            duration: Duration(seconds: 4),
-            child: Container(
-              color: Colors.black.withOpacity(0.5),
-            ),
-          ),
-        ),*/
+        Container(
+          color: Colors.black.withOpacity(_tween.value.clamp(0, 0.5)),
+        ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: SlideTransition(
-            position: controller.drive(Tween<Offset>(
-              begin: const Offset(0.0, 1.0),
-              end: Offset.zero,
-            ).chain(CurveTween(
-              curve: Curves.fastOutSlowIn,
-            ))),
+          child: Transform.translate(
+            offset: Offset(0, bannerHeight - _tween.value * bannerHeight),
             child: _buildBanner(),
           ),
-        )
+        ),
       ],
     );
   }
 
   Widget _buildBanner() {
     return Container(
-      height: 40,
+      height: bannerHeight,
       color: Colors.redAccent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
