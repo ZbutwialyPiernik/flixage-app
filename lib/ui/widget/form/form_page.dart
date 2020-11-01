@@ -1,4 +1,4 @@
-import 'package:flixage/ui/widget/overlay_network_aware_widget.dart';
+import 'package:flixage/ui/widget/network_aware/overlay_network_aware_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 class FormPage extends StatelessWidget {

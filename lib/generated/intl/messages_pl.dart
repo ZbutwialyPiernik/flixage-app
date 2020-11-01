@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_validation_illegalCharacters" : MessageLookupByLibrary.simpleMessage("Nieprawidłowe znaki"),
     "common_validation_tooLong" : MessageLookupByLibrary.simpleMessage("Zbyt długie"),
     "common_validation_tooShort" : MessageLookupByLibrary.simpleMessage("Zbyt krótkie"),
+    "createPlaylistPage_emptyName" : MessageLookupByLibrary.simpleMessage("Nazwa nie może być pusta"),
     "createPlaylistPage_namePlaylist" : MessageLookupByLibrary.simpleMessage("Nazwij swoją playlistę"),
     "dio_connectionTimeout" : MessageLookupByLibrary.simpleMessage("Nie udało się połączyć z serwerem"),
     "dio_receiveTimeout" : MessageLookupByLibrary.simpleMessage("Przekroczono limit czasu oczekiwania"),

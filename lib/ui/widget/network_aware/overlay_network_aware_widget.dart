@@ -4,6 +4,7 @@ import 'package:flixage/bloc/networt_status_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class OverlayNetworkAwarePage extends StatelessWidget {
@@ -62,8 +63,7 @@ class _OverlayState extends State<Overlay> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    if (!controller.isAnimating ||
-        controller.isCompleted && _status == NetworkStatus.Online) return Container();
+    if ((!controller.isAnimating) && controller. ) return Container();
 
     return Stack(
       children: [

@@ -10,7 +10,7 @@ import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dar
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/bloc_builder.dart';
-import 'package:flixage/ui/widget/default_network_aware_widget.dart';
+import 'package:flixage/ui/widget/network_aware/default_network_aware_widget.dart';
 import 'package:flixage/ui/widget/item/artist_item.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
 import 'package:flixage/ui/widget/list/queryable_list.dart';
@@ -40,11 +40,7 @@ class _LibraryPageState extends State<LibraryPage> {
             indicatorColor: Theme.of(context).primaryColor,
             labelColor: Colors.white.withOpacity(1),
             indicatorSize: TabBarIndicatorSize.label,
-            tabs: [
-              Tab(text: 'Playlists'),
-              Tab(text: 'Artists'),
-              Tab(text: 'Followed')
-            ],
+            tabs: [Tab(text: 'Playlists'), Tab(text: 'Artists'), Tab(text: 'Followed')],
           ),
           Expanded(
             child: TabBarView(
@@ -75,9 +71,9 @@ class _LibraryPageState extends State<LibraryPage> {
                 arguments: Arguments(extra: playlist),
               ),
             ),
-            emptyBuilder: (context) => Align(
-                alignment: Alignment.center,
-                child: Text(S.current.libraryPage_noPlaylists)),
+            emptyBuilder: (context) => Center(
+              child: Text(S.current.libraryPage_noPlaylists),
+            ),
           );
         },
       ),
@@ -93,8 +89,7 @@ class _LibraryPageState extends State<LibraryPage> {
           return QueryableList<Artist>(
             items: state.data,
             itemBuilder: (context, artist) => ArtistItem(artist: artist),
-            emptyBuilder: (context) => Align(
-              alignment: Alignment.center,
+            emptyBuilder: (context) => Center(
               child: Text("Nie odsłuchałeś jeszcze żadnego utworu"),
             ),
           );

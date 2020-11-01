@@ -35,6 +35,7 @@
   "artistPage_popular": "Popular",
   "artistPage_singles": "Singles",
   "artistPage_showAll": "Show all",
+  "createPlaylistPage_emptyName": "Name cannot be empty",
   "playlistPage_author": "Author: {name}",
   "playlistPage_thumbnailChanged": "Thumbnail changed",
   "playlistPage_playlistLoadingError": "Playlist loading error",

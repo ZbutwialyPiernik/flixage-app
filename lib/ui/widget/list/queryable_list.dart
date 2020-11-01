@@ -28,16 +28,19 @@ class QueryableList<T extends Queryable> extends StatelessWidget {
     Widget child;
 
     if (items.isEmpty) {
-      child = Stack(
-        children: <Widget>[
-          ListView.separated(
-            padding: padding,
-            separatorBuilder: (context, index) => SizedBox(height: itemSpacing),
-            itemCount: leadingTiles.length,
-            itemBuilder: (context, index) => leadingTiles[index],
-          ),
-          emptyBuilder(context)
-        ],
+      child = SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            if (leadingTiles.isNotEmpty)
+              ListView.separated(
+                padding: padding,
+                separatorBuilder: (context, index) => SizedBox(height: itemSpacing),
+                itemCount: leadingTiles.length,
+                itemBuilder: (context, index) => leadingTiles[index],
+              ),
+            emptyBuilder(context)
+          ],
+        ),
       );
     } else {
       child = ListView.separated(

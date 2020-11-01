@@ -395,6 +395,16 @@ class S {
     );
   }
 
+  /// `Name cannot be empty`
+  String get createPlaylistPage_emptyName {
+    return Intl.message(
+      'Name cannot be empty',
+      name: 'createPlaylistPage_emptyName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Author: {name}`
   String playlistPage_author(Object name) {
     return Intl.message(

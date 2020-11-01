@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/dio_util.dart';
@@ -44,10 +46,10 @@ class RegisterBloc extends FormBloc {
       if (e is DioError) {
         if (e.type == DioErrorType.RESPONSE) {
           switch (e.response?.statusCode) {
-            case 409:
+            case HttpStatus.conflict:
               return Future.error(S.current.registerPage_validation_usernameTaken);
               break;
-            case 400:
+            case HttpStatus.badRequest:
               log.e(
                   "Register validator is not properly implemented, server should not throw 400");
               return Future.error(S.current.common_unknownError);

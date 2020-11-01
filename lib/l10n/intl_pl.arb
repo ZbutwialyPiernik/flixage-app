@@ -25,6 +25,7 @@
   "artistPage_popular": "Popularne",
   "artistPage_singles": "Single",
   "artistPage_showAll": "Pokaż wszystkie",
+  "createPlaylistPage_emptyName": "Nazwa nie może być pusta",
   "playlistPage_author": "Autor: {name}",
   "playlistPage_emptyPlaylist": "Twoja playlista jest pusta",
   "searchPage_search": "Wyszukaj",
