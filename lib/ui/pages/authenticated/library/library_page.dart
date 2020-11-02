@@ -40,7 +40,11 @@ class _LibraryPageState extends State<LibraryPage> {
             indicatorColor: Theme.of(context).primaryColor,
             labelColor: Colors.white.withOpacity(1),
             indicatorSize: TabBarIndicatorSize.label,
-            tabs: [Tab(text: 'Playlists'), Tab(text: 'Artists'), Tab(text: 'Followed')],
+            tabs: [
+              Tab(text: S.current.libraryPage_tab_playlists_title),
+              Tab(text: S.current.libraryPage_tab_artists_title),
+              Tab(text: S.current.libraryPage_tab_followed_title)
+            ],
           ),
           Expanded(
             child: TabBarView(
@@ -71,8 +75,20 @@ class _LibraryPageState extends State<LibraryPage> {
                 arguments: Arguments(extra: playlist),
               ),
             ),
-            emptyBuilder: (context) => Center(
-              child: Text(S.current.libraryPage_noPlaylists),
+            emptyBuilder: (context) => Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: _createPlaylistItem(context),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(S.current.libraryPage_tab_playlists_noPlaylists),
+                )
+              ],
             ),
           );
         },
@@ -90,7 +106,7 @@ class _LibraryPageState extends State<LibraryPage> {
             items: state.data,
             itemBuilder: (context, artist) => ArtistItem(artist: artist),
             emptyBuilder: (context) => Center(
-              child: Text("Nie odsłuchałeś jeszcze żadnego utworu"),
+              child: Text(S.current.libraryPage_tab_artists_noPlayed),
             ),
           );
         },
@@ -123,7 +139,7 @@ class _LibraryPageState extends State<LibraryPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
-                "Utwórz playlistę",
+                S.current.libraryPage_tab_playlists_createPlaylist,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),

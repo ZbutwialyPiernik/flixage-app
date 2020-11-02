@@ -25,10 +25,11 @@ There are few things to remember when working with this project, after generatin
 final value = PageResponse<Track>.fromJson(_result.data, Track.fromJson);
 ```
 
+For generating boilerplate i18n code I'm using [Intl Utils](https://pub.dev/packages/intl_utils). This plugin has extensions for both [Intellij](https://plugins.jetbrains.com/plugin/13666-flutter-intl) and [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl).
+
 ## TODO
 
 - Refactor views and extract widgets to custom classes/methods to improve readability
-- Internationalize strings in app ✅ (90% done)
 - Benchmark app and improve performance
 
 ## Screenshots

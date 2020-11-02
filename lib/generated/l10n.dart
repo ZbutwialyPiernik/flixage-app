@@ -236,20 +236,60 @@ class S {
   }
 
   /// `Playlists`
-  String get libraryPage_title {
+  String get libraryPage_tab_playlists_title {
     return Intl.message(
       'Playlists',
-      name: 'libraryPage_title',
+      name: 'libraryPage_tab_playlists_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Artists`
+  String get libraryPage_tab_artists_title {
+    return Intl.message(
+      'Artists',
+      name: 'libraryPage_tab_artists_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create playlist`
+  String get libraryPage_tab_playlists_createPlaylist {
+    return Intl.message(
+      'Create playlist',
+      name: 'libraryPage_tab_playlists_createPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Followed`
+  String get libraryPage_tab_followed_title {
+    return Intl.message(
+      'Followed',
+      name: 'libraryPage_tab_followed_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't played any song yet`
+  String get libraryPage_tab_artists_noPlayed {
+    return Intl.message(
+      'You haven\'t played any song yet',
+      name: 'libraryPage_tab_artists_noPlayed',
       desc: '',
       args: [],
     );
   }
 
   /// `You don't have any playlists yet`
-  String get libraryPage_noPlaylists {
+  String get libraryPage_tab_playlists_noPlaylists {
     return Intl.message(
       'You don\'t have any playlists yet',
-      name: 'libraryPage_noPlaylists',
+      name: 'libraryPage_tab_playlists_noPlaylists',
       desc: '',
       args: [],
     );

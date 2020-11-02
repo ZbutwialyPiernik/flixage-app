@@ -83,8 +83,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "homePage_recentlyPlayed" : MessageLookupByLibrary.simpleMessage("Ostatnio odtwarzane"),
     "homePage_welcome" : m2,
     "libraryFetchError" : MessageLookupByLibrary.simpleMessage("Wystąpił problem podczas pobierania biblioteki"),
-    "libraryPage_noPlaylists" : MessageLookupByLibrary.simpleMessage("Nie masz jeszcze żadnej playlisty"),
-    "libraryPage_title" : MessageLookupByLibrary.simpleMessage("Playlisty"),
     "loginPage_authenticationServiceUnvaiable" : MessageLookupByLibrary.simpleMessage("Serwery uwierzytelniania są niedostępne"),
     "loginPage_invalidCredentials" : MessageLookupByLibrary.simpleMessage("Nieprawidłowe dane logowania"),
     "loginPage_invalidPassword" : MessageLookupByLibrary.simpleMessage("Nieprawidłowe hasło"),
