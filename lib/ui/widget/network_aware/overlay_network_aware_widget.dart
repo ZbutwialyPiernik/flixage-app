@@ -76,10 +76,9 @@ class _OverlayState extends State<Overlay> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
-    Logger().d(_controller.status);
+    if (_controller.status == AnimationStatus.dismissed) return Container();
 
-    if (_controller.status == AnimationStatus.dismissed &&
-        _status == NetworkStatus.Online) return Container();
+    FocusScope.of(context).unfocus();
 
     return Stack(
       children: [

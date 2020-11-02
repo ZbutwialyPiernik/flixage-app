@@ -45,26 +45,28 @@ class _FormWidgetState<T extends FormBloc> extends State<FormWidget> {
             SizedBox(
               height: 16,
             ),
-            ProgressButton(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                //S.current.authenticationPage_login.toUpperCase()
-                child: Text(
-                  widget.submitButtonText,
-                  style: Theme.of(context)
-                      .textTheme
-                      .button
-                      .copyWith(fontWeight: FontWeight.bold),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 64),
+              child: ProgressButton(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    widget.submitButtonText,
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
+                onPressed: state is FormLoading
+                    ? null
+                    : () => bloc.dispatch(SubmitForm(_toMap(bloc))),
+                buttonState: state is FormLoading || state is FormSubmitSuccess
+                    ? ButtonState.inProgress
+                    : ButtonState.normal,
+                backgroundColor: Theme.of(context).primaryColor,
+                progressColor: Colors.white,
               ),
-              onPressed: state is FormLoading
-                  ? null
-                  : () => bloc.dispatch(SubmitForm(_toMap(bloc))),
-              buttonState: state is FormLoading || state is FormSubmitSuccess
-                  ? ButtonState.inProgress
-                  : ButtonState.normal,
-              backgroundColor: Theme.of(context).primaryColor,
-              progressColor: Colors.white,
             ),
           ],
         );

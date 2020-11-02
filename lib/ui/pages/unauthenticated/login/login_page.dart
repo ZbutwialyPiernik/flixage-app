@@ -23,6 +23,7 @@ class LoginPage extends StatelessWidget {
     return FormPage(
       child: Column(
         children: [
+          SizedBox(height: 64),
           FormWidget(
             createBloc: (context) => LoginBloc(
               Provider.of<AuthenticationBloc>(context),
@@ -30,7 +31,7 @@ class LoginPage extends StatelessWidget {
             ),
             submitButtonText: S.current.loginPage_login,
           ),
-          SizedBox(height: 32),
+          SizedBox(height: 64),
           FlatButton(
             child: Text(
               S.current.authenticationPage_register,
