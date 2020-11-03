@@ -10,7 +10,6 @@ import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dar
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/bloc_builder.dart';
-import 'package:flixage/ui/widget/network_aware/default_network_aware_widget.dart';
 import 'package:flixage/ui/widget/item/artist_item.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
 import 'package:flixage/ui/widget/list/queryable_list.dart';
@@ -48,7 +47,7 @@ class _LibraryPageState extends State<LibraryPage> {
           ),
           Expanded(
             child: TabBarView(
-              children: _buildTabs(context).map((page) => _wrapPage(page)).toList(),
+              children: _buildTabs(context),
             ),
           ),
         ],
@@ -113,10 +112,6 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
       Text("Followed")
     ];
-  }
-
-  Widget _wrapPage(Widget page) {
-    return DefaultNetworkAwarePage(child: page);
   }
 
   Widget _createPlaylistItem(BuildContext context) {

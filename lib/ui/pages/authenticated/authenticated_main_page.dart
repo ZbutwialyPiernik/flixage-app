@@ -19,6 +19,7 @@ import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_share_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/track_context_menu.dart';
+import 'package:flixage/ui/widget/network_aware/overlay_network_aware_widget.dart';
 import 'package:flixage/ui/widget/notification_root.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -97,72 +98,74 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
   Widget build(BuildContext context) {
     return NotificationRoot(
       scaffoldKey: scaffoldKey,
-      child: Scaffold(
-        key: scaffoldKey,
-        body: SafeArea(
-          child: WillPopScope(
-            onWillPop: () async => !await navigator.maybePop(),
-            child: Navigator(
-              observers: [this],
-              initialRoute: bottomBarRoutes[0],
-              onGenerateRoute: (settings) {
-                final routeBuilder = routes[settings.name];
+      child: OverlayNetworkAwarePage(
+        child: Scaffold(
+          key: scaffoldKey,
+          body: SafeArea(
+            child: WillPopScope(
+              onWillPop: () async => !await navigator.maybePop(),
+              child: Navigator(
+                observers: [this],
+                initialRoute: bottomBarRoutes[0],
+                onGenerateRoute: (settings) {
+                  final routeBuilder = routes[settings.name];
 
-                if (routeBuilder == null) {
-                  throw Exception('Route builder is null ${settings.name}');
-                }
+                  if (routeBuilder == null) {
+                    throw Exception('Route builder is null ${settings.name}');
+                  }
 
-                return PageRouteBuilder(
-                  pageBuilder: (c, a1, a2) => routeBuilder(context),
-                  transitionsBuilder: (c, anim, a2, child) =>
-                      FadeTransition(opacity: anim, child: child),
-                  transitionDuration: Duration(milliseconds: 400),
-                  settings: settings,
-                  opaque: _determineOpaque(settings),
-                );
-              },
+                  return PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => routeBuilder(context),
+                    transitionsBuilder: (c, anim, a2, child) =>
+                        FadeTransition(opacity: anim, child: child),
+                    transitionDuration: Duration(milliseconds: 400),
+                    settings: settings,
+                    opaque: _determineOpaque(settings),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        bottomNavigationBar: StreamBuilder(
-          stream: _showBottomBar.stream,
-          builder: (_, snapshot) => (snapshot.data ?? true)
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    AudioPlayerWidget(
-                      navigator: navigator,
-                    ),
-                    SizedBox(height: 2),
-                    BottomNavigationBar(
-                      backgroundColor: Theme.of(context).bottomAppBarColor,
-                      currentIndex: _currentIndex,
-                      onTap: (index) => setState(() {
-                        _currentIndex = index;
-                        navigator.pushNamedAndRemoveUntil(
-                            bottomBarRoutes[_currentIndex], (route) => false);
-                      }),
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.home),
-                          label: S.current.buttomAppBar_home,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.search),
-                          label: S.current.buttomAppBar_search,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.library_music),
-                          label: S.current.bottomAppBar_library,
-                        )
-                      ],
-                    ),
-                  ],
-                )
-              : SizedBox(
-                  height: 0,
-                ),
+          bottomNavigationBar: StreamBuilder(
+            stream: _showBottomBar.stream,
+            builder: (_, snapshot) => (snapshot.data ?? true)
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      AudioPlayerWidget(
+                        navigator: navigator,
+                      ),
+                      SizedBox(height: 2),
+                      BottomNavigationBar(
+                        backgroundColor: Theme.of(context).bottomAppBarColor,
+                        currentIndex: _currentIndex,
+                        onTap: (index) => setState(() {
+                          _currentIndex = index;
+                          navigator.pushNamedAndRemoveUntil(
+                              bottomBarRoutes[_currentIndex], (route) => false);
+                        }),
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.home),
+                            label: S.current.buttomAppBar_home,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.search),
+                            label: S.current.buttomAppBar_search,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: Icon(Icons.library_music),
+                            label: S.current.bottomAppBar_library,
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    height: 0,
+                  ),
+          ),
         ),
       ),
     );

@@ -4,7 +4,6 @@ import 'package:flixage/bloc/networt_status_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class OverlayNetworkAwarePage extends StatelessWidget {
