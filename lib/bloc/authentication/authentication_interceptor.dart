@@ -8,7 +8,6 @@ import 'package:flixage/repository/authentication_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
-const String AUTHORIZATION_HEADER = "Authorization";
 const String AUTHORIZATION_PREFIX = "Bearer ";
 
 class AuthenticationInterceptor extends Interceptor {
@@ -31,7 +30,7 @@ class AuthenticationInterceptor extends Interceptor {
     dio.interceptors.requestLock.lock();
 
     if (!options.path.contains("authentication")) {
-      options.headers[AUTHORIZATION_HEADER] =
+      options.headers[HttpHeaders.authorizationHeader] =
           AUTHORIZATION_PREFIX + await tokenStore.getAccessToken();
     }
 

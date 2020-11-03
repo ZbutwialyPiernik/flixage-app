@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/bloc/authentication/network_state_interceptor.dart';
 import 'package:flixage/bloc/language/language_bloc.dart';
 import 'package:flixage/bloc/networt_status_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
@@ -42,8 +43,10 @@ void main() {
   final authenticatedDio = Dio();
   final unauthenticatedDio = Dio();
 
-  _setupDio("Authenticated", authenticatedDio);
-  _setupDio("Unauthenticated", unauthenticatedDio);
+  final networkBloc = NetworkStatusBloc();
+
+  _setupDio("Authenticated", authenticatedDio, networkBloc);
+  _setupDio("Unauthenticated", unauthenticatedDio, networkBloc);
 
   final authenticationRepository = AuthenticationRepository(unauthenticatedDio);
   final secureStorage = FlutterSecureStorage();
@@ -54,15 +57,17 @@ void main() {
     tokenStore: tokenStore,
     authenticationRepository: authenticationRepository,
     secureStorage: secureStorage,
+    networkBloc: networkBloc,
   ));
 }
 
-_setupDio(String name, Dio dio) {
+_setupDio(String name, Dio dio, NetworkStatusBloc networkBloc) {
   dio.options.baseUrl = API_SERVER;
   dio.options.connectTimeout = defaultConnectTimeout;
   dio.options.receiveTimeout = defaultReceiveTimeout;
   dio.options.sendTimeout = defaultSendTimeout;
 
+  dio.interceptors.add(NetworkStateInterceptor(networkBloc));
   dio.interceptors.add(LoggingInterceptor(name));
 }
 
@@ -71,13 +76,15 @@ class Main extends StatelessWidget {
   final TokenStore tokenStore;
   final FlutterSecureStorage secureStorage;
   final AuthenticationRepository authenticationRepository;
+  final NetworkStatusBloc networkBloc;
 
   const Main({
     Key key,
-    this.dio,
-    this.tokenStore,
-    this.authenticationRepository,
-    this.secureStorage,
+    @required this.dio,
+    @required this.tokenStore,
+    @required this.authenticationRepository,
+    @required this.secureStorage,
+    @required this.networkBloc,
   }) : super(key: key);
 
   @override
@@ -103,7 +110,7 @@ class Main extends StatelessWidget {
         Provider<AuthenticationRepository>.value(value: authenticationRepository),
         Provider<TokenStore>.value(value: tokenStore),
         Provider<Dio>.value(value: dio),
-        Provider<NetworkStatusBloc>(create: (_) => NetworkStatusBloc()),
+        Provider<NetworkStatusBloc>.value(value: networkBloc),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
