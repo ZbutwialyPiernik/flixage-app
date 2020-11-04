@@ -130,6 +130,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsPage_logout" : MessageLookupByLibrary.simpleMessage("Logout"),
     "settingsPage_section_account" : MessageLookupByLibrary.simpleMessage("Account"),
     "settingsPage_title" : MessageLookupByLibrary.simpleMessage("Settings"),
+    "splashScreen_offline" : MessageLookupByLibrary.simpleMessage("You\'re offline, check your connection and try again"),
+    "splashScreen_welcome" : MessageLookupByLibrary.simpleMessage("Welcome Again!"),
     "trackAddError" : m12,
     "trackAdded" : m13,
     "trackContextMenu_addToPlaylist" : MessageLookupByLibrary.simpleMessage("Add to playlist"),

@@ -135,6 +135,26 @@ class S {
     );
   }
 
+  /// `Welcome Again!`
+  String get splashScreen_welcome {
+    return Intl.message(
+      'Welcome Again!',
+      name: 'splashScreen_welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're offline, check your connection and try again`
+  String get splashScreen_offline {
+    return Intl.message(
+      'You\'re offline, check your connection and try again',
+      name: 'splashScreen_offline',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settingsPage_title {
     return Intl.message(

@@ -9,6 +9,8 @@
   "common_offline": "You're offline",
   "common_username": "Username",
   "common_password": "Password",
+  "splashScreen_welcome": "Welcome Again!",
+  "splashScreen_offline": "You're offline, check your connection and try again",
   "settingsPage_title": "Settings",
   "settingsPage_language": "Language",
   "settingsPage_logout": "Logout",

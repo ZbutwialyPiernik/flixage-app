@@ -23,7 +23,7 @@ dependencies:
   validators: ^2.0.0
   equatable: ^1.1.1
   # Animations
-  animated_text_kit: ^2.2.0
+  #animated_text_kit: ^2.2.0
   # Widgets
   progress_button: ^0.0.2
   settings_ui: ^0.4.0

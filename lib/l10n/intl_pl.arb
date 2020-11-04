@@ -9,6 +9,8 @@
   "common_offline": "Brak połączenia z internetem",
   "common_username": "Nazwa użytkownika",
   "common_password": "Hasło",
+  "splashScreen_welcome": "Witaj Ponownie!",
+  "splashScreen_offline": "Jesteś offline, sprawdź swoje połączenie i spróbuj ponownie",
   "settingsPage_title": "Ustawienia",
   "settingsPage_language": "Język",
   "buttomAppBar_home": "Home",

@@ -74,18 +74,23 @@ class _LibraryPageState extends State<LibraryPage> {
                 arguments: Arguments(extra: playlist),
               ),
             ),
-            emptyBuilder: (context) => Stack(
+            emptyBuilder: (context) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: _createPlaylistItem(context),
-                  ),
+                Text(
+                  S.current.libraryPage_tab_playlists_noPlaylists,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(S.current.libraryPage_tab_playlists_noPlaylists),
+                SizedBox(height: 16),
+                RaisedButton(
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  color: Theme.of(context).accentColor,
+                  shape: StadiumBorder(),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                      CreatePlaylistPage.route,
+                      arguments: Arguments(showBottomAppBar: false)),
+                  child: Text(S.current.libraryPage_tab_playlists_createPlaylist),
                 )
               ],
             ),
@@ -105,7 +110,8 @@ class _LibraryPageState extends State<LibraryPage> {
             items: state.data,
             itemBuilder: (context, artist) => ArtistItem(artist: artist),
             emptyBuilder: (context) => Center(
-              child: Text(S.current.libraryPage_tab_artists_noPlayed),
+              child: Text(S.current.libraryPage_tab_artists_noPlayed,
+                  style: Theme.of(context).textTheme.headline5),
             ),
           );
         },
