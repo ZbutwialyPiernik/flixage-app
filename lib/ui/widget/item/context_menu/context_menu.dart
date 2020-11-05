@@ -1,6 +1,5 @@
 import 'package:flixage/model/queryable.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
 import 'package:flutter/material.dart';
 
 abstract class ContextMenu<T extends Queryable> extends StatelessWidget {
@@ -12,7 +11,7 @@ abstract class ContextMenu<T extends Queryable> extends StatelessWidget {
   List<Widget> createHeader(BuildContext context, T item);
 
   @protected
-  List<ContextMenuItem<T>> createActions(BuildContext context, T item);
+  List<Widget> createActions(BuildContext context, T item);
 
   Widget build(BuildContext context) {
     final T item = (ModalRoute.of(context).settings.arguments as Arguments).extra;

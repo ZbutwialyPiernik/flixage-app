@@ -43,11 +43,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m11(query) => "Nie znaleziono \"${query}\"";
 
-  static m12(name) => "Błąd podczas dodawania utworu do playlisty „${name}”";
+  static m13(name) => "Błąd podczas dodawania utworu do playlisty „${name}”";
 
-  static m13(name) => "Utwór został dodany do playlisty „${name}”";
+  static m14(name) => "Utwór został dodany do playlisty „${name}”";
 
-  static m14(name) => "Utwór • ${name}";
+  static m15(name) => "Utwór • ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -125,12 +125,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsPage_title" : MessageLookupByLibrary.simpleMessage("Ustawienia"),
     "splashScreen_offline" : MessageLookupByLibrary.simpleMessage("Jesteś offline, sprawdź swoje połączenie i spróbuj ponownie"),
     "splashScreen_welcome" : MessageLookupByLibrary.simpleMessage("Witaj Ponownie!"),
-    "trackAddError" : m12,
-    "trackAdded" : m13,
+    "trackAddError" : m13,
+    "trackAdded" : m14,
     "trackContextMenu_addToPlaylist" : MessageLookupByLibrary.simpleMessage("Dodaj do playlisty"),
     "trackContextMenu_showAlbum" : MessageLookupByLibrary.simpleMessage("Pokaż album"),
     "trackContextMenu_showArtist" : MessageLookupByLibrary.simpleMessage("Pokaż artystę"),
-    "trackItem_track" : m14,
+    "trackItem_track" : m15,
     "userItem_user" : MessageLookupByLibrary.simpleMessage("Użytkownik")
   };
 }

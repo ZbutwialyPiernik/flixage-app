@@ -17,6 +17,9 @@ class Playlist extends Queryable {
     this.shareCode,
   }) : super(id, name, thumbnailUrl);
 
+  bool isOwner(User otherUser) => otherUser.id == owner.id;
+  bool isNotOwner(User otherUser) => otherUser.id != owner.id;
+
   static Playlist fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 

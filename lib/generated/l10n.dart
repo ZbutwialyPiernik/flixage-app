@@ -914,6 +914,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Author: {name}`
+  String sharePlaylistContextMenu_author(Object name) {
+    return Intl.message(
+      'Author: $name',
+      name: 'sharePlaylistContextMenu_author',
+      desc: '',
+      args: [name],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -86,5 +86,6 @@
   "homePage_latestSingles": "Latest singles",
   "homePage_recentlyPlayed": "Recently played",
   "loginPage_serversUnavailable": "Couldn't connect to server",
-  "loginPage_authenticationServiceUnvaiable": "Authentication service unavailable"
+  "loginPage_authenticationServiceUnvaiable": "Authentication service unavailable",
+  "sharePlaylistContextMenu_author": "Author: {name}"
 }

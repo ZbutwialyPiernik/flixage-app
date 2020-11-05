@@ -18,7 +18,7 @@ abstract class QueryableContextMenu<T extends Queryable> extends ContextMenu<T> 
           SizedBox(height: 16),
           Text(item.name,
               style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16)),
-          SizedBox(height: 24),
+          SizedBox(height: 32),
         ],
       )
     ];

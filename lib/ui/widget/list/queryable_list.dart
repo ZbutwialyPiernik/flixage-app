@@ -38,7 +38,7 @@ class QueryableList<T extends Queryable> extends StatelessWidget {
       );
     }
 
-    return Expanded(child: child);
+    return child;
   }
 
   Widget _buildItem(BuildContext context, int index, List<T> items) {

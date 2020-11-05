@@ -116,7 +116,31 @@ class _LibraryPageState extends State<LibraryPage> {
           );
         },
       ),
-      Text("Followed")
+      QueryableList<Playlist>(
+        items: [],
+        itemBuilder: (context, playlist) => PlaylistItem(playlist: playlist),
+        emptyBuilder: (context) => Column(
+          children: [
+            Text(S.current.libraryPage_tab_artists_noPlayed,
+                style: Theme.of(context).textTheme.headline5),
+            SizedBox(height: 8),
+            Row(children: [
+              Chip(
+                avatar: Icon(Icons.qr_code),
+                label: Text("XD"),
+              ),
+              IconButton(
+                icon: Icon(Icons.qr_code),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.ac_unit),
+                onPressed: () {},
+              ),
+            ])
+          ],
+        ),
+      )
     ];
   }
 

@@ -17,7 +17,7 @@ class TrackContextMenu extends QueryableContextMenu<Track> {
   static const String route = "contextMenu/track";
 
   @override
-  List<ContextMenuItem<Track>> createActions(BuildContext context, Track track) {
+  List<Widget> createActions(BuildContext context, Track track) {
     final libraryBloc = Provider.of<LibraryBloc>(context);
 
     return [
