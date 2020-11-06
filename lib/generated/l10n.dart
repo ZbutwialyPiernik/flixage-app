@@ -35,31 +35,31 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Request timeout`
-  String get dio_requestTimeout {
+  /// `Home`
+  String get buttomAppBar_home {
     return Intl.message(
-      'Request timeout',
-      name: 'dio_requestTimeout',
+      'Home',
+      name: 'buttomAppBar_home',
       desc: '',
       args: [],
     );
   }
 
-  /// `Failed to connect to the server`
-  String get dio_connectionTimeout {
+  /// `Search`
+  String get buttomAppBar_search {
     return Intl.message(
-      'Failed to connect to the server',
-      name: 'dio_connectionTimeout',
+      'Search',
+      name: 'buttomAppBar_search',
       desc: '',
       args: [],
     );
   }
 
-  /// `Timed out`
-  String get dio_receiveTimeout {
+  /// `Library`
+  String get bottomAppBar_library {
     return Intl.message(
-      'Timed out',
-      name: 'dio_receiveTimeout',
+      'Library',
+      name: 'bottomAppBar_library',
       desc: '',
       args: [],
     );
@@ -135,91 +135,91 @@ class S {
     );
   }
 
-  /// `Welcome Again!`
-  String get splashScreen_welcome {
+  /// `Request timeout`
+  String get dio_requestTimeout {
     return Intl.message(
-      'Welcome Again!',
-      name: 'splashScreen_welcome',
+      'Request timeout',
+      name: 'dio_requestTimeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `You're offline, check your connection and try again`
-  String get splashScreen_offline {
+  /// `Failed to connect to the server`
+  String get dio_connectionTimeout {
     return Intl.message(
-      'You\'re offline, check your connection and try again',
-      name: 'splashScreen_offline',
+      'Failed to connect to the server',
+      name: 'dio_connectionTimeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Settings`
-  String get settingsPage_title {
+  /// `Timed out`
+  String get dio_receiveTimeout {
     return Intl.message(
-      'Settings',
-      name: 'settingsPage_title',
+      'Timed out',
+      name: 'dio_receiveTimeout',
       desc: '',
       args: [],
     );
   }
 
-  /// `Language`
-  String get settingsPage_language {
+  /// `By {name}`
+  String albumPage_by(Object name) {
     return Intl.message(
-      'Language',
-      name: 'settingsPage_language',
+      'By $name',
+      name: 'albumPage_by',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Monthly listeners: {monthlyListeners}`
+  String albumPage_monthlyListeners(Object monthlyListeners) {
+    return Intl.message(
+      'Monthly listeners: $monthlyListeners',
+      name: 'albumPage_monthlyListeners',
+      desc: '',
+      args: [monthlyListeners],
+    );
+  }
+
+  /// `Albums`
+  String get artistPage_albums {
+    return Intl.message(
+      'Albums',
+      name: 'artistPage_albums',
       desc: '',
       args: [],
     );
   }
 
-  /// `Logout`
-  String get settingsPage_logout {
+  /// `Popular`
+  String get artistPage_popular {
     return Intl.message(
-      'Logout',
-      name: 'settingsPage_logout',
+      'Popular',
+      name: 'artistPage_popular',
       desc: '',
       args: [],
     );
   }
 
-  /// `Account`
-  String get settingsPage_section_account {
+  /// `Singles`
+  String get artistPage_singles {
     return Intl.message(
-      'Account',
-      name: 'settingsPage_section_account',
+      'Singles',
+      name: 'artistPage_singles',
       desc: '',
       args: [],
     );
   }
 
-  /// `Home`
-  String get buttomAppBar_home {
+  /// `Show all`
+  String get artistPage_showAll {
     return Intl.message(
-      'Home',
-      name: 'buttomAppBar_home',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Search`
-  String get buttomAppBar_search {
-    return Intl.message(
-      'Search',
-      name: 'buttomAppBar_search',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Library`
-  String get bottomAppBar_library {
-    return Intl.message(
-      'Library',
-      name: 'bottomAppBar_library',
+      'Show all',
+      name: 'artistPage_showAll',
       desc: '',
       args: [],
     );
@@ -250,6 +250,76 @@ class S {
     return Intl.message(
       'Illegal characters',
       name: 'authenticationPage_illegalCharacters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name cannot be empty`
+  String get createPlaylistPage_emptyName {
+    return Intl.message(
+      'Name cannot be empty',
+      name: 'createPlaylistPage_emptyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name your playlist`
+  String get createPlaylistPage_namePlaylist {
+    return Intl.message(
+      'Name your playlist',
+      name: 'createPlaylistPage_namePlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome {name}!`
+  String homePage_welcome(Object name) {
+    return Intl.message(
+      'Welcome $name!',
+      name: 'homePage_welcome',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `New releases`
+  String get homePage_newReleases {
+    return Intl.message(
+      'New releases',
+      name: 'homePage_newReleases',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest artists`
+  String get homePage_latestArtists {
+    return Intl.message(
+      'Latest artists',
+      name: 'homePage_latestArtists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Latest singles`
+  String get homePage_latestSingles {
+    return Intl.message(
+      'Latest singles',
+      name: 'homePage_latestSingles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recently played`
+  String get homePage_recentlyPlayed {
+    return Intl.message(
+      'Recently played',
+      name: 'homePage_recentlyPlayed',
       desc: '',
       args: [],
     );
@@ -315,6 +385,16 @@ class S {
     );
   }
 
+  /// `Authentication service unavailable`
+  String get loginPage_authenticationServiceUnvaiable {
+    return Intl.message(
+      'Authentication service unavailable',
+      name: 'loginPage_authenticationServiceUnvaiable',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Invalid Credentials`
   String get loginPage_invalidCredentials {
     return Intl.message(
@@ -325,11 +405,101 @@ class S {
     );
   }
 
-  /// `Invalid password`
-  String get loginPage_invalidPassword {
+  /// `Login`
+  String get loginPage_login {
     return Intl.message(
-      'Invalid password',
-      name: 'loginPage_invalidPassword',
+      'Login',
+      name: 'loginPage_login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't connect to server`
+  String get loginPage_serversUnavailable {
+    return Intl.message(
+      'Couldn\'t connect to server',
+      name: 'loginPage_serversUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New playlist`
+  String get pickPlaylistPage_newPlaylist {
+    return Intl.message(
+      'New playlist',
+      name: 'pickPlaylistPage_newPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add to playlist`
+  String get pickPlaylistPage_addToPlaylist {
+    return Intl.message(
+      'Add to playlist',
+      name: 'pickPlaylistPage_addToPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Author: {name}`
+  String playlistPage_author(Object name) {
+    return Intl.message(
+      'Author: $name',
+      name: 'playlistPage_author',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Thumbnail changed`
+  String get playlistPage_thumbnailChanged {
+    return Intl.message(
+      'Thumbnail changed',
+      name: 'playlistPage_thumbnailChanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Playlist loading error`
+  String get playlistPage_playlistLoadingError {
+    return Intl.message(
+      'Playlist loading error',
+      name: 'playlistPage_playlistLoadingError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsupported extension`
+  String get playlistPage_unsupportedExtension {
+    return Intl.message(
+      'Unsupported extension',
+      name: 'playlistPage_unsupportedExtension',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your playlist is empty`
+  String get playlistPage_emptyPlaylist {
+    return Intl.message(
+      'Your playlist is empty',
+      name: 'playlistPage_emptyPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shuffle play`
+  String get queryablePage_playRandomly {
+    return Intl.message(
+      'Shuffle play',
+      name: 'queryablePage_playRandomly',
       desc: '',
       args: [],
     );
@@ -385,131 +555,21 @@ class S {
     );
   }
 
+  /// `Register`
+  String get registerPage_register {
+    return Intl.message(
+      'Register',
+      name: 'registerPage_register',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Repeat password`
   String get registerPage_repeatPassword {
     return Intl.message(
       'Repeat password',
       name: 'registerPage_repeatPassword',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Shuffle play`
-  String get queryablePage_playRandomly {
-    return Intl.message(
-      'Shuffle play',
-      name: 'queryablePage_playRandomly',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `By {name}`
-  String albumPage_by(Object name) {
-    return Intl.message(
-      'By $name',
-      name: 'albumPage_by',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `Albums`
-  String get artistPage_albums {
-    return Intl.message(
-      'Albums',
-      name: 'artistPage_albums',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Popular`
-  String get artistPage_popular {
-    return Intl.message(
-      'Popular',
-      name: 'artistPage_popular',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Singles`
-  String get artistPage_singles {
-    return Intl.message(
-      'Singles',
-      name: 'artistPage_singles',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Show all`
-  String get artistPage_showAll {
-    return Intl.message(
-      'Show all',
-      name: 'artistPage_showAll',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Name cannot be empty`
-  String get createPlaylistPage_emptyName {
-    return Intl.message(
-      'Name cannot be empty',
-      name: 'createPlaylistPage_emptyName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Author: {name}`
-  String playlistPage_author(Object name) {
-    return Intl.message(
-      'Author: $name',
-      name: 'playlistPage_author',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `Thumbnail changed`
-  String get playlistPage_thumbnailChanged {
-    return Intl.message(
-      'Thumbnail changed',
-      name: 'playlistPage_thumbnailChanged',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Playlist loading error`
-  String get playlistPage_playlistLoadingError {
-    return Intl.message(
-      'Playlist loading error',
-      name: 'playlistPage_playlistLoadingError',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Unsupported extension`
-  String get playlistPage_unsupportedExtension {
-    return Intl.message(
-      'Unsupported extension',
-      name: 'playlistPage_unsupportedExtension',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Your playlist is empty`
-  String get playlistPage_emptyPlaylist {
-    return Intl.message(
-      'Your playlist is empty',
-      name: 'playlistPage_emptyPlaylist',
       desc: '',
       args: [],
     );
@@ -575,13 +635,93 @@ class S {
     );
   }
 
-  /// `Track • {name}`
-  String trackItem_track(Object name) {
+  /// `Settings`
+  String get settingsPage_title {
     return Intl.message(
-      'Track • $name',
-      name: 'trackItem_track',
+      'Settings',
+      name: 'settingsPage_title',
       desc: '',
-      args: [name],
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get settingsPage_language {
+    return Intl.message(
+      'Language',
+      name: 'settingsPage_language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get settingsPage_logout {
+    return Intl.message(
+      'Logout',
+      name: 'settingsPage_logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account`
+  String get settingsPage_section_account {
+    return Intl.message(
+      'Account',
+      name: 'settingsPage_section_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select language`
+  String get settingsPage_selectLanguage {
+    return Intl.message(
+      'Select language',
+      name: 'settingsPage_selectLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome Again!`
+  String get splashScreen_welcome {
+    return Intl.message(
+      'Welcome Again!',
+      name: 'splashScreen_welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You're offline, check your connection and try again`
+  String get splashScreen_offline {
+    return Intl.message(
+      'You\'re offline, check your connection and try again',
+      name: 'splashScreen_offline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Public playlists`
+  String get userPage_publicPlaylists {
+    return Intl.message(
+      'Public playlists',
+      name: 'userPage_publicPlaylists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Album`
+  String get albumItem_album {
+    return Intl.message(
+      'Album',
+      name: 'albumItem_album',
+      desc: '',
+      args: [],
     );
   }
 
@@ -595,21 +735,21 @@ class S {
     );
   }
 
+  /// `Track • {name}`
+  String trackItem_track(Object name) {
+    return Intl.message(
+      'Track • $name',
+      name: 'trackItem_track',
+      desc: '',
+      args: [name],
+    );
+  }
+
   /// `User`
   String get userItem_user {
     return Intl.message(
       'User',
       name: 'userItem_user',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Album`
-  String get albumItem_album {
-    return Intl.message(
-      'Album',
-      name: 'albumItem_album',
       desc: '',
       args: [],
     );
@@ -632,16 +772,6 @@ class S {
       name: 'playlistItem_createdBy',
       desc: '',
       args: [name],
-    );
-  }
-
-  /// `Monthly listeners: {monthlyListeners}`
-  String albumPage_monthlyListeners(Object monthlyListeners) {
-    return Intl.message(
-      'Monthly listeners: $monthlyListeners',
-      name: 'albumPage_monthlyListeners',
-      desc: '',
-      args: [monthlyListeners],
     );
   }
 
@@ -725,6 +855,16 @@ class S {
     );
   }
 
+  /// `Show author`
+  String get contextMenu_showAuthor {
+    return Intl.message(
+      'Show author',
+      name: 'contextMenu_showAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Error during update of playlist '{name}'`
   String playlistUpdateError(Object name) {
     return Intl.message(
@@ -765,6 +905,36 @@ class S {
     );
   }
 
+  /// `Author: {name}`
+  String sharePlaylistContextMenu_author(Object name) {
+    return Intl.message(
+      'Author: $name',
+      name: 'sharePlaylistContextMenu_author',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Copy link`
+  String get sharePlaylistContextMenu_copyLink {
+    return Intl.message(
+      'Copy link',
+      name: 'sharePlaylistContextMenu_copyLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Link has been copied to clipboard`
+  String get sharePlaylistContextMenu_linkCopied {
+    return Intl.message(
+      'Link has been copied to clipboard',
+      name: 'sharePlaylistContextMenu_linkCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Show artist`
   String get trackContextMenu_showArtist {
     return Intl.message(
@@ -792,136 +962,6 @@ class S {
       name: 'trackContextMenu_addToPlaylist',
       desc: '',
       args: [],
-    );
-  }
-
-  /// `Name your playlist`
-  String get createPlaylistPage_namePlaylist {
-    return Intl.message(
-      'Name your playlist',
-      name: 'createPlaylistPage_namePlaylist',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `New playlist`
-  String get pickPlaylistPage_newPlaylist {
-    return Intl.message(
-      'New playlist',
-      name: 'pickPlaylistPage_newPlaylist',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Add to playlist`
-  String get pickPlaylistPage_addToPlaylist {
-    return Intl.message(
-      'Add to playlist',
-      name: 'pickPlaylistPage_addToPlaylist',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Login`
-  String get loginPage_login {
-    return Intl.message(
-      'Login',
-      name: 'loginPage_login',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Register`
-  String get registerPage_register {
-    return Intl.message(
-      'Register',
-      name: 'registerPage_register',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Welcome {name}!`
-  String homePage_welcome(Object name) {
-    return Intl.message(
-      'Welcome $name!',
-      name: 'homePage_welcome',
-      desc: '',
-      args: [name],
-    );
-  }
-
-  /// `New releases`
-  String get homePage_newReleases {
-    return Intl.message(
-      'New releases',
-      name: 'homePage_newReleases',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Latest artists`
-  String get homePage_latestArtists {
-    return Intl.message(
-      'Latest artists',
-      name: 'homePage_latestArtists',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Latest singles`
-  String get homePage_latestSingles {
-    return Intl.message(
-      'Latest singles',
-      name: 'homePage_latestSingles',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Recently played`
-  String get homePage_recentlyPlayed {
-    return Intl.message(
-      'Recently played',
-      name: 'homePage_recentlyPlayed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Couldn't connect to server`
-  String get loginPage_serversUnavailable {
-    return Intl.message(
-      'Couldn\'t connect to server',
-      name: 'loginPage_serversUnavailable',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Authentication service unavailable`
-  String get loginPage_authenticationServiceUnvaiable {
-    return Intl.message(
-      'Authentication service unavailable',
-      name: 'loginPage_authenticationServiceUnvaiable',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Author: {name}`
-  String sharePlaylistContextMenu_author(Object name) {
-    return Intl.message(
-      'Author: $name',
-      name: 'sharePlaylistContextMenu_author',
-      desc: '',
-      args: [name],
     );
   }
 }

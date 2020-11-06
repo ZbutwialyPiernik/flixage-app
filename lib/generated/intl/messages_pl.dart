@@ -85,7 +85,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "libraryFetchError" : MessageLookupByLibrary.simpleMessage("Wystąpił problem podczas pobierania biblioteki"),
     "loginPage_authenticationServiceUnvaiable" : MessageLookupByLibrary.simpleMessage("Serwery uwierzytelniania są niedostępne"),
     "loginPage_invalidCredentials" : MessageLookupByLibrary.simpleMessage("Nieprawidłowe dane logowania"),
-    "loginPage_invalidPassword" : MessageLookupByLibrary.simpleMessage("Nieprawidłowe hasło"),
     "loginPage_login" : MessageLookupByLibrary.simpleMessage("Zaloguj"),
     "loginPage_serversUnavailable" : MessageLookupByLibrary.simpleMessage("Nie udało się połączyć z serwerem"),
     "pickPlaylistPage_addToPlaylist" : MessageLookupByLibrary.simpleMessage("Dodaj do playlisty"),

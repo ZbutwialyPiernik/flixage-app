@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
   final B Function(BuildContext context) create;
   final Widget Function(BuildContext context, B bloc, AsyncSnapshot<S> state) builder;
-  final Function(BuildContext context, B bloc) init;
+  final Function(BuildContext context, B bloc) onInit;
 
   const BlocBuilder({
     Key key,
     @required this.builder,
     this.create,
-    this.init,
+    this.onInit,
   }) : super(key: key);
 
   @override
@@ -30,8 +30,8 @@ class _BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S
 
     bloc = isLocal ? widget.create(context) : Provider.of<B>(context);
 
-    if (widget.init != null) {
-      widget.init(context, bloc);
+    if (widget.onInit != null) {
+      widget.onInit(context, bloc);
     }
   }
 

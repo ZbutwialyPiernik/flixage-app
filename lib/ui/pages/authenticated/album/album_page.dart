@@ -27,7 +27,7 @@ class AlbumPage extends StatelessWidget {
       create: (context) => AlbumBloc(
           notificationBloc: Provider.of<NotificationBloc>(context),
           albumRepository: AlbumRepository(Provider.of<Dio>(context))),
-      init: (context, bloc) => bloc.dispatch(album),
+      onInit: (context, bloc) => bloc.dispatch(album),
       builder: (context, _, snapshot) {
         if (!snapshot.hasData)
           return Expanded(

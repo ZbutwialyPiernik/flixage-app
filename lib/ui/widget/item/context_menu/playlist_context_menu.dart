@@ -32,11 +32,13 @@ class PlaylistContextMenu extends QueryableContextMenu<Playlist> {
           iconData: Icons.edit,
           description: S.current.playlistContextMenu_editPlaylist,
           onPressed: () {},
-        ),//      ContextMenuItem(
-          //iconData: Icons.person, description: "Pokaż autora", onPressed: () {}),
+        ), //      ContextMenuItem(
+      //iconData: Icons.person, description: "Pokaż autora", onPressed: () {}),
       //if (playlist.isNotOwner(authenticationBloc.currentUser))
       ContextMenuItem(
-          iconData: Icons.person, description: "Pokaż autora", onPressed: () {}),
+          iconData: Icons.person,
+          description: S.current.contextMenu_showAuthor,
+          onPressed: () {}),
       ContextMenuItem(
         iconData: Icons.share,
         description: S.current.playlistContextMenu_sharePlaylist,

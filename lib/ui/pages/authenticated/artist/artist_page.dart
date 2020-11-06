@@ -36,7 +36,7 @@ class _ArtistPageState extends State<ArtistPage> {
         notificationBloc: Provider.of<NotificationBloc>(context),
         artistRepository: ArtistRepository(Provider.of<Dio>(context)),
       ),
-      init: (context, bloc) => bloc.dispatch(artist),
+      onInit: (context, bloc) => bloc.dispatch(artist),
       builder: (context, _, snapshot) {
         if (!snapshot.hasData)
           return Expanded(

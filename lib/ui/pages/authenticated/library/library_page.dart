@@ -58,7 +58,7 @@ class _LibraryPageState extends State<LibraryPage> {
   List<Widget> _buildTabs(BuildContext context) {
     return [
       BlocBuilder<LibraryBloc, List<Playlist>>(
-        init: (context, bloc) => bloc.dispatch(LoadLibrary()),
+        onInit: (context, bloc) => bloc.dispatch(LoadLibrary()),
         builder: (context, _, state) {
           if (!state.hasData) {
             return LoadingWidget();
@@ -100,7 +100,7 @@ class _LibraryPageState extends State<LibraryPage> {
       BlocBuilder<TopArtistsBloc, List<Artist>>(
         create: (context) =>
             TopArtistsBloc(userRepository: UserRepository(Provider.of<Dio>(context))),
-        init: (context, bloc) => bloc.dispatch(LoadArtists()),
+        onInit: (context, bloc) => bloc.dispatch(LoadArtists()),
         builder: (context, _, state) {
           if (!state.hasData) {
             return LoadingWidget();

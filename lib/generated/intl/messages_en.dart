@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "common_validation_illegalCharacters" : MessageLookupByLibrary.simpleMessage("Illegal characters"),
     "common_validation_tooLong" : MessageLookupByLibrary.simpleMessage("Too long"),
     "common_validation_tooShort" : MessageLookupByLibrary.simpleMessage("Too short"),
+    "contextMenu_showAuthor" : MessageLookupByLibrary.simpleMessage("Show author"),
     "createPlaylistPage_emptyName" : MessageLookupByLibrary.simpleMessage("Name cannot be empty"),
     "createPlaylistPage_namePlaylist" : MessageLookupByLibrary.simpleMessage("Name your playlist"),
     "dio_connectionTimeout" : MessageLookupByLibrary.simpleMessage("Failed to connect to the server"),
@@ -93,7 +94,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "libraryPage_tab_playlists_title" : MessageLookupByLibrary.simpleMessage("Playlists"),
     "loginPage_authenticationServiceUnvaiable" : MessageLookupByLibrary.simpleMessage("Authentication service unavailable"),
     "loginPage_invalidCredentials" : MessageLookupByLibrary.simpleMessage("Invalid Credentials"),
-    "loginPage_invalidPassword" : MessageLookupByLibrary.simpleMessage("Invalid password"),
     "loginPage_login" : MessageLookupByLibrary.simpleMessage("Login"),
     "loginPage_serversUnavailable" : MessageLookupByLibrary.simpleMessage("Couldn\'t connect to server"),
     "pickPlaylistPage_addToPlaylist" : MessageLookupByLibrary.simpleMessage("Add to playlist"),
@@ -131,8 +131,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsPage_language" : MessageLookupByLibrary.simpleMessage("Language"),
     "settingsPage_logout" : MessageLookupByLibrary.simpleMessage("Logout"),
     "settingsPage_section_account" : MessageLookupByLibrary.simpleMessage("Account"),
+    "settingsPage_selectLanguage" : MessageLookupByLibrary.simpleMessage("Select language"),
     "settingsPage_title" : MessageLookupByLibrary.simpleMessage("Settings"),
     "sharePlaylistContextMenu_author" : m12,
+    "sharePlaylistContextMenu_copyLink" : MessageLookupByLibrary.simpleMessage("Copy link"),
+    "sharePlaylistContextMenu_linkCopied" : MessageLookupByLibrary.simpleMessage("Link has been copied to clipboard"),
     "splashScreen_offline" : MessageLookupByLibrary.simpleMessage("You\'re offline, check your connection and try again"),
     "splashScreen_welcome" : MessageLookupByLibrary.simpleMessage("Welcome Again!"),
     "trackAddError" : m13,
@@ -141,6 +144,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "trackContextMenu_showAlbum" : MessageLookupByLibrary.simpleMessage("Show album"),
     "trackContextMenu_showArtist" : MessageLookupByLibrary.simpleMessage("Show artist"),
     "trackItem_track" : m15,
-    "userItem_user" : MessageLookupByLibrary.simpleMessage("User")
+    "userItem_user" : MessageLookupByLibrary.simpleMessage("User"),
+    "userPage_publicPlaylists" : MessageLookupByLibrary.simpleMessage("Public playlists")
   };
 }

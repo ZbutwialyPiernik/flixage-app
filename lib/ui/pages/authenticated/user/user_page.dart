@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/page/user/user_bloc.dart';
+import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/user.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/ui/widget/arguments.dart';
@@ -30,7 +31,7 @@ class UserPage extends StatelessWidget {
         BlocBuilder<UserBloc, UserData>(
           create: (context) =>
               UserBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
-          init: (context, bloc) => bloc.dispatch(user),
+          onInit: (context, bloc) => bloc.dispatch(user),
           builder: (context, _, snapshot) {
             if (!snapshot.hasData) {
               return LoadingWidget();
@@ -42,9 +43,7 @@ class UserPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(
-                    "Public playlists",
-                  ),
+                  Text(S.current.userPage_publicPlaylists),
                   Expanded(
                     child: ListView.separated(
                       shrinkWrap: true,

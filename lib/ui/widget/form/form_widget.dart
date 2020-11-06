@@ -1,6 +1,7 @@
 import 'package:flixage/bloc/form_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/ui/widget/bloc_builder.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_button/progress_button.dart';
 import 'package:meta/meta.dart';
@@ -8,12 +9,14 @@ import 'package:provider/provider.dart';
 
 class FormWidget<T extends FormBloc> extends StatefulWidget {
   final T Function(BuildContext context) createBloc;
+  final Function(BuildContext, T bloc) onInit;
   final String submitButtonText;
 
   const FormWidget({
     Key key,
     @required this.createBloc,
     @required this.submitButtonText,
+    this.onInit,
   }) : super(key: key);
 
   @override
@@ -29,6 +32,7 @@ class _FormWidgetState<T extends FormBloc> extends State<FormWidget> {
 
     return BlocBuilder<T, FormBlocState>(
       create: widget.createBloc,
+      onInit: widget.onInit,
       builder: (context, bloc, snapshot) {
         final state = snapshot.data;
         final isDisabled = state is FormLoading || state is FormSubmitSuccess;

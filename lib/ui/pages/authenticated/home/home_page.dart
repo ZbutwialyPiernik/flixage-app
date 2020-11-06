@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
             trackRepository: TrackRepository(dio),
             userRepository: UserRepository(dio),
           ),
-          init: (context, bloc) => bloc.dispatch(LoadHome()),
+          onInit: (context, bloc) => bloc.dispatch(LoadHome()),
           builder: (context, _, snapshot) {
             if (!snapshot.hasData) {
               return LoadingWidget();

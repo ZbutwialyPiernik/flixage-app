@@ -22,7 +22,7 @@ class LanguageTile extends SettingsTile {
               onTap: () {
                 showConfirmationDialog<Locale>(
                   context: context,
-                  title: "Select language",
+                  title: S.current.settingsPage_selectLanguage,
                   shrinkWrap: true,
                   actions: S.delegate.supportedLocales
                       .map((locale) => AlertDialogAction(

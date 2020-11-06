@@ -17,12 +17,12 @@ class PlaylistShareContextMenu extends ContextMenu<Playlist> {
   List<Widget> createActions(BuildContext context, Playlist item) => [
         ContextMenuItem(
           iconData: Icons.link,
-          description: "Skopiuj link",
+          description: S.current.sharePlaylistContextMenu_copyLink,
           onPressed: () {
             Clipboard.setData(ClipboardData(
-              text: "http://www.flixage.com/share/playlist/" + item.shareCode));
-            //Provider.of<NotificationBloc>(context).dispatch(
-            //    SimpleNotification.info(content: "Link został skopiowany do schowka"));
+                text: "http://www.flixage.com/share/playlist/" + item.shareCode));
+            Provider.of<NotificationBloc>(context).dispatch(SimpleNotification.info(
+                content: S.current.sharePlaylistContextMenu_linkCopied));
           },
         ),
       ];
