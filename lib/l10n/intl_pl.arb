@@ -1,7 +1,5 @@
+
 {
-  "dio_requestTimeout": "Przekroczono limit czasu oczekiwania",
-  "dio_connectionTimeout": "Nie udało się połączyć z serwerem",
-  "dio_receiveTimeout": "Przekroczono limit czasu oczekiwania",
   "common_unknownError": "Nieznany błąd",
   "common_validation_tooShort": "Zbyt krótkie",
   "common_validation_tooLong": "Zbyt długie",
@@ -9,6 +7,9 @@
   "common_offline": "Brak połączenia z internetem",
   "common_username": "Nazwa użytkownika",
   "common_password": "Hasło",
+  "dio_requestTimeout": "Przekroczono limit czasu oczekiwania",
+  "dio_connectionTimeout": "Nie udało się połączyć z serwerem",
+  "dio_receiveTimeout": "Przekroczono limit czasu oczekiwania",
   "splashScreen_welcome": "Witaj Ponownie!",
   "splashScreen_offline": "Jesteś offline, sprawdź swoje połączenie i spróbuj ponownie",
   "settingsPage_title": "Ustawienia",

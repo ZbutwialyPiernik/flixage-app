@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
   final B Function(BuildContext context) create;
   final Widget Function(BuildContext context, B bloc, AsyncSnapshot<S> state) builder;
-  final Function(BuildContext context, B bloc) onInit;
+  final void Function(BuildContext context, B bloc) onInit;
 
   const BlocBuilder({
     Key key,
