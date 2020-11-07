@@ -110,7 +110,7 @@ class _LibraryPageState extends State<LibraryPage> {
             items: state.data,
             itemBuilder: (context, artist) => ArtistItem(artist: artist),
             emptyBuilder: (context) => Center(
-              child: Text(S.current.libraryPage_tab_artists_noPlayed,
+              child: Text(S.current.libraryPage_tab_artists_notPlayed,
                   style: Theme.of(context).textTheme.headline5),
             ),
           );
@@ -122,7 +122,7 @@ class _LibraryPageState extends State<LibraryPage> {
         emptyBuilder: (context) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(S.current.libraryPage_tab_artists_noPlayed,
+            Text(S.current.libraryPage_tab_followed_notFollowed,
                 style: Theme.of(context).textTheme.headline5),
             SizedBox(height: 8),
             Row(children: [

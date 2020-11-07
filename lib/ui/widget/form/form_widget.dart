@@ -23,7 +23,7 @@ class FormWidget<T extends FormBloc> extends StatefulWidget {
   _FormWidgetState createState() => _FormWidgetState<T>();
 }
 
-class _FormWidgetState<T extends FormBloc> extends State<FormWidget> {
+class _FormWidgetState<T extends FormBloc> extends State<FormWidget<T>> {
   final Map<String, TextEditingController> _controllers = Map();
 
   @override

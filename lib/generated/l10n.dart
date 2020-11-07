@@ -325,21 +325,21 @@ class S {
     );
   }
 
-  /// `Playlists`
-  String get libraryPage_tab_playlists_title {
-    return Intl.message(
-      'Playlists',
-      name: 'libraryPage_tab_playlists_title',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Artists`
   String get libraryPage_tab_artists_title {
     return Intl.message(
       'Artists',
       name: 'libraryPage_tab_artists_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You haven't played any song yet`
+  String get libraryPage_tab_artists_notPlayed {
+    return Intl.message(
+      'You haven\'t played any song yet',
+      name: 'libraryPage_tab_artists_notPlayed',
       desc: '',
       args: [],
     );
@@ -355,6 +355,26 @@ class S {
     );
   }
 
+  /// `You don't have any playlists yet`
+  String get libraryPage_tab_playlists_noPlaylists {
+    return Intl.message(
+      'You don\'t have any playlists yet',
+      name: 'libraryPage_tab_playlists_noPlaylists',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Playlists`
+  String get libraryPage_tab_playlists_title {
+    return Intl.message(
+      'Playlists',
+      name: 'libraryPage_tab_playlists_title',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Followed`
   String get libraryPage_tab_followed_title {
     return Intl.message(
@@ -365,21 +385,11 @@ class S {
     );
   }
 
-  /// `You haven't played any song yet`
-  String get libraryPage_tab_artists_noPlayed {
+  /// `You don't follow any playlists yet`
+  String get libraryPage_tab_followed_notFollowed {
     return Intl.message(
-      'You haven\'t played any song yet',
-      name: 'libraryPage_tab_artists_noPlayed',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You don't have any playlists yet`
-  String get libraryPage_tab_playlists_noPlaylists {
-    return Intl.message(
-      'You don\'t have any playlists yet',
-      name: 'libraryPage_tab_playlists_noPlaylists',
+      'You don\'t follow any playlists yet',
+      name: 'libraryPage_tab_followed_notFollowed',
       desc: '',
       args: [],
     );
