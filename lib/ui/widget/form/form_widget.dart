@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class FormWidget<T extends FormBloc> extends StatefulWidget {
   final T Function(BuildContext context) createBloc;
-  final void Function(BuildContext, T bloc) onInit;
+  final void Function(BuildContext context, T bloc) onInit;
   final String submitButtonText;
 
   const FormWidget({

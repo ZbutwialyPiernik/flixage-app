@@ -120,6 +120,7 @@ class _LibraryPageState extends State<LibraryPage> {
         items: [],
         itemBuilder: (context, playlist) => PlaylistItem(playlist: playlist),
         emptyBuilder: (context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(S.current.libraryPage_tab_artists_noPlayed,
                 style: Theme.of(context).textTheme.headline5),
