@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/home/home_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/queryable.dart';
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
             trackRepository: TrackRepository(dio),
             userRepository: UserRepository(dio),
           ),
-          onInit: (context, bloc) => bloc.dispatch(LoadHome()),
+          onInit: (context, bloc) => bloc.dispatch(Load()),
           builder: (context, _, data) {
             return SingleChildScrollView(
               padding: EdgeInsets.only(bottom: 16),

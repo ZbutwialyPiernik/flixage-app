@@ -915,6 +915,16 @@ class S {
     );
   }
 
+  /// `Observe`
+  String get playlistContextMenu_observe {
+    return Intl.message(
+      'Observe',
+      name: 'playlistContextMenu_observe',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Author: {name}`
   String sharePlaylistContextMenu_author(Object name) {
     return Intl.message(

@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pickPlaylistPage_addToPlaylist" : MessageLookupByLibrary.simpleMessage("Add to playlist"),
     "pickPlaylistPage_newPlaylist" : MessageLookupByLibrary.simpleMessage("New playlist"),
     "playlistContextMenu_editPlaylist" : MessageLookupByLibrary.simpleMessage("Edit playlist"),
+    "playlistContextMenu_observe" : MessageLookupByLibrary.simpleMessage("Observe"),
     "playlistContextMenu_removePlaylist" : MessageLookupByLibrary.simpleMessage("Remove playlist"),
     "playlistContextMenu_sharePlaylist" : MessageLookupByLibrary.simpleMessage("Share playlist"),
     "playlistCreateError" : m3,

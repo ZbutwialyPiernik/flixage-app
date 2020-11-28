@@ -8,7 +8,7 @@ import 'package:flixage/repository/playlist_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
-class UploadThumbnail extends Equatable {
+class UploadThumbnail extends AbstractLoad<UploadThumbnail> {
   final File image;
   final Playlist playlist;
 
@@ -16,6 +16,9 @@ class UploadThumbnail extends Equatable {
 
   @override
   List<Object> get props => [image, playlist];
+
+  @override
+  UploadThumbnail get arg => this;
 }
 
 class ThumbnailUploaded extends Equatable {

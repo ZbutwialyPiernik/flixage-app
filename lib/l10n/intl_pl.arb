@@ -67,6 +67,7 @@
   "playlistContextMenu_editPlaylist": "Edytuj playlistę",
   "playlistContextMenu_removePlaylist": "Usuń playlistę",
   "playlistContextMenu_sharePlaylist": "Udostępnij playlistę",
+  "playlistContextMenu_observe": "Obserwuj",
   "playlistPage_playlistLoadingError": "Wystąpił problem z ładowaniem playlisty",
   "playlistPage_thumbnailChanged": "Zmieniono miniaturkę",
   "playlistPage_unsupportedExtension": "Niewspierane rozszerzenie",

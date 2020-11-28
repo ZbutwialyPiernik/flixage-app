@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
+import 'package:flixage/bloc/page/library/followed_playlists_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/bloc/page/library/top_artists_bloc.dart';
@@ -103,7 +105,22 @@ class _LibraryPageState extends State<LibraryPage> {
       DefaultLoadingBlocWidget<TopArtistsBloc, List<Artist>>(
         create: (context) =>
             TopArtistsBloc(userRepository: UserRepository(Provider.of<Dio>(context))),
-        onInit: (context, bloc) => bloc.dispatch(LoadArtists()),
+        onInit: (context, bloc) => bloc.dispatch(Load()),
+        builder: (context, _, artits) {
+          return QueryableList<Artist>(
+            items: artits,
+            itemBuilder: (context, artist) => ArtistItem(artist: artist),
+            emptyBuilder: (context) => Center(
+              child: Text(S.current.libraryPage_tab_artists_notPlayed,
+                  style: Theme.of(context).textTheme.headline5),
+            ),
+          );
+        },
+      ),
+      DefaultLoadingBlocWidget<TopArtistsBloc, List<Artist>>(
+        create: (context) =>
+            TopArtistsBloc(userRepository: UserRepository(Provider.of<Dio>(context))),
+        onInit: (context, bloc) => bloc.dispatch(Load()),
         builder: (context, _, artits) {
           return QueryableList<Artist>(
             items: artits,
@@ -124,17 +141,20 @@ class _LibraryPageState extends State<LibraryPage> {
             Text(S.current.libraryPage_tab_followed_notFollowed,
                 style: Theme.of(context).textTheme.headline5),
             SizedBox(height: 8),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              IconButton(
-                icon: Icon(Icons.qr_code),
-                onPressed: () {
-                  scanner.scan().then((value) {
-                    Provider.of<NotificationBloc>(context)
-                        .dispatch(SimpleNotification.info(content: value));
-                  });
-                },
-              ),
-            ])
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.qr_code),
+                  onPressed: () {
+                    scanner.scan().then((value) {
+                      Provider.of<NotificationBloc>(context)
+                          .dispatch(SimpleNotification.info(content: value));
+                    });
+                  },
+                ),
+              ],
+            )
           ],
         ),
       )

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/artist/artist_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
@@ -36,7 +37,7 @@ class _ArtistPageState extends State<ArtistPage> {
         notificationBloc: Provider.of<NotificationBloc>(context),
         artistRepository: ArtistRepository(Provider.of<Dio>(context)),
       ),
-      onInit: (context, bloc) => bloc.dispatch(artist),
+      onInit: (context, bloc) => bloc.dispatch(Load(arg: artist)),
       builder: (context, _, data) {
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {

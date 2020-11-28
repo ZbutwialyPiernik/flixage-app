@@ -87,6 +87,7 @@
   "playlistContextMenu_removePlaylist": "Remove playlist",
   "playlistContextMenu_editPlaylist": "Edit playlist",
   "playlistContextMenu_sharePlaylist": "Share playlist",
+  "playlistContextMenu_observe": "Observe",
   "sharePlaylistContextMenu_author": "Author: {name}",
   "sharePlaylistContextMenu_copyLink": "Copy link",
   "sharePlaylistContextMenu_linkCopied": "Link has been copied to clipboard",

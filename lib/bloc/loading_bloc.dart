@@ -3,6 +3,19 @@ import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/dio_util.dart';
 import 'package:rxdart/rxdart.dart';
 
+abstract class AbstractLoad<T> extends Equatable {
+  T get arg;
+}
+
+class Load<T> extends AbstractLoad<T> {
+  final T arg;
+
+  Load({this.arg});
+
+  @override
+  List<Object> get props => [arg];
+}
+
 abstract class LoadingState<T> extends Equatable {}
 
 class LoadingUnitinialized<T> extends LoadingState<T> {
@@ -24,7 +37,7 @@ class LoadingSuccess<T> extends LoadingState<T> {
   List<Object> get props => [item];
 }
 
-abstract class LoadingBloc<T, D> extends Bloc<T, LoadingState<D>> {
+abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> {
   final BehaviorSubject<LoadingState<D>> _subject = BehaviorSubject();
 
   Stream<LoadingState<D>> get state => _subject.stream;
@@ -34,10 +47,10 @@ abstract class LoadingBloc<T, D> extends Bloc<T, LoadingState<D>> {
   Future<D> load(T event);
 
   @override
-  void onEvent(T event) {
+  void onEvent(AbstractLoad<T> event) {
     _subject.add(LoadingInProgress());
 
-    load(event)
+    load(event.arg)
         .then((data) => _subject.add(LoadingSuccess(data)))
         .catchError((e) => _subject.addError(mapCommonErrors(e)));
   }

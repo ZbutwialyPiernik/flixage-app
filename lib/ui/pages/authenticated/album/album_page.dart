@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/album/album_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
@@ -27,7 +28,7 @@ class AlbumPage extends StatelessWidget {
       create: (context) => AlbumBloc(
           notificationBloc: Provider.of<NotificationBloc>(context),
           albumRepository: AlbumRepository(Provider.of<Dio>(context))),
-      onInit: (context, bloc) => bloc.dispatch(album),
+      onInit: (context, bloc) => bloc.dispatch(Load(arg: album)),
       builder: (context, _, data) {
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {

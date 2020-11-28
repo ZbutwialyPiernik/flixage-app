@@ -15,7 +15,7 @@ class LoadPlaylist extends Equatable {
   List<Object> get props => [playlist];
 }
 
-class PlaylistBloc extends LoadingBloc<LoadPlaylist, List<Track>> {
+class PlaylistBloc extends LoadingBloc<Playlist, List<Track>> {
   final Logger log = Logger();
   final PlaylistRepository playlistRepository;
 
@@ -24,9 +24,9 @@ class PlaylistBloc extends LoadingBloc<LoadPlaylist, List<Track>> {
   });
 
   @override
-  Future<List<Track>> load(LoadPlaylist event) async {
+  Future<List<Track>> load(Playlist playlist) async {
     try {
-      final tracks = await playlistRepository.getTracksFromPlaylist(event.playlist.id);
+      final tracks = await playlistRepository.getTracksFromPlaylist(playlist.id);
 
       return tracks;
     } catch (e) {

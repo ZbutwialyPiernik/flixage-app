@@ -1,5 +1,6 @@
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/follow_playlist_bloc.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
@@ -46,12 +47,15 @@ class PlaylistContextMenu extends QueryableContextMenu<Playlist> {
           ),
         ),
       if (playlist.isNotOwner(authenticationBloc.currentUser))
-        BlocBuilder<FollowPlaylistBloc, void>(
+        BlocBuilder<FollowPlaylistBloc, LoadingState<void>>(
           builder: (context, bloc, snapshot) {
+            final enabled =
+                snapshot.data is LoadingUnitinialized || snapshot.data is LoadingSuccess;
+
             return ContextMenuItem(
               iconData: Icons.favorite,
-              description: "Observe",
-              onPressed: () => bloc.dispatch(playlist.id),
+              description: S.current.playlistContextMenu_observe,
+              onPressed: enabled ? () => bloc.dispatch(Load(arg: playlist.id)) : null,
             );
           },
         ),

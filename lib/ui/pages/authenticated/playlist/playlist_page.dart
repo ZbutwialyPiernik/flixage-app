@@ -1,5 +1,6 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/playlist/playlist_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
@@ -32,7 +33,7 @@ class PlaylistPage extends StatelessWidget {
     return DefaultLoadingBlocWidget<PlaylistBloc, List<Track>>(
       create: (context) =>
           PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
-      onInit: (context, bloc) => bloc.dispatch(LoadPlaylist(playlist)),
+      onInit: (context, bloc) => bloc.dispatch(Load(arg: playlist)),
       builder: (context, _, tracks) {
         Widget body;
 
