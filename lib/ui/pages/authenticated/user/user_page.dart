@@ -4,11 +4,10 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/user.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
-import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,17 +27,11 @@ class UserPage extends StatelessWidget {
           height: 128,
         ),
         Text(user.name),
-        BlocBuilder<UserBloc, UserData>(
+        DefaultLoadingBlocWidget<UserBloc, UserData>(
           create: (context) =>
               UserBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
           onInit: (context, bloc) => bloc.dispatch(user),
-          builder: (context, _, snapshot) {
-            if (!snapshot.hasData) {
-              return LoadingWidget();
-            }
-
-            final data = snapshot.data;
-
+          builder: (context, _, data) {
             return Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

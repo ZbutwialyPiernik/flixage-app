@@ -9,7 +9,7 @@ import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/artist_repository.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/album_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/artist_context_menu.dart';
@@ -31,20 +31,13 @@ class _ArtistPageState extends State<ArtistPage> {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return BlocBuilder<ArtistBloc, ArtistData>(
+    return DefaultLoadingBlocWidget<ArtistBloc, ArtistData>(
       create: (context) => ArtistBloc(
         notificationBloc: Provider.of<NotificationBloc>(context),
         artistRepository: ArtistRepository(Provider.of<Dio>(context)),
       ),
       onInit: (context, bloc) => bloc.dispatch(artist),
-      builder: (context, _, snapshot) {
-        if (!snapshot.hasData)
-          return Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-
+      builder: (context, _, data) {
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return <Widget>[
@@ -55,7 +48,7 @@ class _ArtistPageState extends State<ArtistPage> {
                 contextMenuRoute: ArtistContextMenu.route,
                 showRandomButton: true,
                 onRandomButtonTap: () => audioPlayerBloc.dispatch(
-                    PlayTracks(playMode: PlayMode.random, tracks: snapshot.data.singles)),
+                    PlayTracks(playMode: PlayMode.random, tracks: data.singles)),
               ),
             ];
           },
@@ -70,17 +63,17 @@ class _ArtistPageState extends State<ArtistPage> {
                   S.current.artistPage_popular,
                   style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
                 ),
-                ..._buildSingles(snapshot.data.singles),
+                ..._buildSingles(data.singles),
                 Text(
                   S.current.artistPage_singles,
                   style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
                 ),
-                ..._buildSingles(snapshot.data.singles),
+                ..._buildSingles(data.singles),
                 Text(
                   S.current.artistPage_albums,
                   style: Theme.of(context).textTheme.subtitle1.copyWith(fontSize: 18),
                 ),
-                ..._buildAlbums(context, snapshot.data.albums),
+                ..._buildAlbums(context, data.albums),
               ],
             ),
           ),

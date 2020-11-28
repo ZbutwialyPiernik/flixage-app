@@ -1,6 +1,5 @@
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
-import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/page/playlist/playlist_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
@@ -8,7 +7,7 @@ import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_thumbnail.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';
@@ -30,29 +29,12 @@ class PlaylistPage extends StatelessWidget {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return BlocBuilder<PlaylistBloc, List<Track>>(
+    return DefaultLoadingBlocWidget<PlaylistBloc, List<Track>>(
       create: (context) =>
           PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
       onInit: (context, bloc) => bloc.dispatch(LoadPlaylist(playlist)),
-      builder: (context, _, snapshot) {
-        final tracks = snapshot.data;
-
-        if (!snapshot.hasData) {
-          return Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-
+      builder: (context, _, tracks) {
         Widget body;
-
-        if (snapshot.hasError) {
-          Provider.of<NotificationBloc>(context)
-              .dispatch(SimpleNotification.error(content: snapshot.error));
-
-          body = Container();
-        }
 
         if (tracks.isEmpty) {
           body = Center(

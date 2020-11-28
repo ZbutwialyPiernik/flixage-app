@@ -19,14 +19,14 @@ class Validator {
 }
 
 class ValidatorBuilder {
-  final List<ValidatorStep> steps = List();
+  final List<ValidatorStep> _steps = List();
 
   ValidatorBuilder add(Predicate predicate, message) {
-    steps.add(ValidatorStep(predicate, message));
+    _steps.add(ValidatorStep(predicate, message));
     return this;
   }
 
-  Validator build() => Validator._(steps);
+  Validator build() => Validator._(_steps);
 }
 
 class ValidationResult {

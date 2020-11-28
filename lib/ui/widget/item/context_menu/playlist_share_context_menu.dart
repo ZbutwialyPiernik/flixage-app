@@ -19,10 +19,11 @@ class PlaylistShareContextMenu extends ContextMenu<Playlist> {
           iconData: Icons.link,
           description: S.current.sharePlaylistContextMenu_copyLink,
           onPressed: () {
-            Clipboard.setData(ClipboardData(
-                text: "http://www.flixage.com/share/playlist/" + item.shareCode));
-            Provider.of<NotificationBloc>(context).dispatch(SimpleNotification.info(
-                content: S.current.sharePlaylistContextMenu_linkCopied));
+            Clipboard.setData(
+                ClipboardData(text: "http://www.flixage.com/share/playlist/" + item.id));
+            Provider.of<NotificationBloc>(context, listen: false).dispatch(
+                SimpleNotification.info(
+                    content: S.current.sharePlaylistContextMenu_linkCopied));
           },
         ),
       ];
@@ -32,8 +33,8 @@ class PlaylistShareContextMenu extends ContextMenu<Playlist> {
     return [
       SizedBox(height: 120),
       FutureBuilder(
-        future: scanner
-            .generateBarCode("http://www.flixage.com/share/playlist/" + item.shareCode),
+        future:
+            scanner.generateBarCode("http://www.flixage.com/share/playlist/" + item.id),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Container(
@@ -52,39 +53,24 @@ class PlaylistShareContextMenu extends ContextMenu<Playlist> {
         },
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(item.name,
-                style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 24)),
-            SizedBox(height: 8),
-            Text(S.current.sharePlaylistContextMenu_author(item.owner.name),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(fontSize: 20, color: Colors.white70))
-          ],
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Chip(
+          backgroundColor: Theme.of(context).accentColor,
+          label: Text(item.id,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  .copyWith(letterSpacing: 8, fontWeight: FontWeight.bold)),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: item.shareCode.characters
-              .map((character) => _buildLetter(context, character))
-              .toList(),
-        ),
-      )
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(item.name,
+              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 24)),
+        ],
+      ),
+      SizedBox(height: 16)
     ];
-  }
-
-  Widget _buildLetter(BuildContext context, String character) {
-    return Container(
-      width: 48,
-      height: 64,
-      color: Theme.of(context).accentColor,
-      child: Center(child: Text(character, style: TextStyle(fontSize: 28))),
-    );
   }
 }

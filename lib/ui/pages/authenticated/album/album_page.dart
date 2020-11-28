@@ -7,7 +7,7 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/album.dart';
 import 'package:flixage/repository/album_repository.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/item/context_menu/album_context_menu.dart';
 import 'package:flixage/ui/widget/item/track_item.dart';
 import 'package:flixage/ui/widget/queryable_app_bar.dart';
@@ -23,21 +23,12 @@ class AlbumPage extends StatelessWidget {
     final Album album = (ModalRoute.of(context).settings.arguments as Arguments).extra;
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return BlocBuilder<AlbumBloc, AlbumData>(
+    return DefaultLoadingBlocWidget<AlbumBloc, AlbumData>(
       create: (context) => AlbumBloc(
           notificationBloc: Provider.of<NotificationBloc>(context),
           albumRepository: AlbumRepository(Provider.of<Dio>(context))),
       onInit: (context, bloc) => bloc.dispatch(album),
-      builder: (context, _, snapshot) {
-        if (!snapshot.hasData)
-          return Expanded(
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-
-        final tracks = snapshot.data.tracks;
-
+      builder: (context, _, data) {
         return NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return <Widget>[
@@ -47,7 +38,7 @@ class AlbumPage extends StatelessWidget {
                 contextMenuRoute: AlbumContextMenu.route,
                 showRandomButton: true,
                 onRandomButtonTap: () => audioPlayerBloc
-                    .dispatch(PlayTracks(playMode: PlayMode.random, tracks: tracks)),
+                    .dispatch(PlayTracks(playMode: PlayMode.random, tracks: data.tracks)),
               ),
             ];
           },
@@ -62,15 +53,15 @@ class AlbumPage extends StatelessWidget {
                   shrinkWrap: true,
                   padding: EdgeInsets.only(left: 16, bottom: 16, top: 16),
                   itemBuilder: (_, index) => TrackItem(
-                    track: tracks[index],
+                    track: data.tracks[index],
                     prefix: Padding(
                       padding: EdgeInsets.only(right: 8),
                       child: Text((index + 1).toString()),
                     ),
-                    secondary: Text(tracks[index].streamCount.toString()),
+                    secondary: Text(data.tracks[index].streamCount.toString()),
                   ),
                   separatorBuilder: (_, index) => SizedBox(height: 8),
-                  itemCount: tracks.length,
+                  itemCount: data.tracks.length,
                 ),
               ],
             ),
@@ -80,3 +71,5 @@ class AlbumPage extends StatelessWidget {
     );
   }
 }
+
+class LoadingStatus {}

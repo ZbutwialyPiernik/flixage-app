@@ -1,9 +1,12 @@
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
+import 'package:flixage/bloc/follow_playlist_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
+import 'package:flixage/ui/pages/authenticated/user/user_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
+import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/item/context_menu/context_menu_item.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_share_context_menu.dart';
 import 'package:flixage/ui/widget/item/context_menu/queryable_context_menu.dart';
@@ -32,13 +35,26 @@ class PlaylistContextMenu extends QueryableContextMenu<Playlist> {
           iconData: Icons.edit,
           description: S.current.playlistContextMenu_editPlaylist,
           onPressed: () {},
-        ), //      ContextMenuItem(
-      //iconData: Icons.person, description: "Pokaż autora", onPressed: () {}),
-      //if (playlist.isNotOwner(authenticationBloc.currentUser))
-      ContextMenuItem(
+        ),
+      if (playlist.isNotOwner(authenticationBloc.currentUser))
+        ContextMenuItem(
           iconData: Icons.person,
           description: S.current.contextMenu_showAuthor,
-          onPressed: () {}),
+          onPressed: () => Navigator.of(context).pushNamed(
+            UserPage.route,
+            arguments: Arguments(extra: playlist.owner),
+          ),
+        ),
+      if (playlist.isNotOwner(authenticationBloc.currentUser))
+        BlocBuilder<FollowPlaylistBloc, void>(
+          builder: (context, bloc, snapshot) {
+            return ContextMenuItem(
+              iconData: Icons.favorite,
+              description: "Observe",
+              onPressed: () => bloc.dispatch(playlist.id),
+            );
+          },
+        ),
       ContextMenuItem(
         iconData: Icons.share,
         description: S.current.playlistContextMenu_sharePlaylist,

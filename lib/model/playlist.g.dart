@@ -14,7 +14,6 @@ Playlist _$PlaylistFromJson(Map<String, dynamic> json) {
     owner: json['owner'] == null
         ? null
         : User.fromJson(json['owner'] as Map<String, dynamic>),
-    shareCode: json['shareCode'] as String,
   );
 }
 
@@ -23,5 +22,4 @@ Map<String, dynamic> _$PlaylistToJson(Playlist instance) => <String, dynamic>{
       'name': instance.name,
       'thumbnailUrl': instance.thumbnailUrl,
       'owner': instance.owner,
-      'shareCode': instance.shareCode,
     };

@@ -32,11 +32,6 @@ abstract class UserRepository {
   });
 
   @GET("/users/me/followedPlaylists")
-  Future<List<Playlist>> followedPlaylist();
+  Future<List<Playlist>> getFollowedPlaylist();
 
-  @PUT("users/me/followedPlaylists/{shareCode}")
-  Future<void> followPlaylist(@Path() String shareCode);
-
-  @DELETE("users/me/followedPlaylists/{shareCode}")
-  Future<void> unfollowPlaylist(@Path() String shareCode);
 }

@@ -54,7 +54,7 @@ class AuthenticatedMainPageState extends State<AuthenticatedMainPage>
     TrackContextMenu.route: (_) => TrackContextMenu(),
     PlaylistContextMenu.route: (_) => PlaylistContextMenu(),
     ArtistContextMenu.route: (_) => ArtistContextMenu(),
-    PlaylistShareContextMenu.route: (_) => PlaylistShareContextMenu()
+    PlaylistShareContextMenu.route: (_) => PlaylistShareContextMenu(),
   };
 
   final bottomBarRoutes = [

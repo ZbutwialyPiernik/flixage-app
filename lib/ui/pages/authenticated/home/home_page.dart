@@ -11,9 +11,8 @@ import 'package:flixage/repository/user_repository.dart';
 import 'package:flixage/ui/pages/authenticated/album/album_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/pages/authenticated/settings/settings_page.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/cached_network_image/custom_image.dart';
-import 'package:flixage/ui/widget/loading_widget.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +39,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        BlocBuilder<HomeBloc, HomeData>(
+        DefaultLoadingBlocWidget<HomeBloc, HomeData>(
           create: (context) => HomeBloc(
             albumRepository: AlbumRepository(dio),
             artistRepository: ArtistRepository(dio),
@@ -48,13 +47,7 @@ class HomePage extends StatelessWidget {
             userRepository: UserRepository(dio),
           ),
           onInit: (context, bloc) => bloc.dispatch(LoadHome()),
-          builder: (context, _, snapshot) {
-            if (!snapshot.hasData) {
-              return LoadingWidget();
-            }
-
-            final data = snapshot.data;
-
+          builder: (context, _, data) {
             return SingleChildScrollView(
               padding: EdgeInsets.only(bottom: 16),
               child: Column(

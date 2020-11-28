@@ -1,10 +1,33 @@
+import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
+import 'package:flixage/bloc/dio_util.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class LoadingBloc<T, D> extends Bloc<T, D> {
-  final BehaviorSubject<D> _subject = BehaviorSubject();
+abstract class LoadingState<T> extends Equatable {}
 
-  Stream<D> get state => _subject.stream;
+class LoadingUnitinialized<T> extends LoadingState<T> {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingInProgress<T> extends LoadingState<T> {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadingSuccess<T> extends LoadingState<T> {
+  final T item;
+
+  LoadingSuccess(this.item);
+
+  @override
+  List<Object> get props => [item];
+}
+
+abstract class LoadingBloc<T, D> extends Bloc<T, LoadingState<D>> {
+  final BehaviorSubject<LoadingState<D>> _subject = BehaviorSubject();
+
+  Stream<LoadingState<D>> get state => _subject.stream;
 
   LoadingBloc();
 
@@ -12,9 +35,11 @@ abstract class LoadingBloc<T, D> extends Bloc<T, D> {
 
   @override
   void onEvent(T event) {
+    _subject.add(LoadingInProgress());
+
     load(event)
-        .then((data) => _subject.add(data))
-        .catchError((e) => _subject.addError(e));
+        .then((data) => _subject.add(LoadingSuccess(data)))
+        .catchError((e) => _subject.addError(mapCommonErrors(e)));
   }
 
   @override

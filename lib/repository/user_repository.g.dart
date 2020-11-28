@@ -77,7 +77,7 @@ class _UserRepository implements UserRepository {
   }
 
   @override
-  followedPlaylist() async {
+  getFollowedPlaylist() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -91,36 +91,5 @@ class _UserRepository implements UserRepository {
         .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
-  }
-
-  @override
-  followPlaylist(shareCode) async {
-    ArgumentError.checkNotNull(shareCode, 'shareCode');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    await _dio.request<void>('users/me/followedPlaylists/$shareCode',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'PUT', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
-        data: _data);
-    return null;
-  }
-
-  @override
-  unfollowPlaylist(shareCode) async {
-    ArgumentError.checkNotNull(shareCode, 'shareCode');
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    await _dio.request<void>('users/me/followedPlaylists/$shareCode',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
-    return null;
   }
 }

@@ -7,14 +7,12 @@ part 'playlist.g.dart';
 @JsonSerializable()
 class Playlist extends Queryable {
   final User owner;
-  final String shareCode;
 
   Playlist({
     String id,
     String name,
     String thumbnailUrl,
     this.owner,
-    this.shareCode,
   }) : super(id, name, thumbnailUrl);
 
   bool isOwner(User otherUser) => otherUser.id == owner.id;
@@ -24,5 +22,5 @@ class Playlist extends Queryable {
   Map<String, dynamic> toJson() => _$PlaylistToJson(this);
 
   @override
-  List<Object> get props => [id, name, thumbnailUrl, owner, shareCode];
+  List<Object> get props => [id, name, thumbnailUrl, owner];
 }
