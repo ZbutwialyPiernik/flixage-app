@@ -1,5 +1,7 @@
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
+import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
+import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/item/context_menu/playlist_context_menu.dart';
 import 'package:flixage/ui/widget/item/queryable_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +27,9 @@ class PlaylistItem extends StatelessWidget {
       height: 80,
       item: playlist,
       contextMenuRoute: PlaylistContextMenu.route,
-      onTap: onTap,
+      onTap: onTap ??
+          (playlist) => Navigator.of(context)
+              .pushNamed(PlaylistPage.route, arguments: Arguments(extra: playlist)),
       secondary: secondary ?? Text(S.current.playlistItem_playlist),
     );
   }

@@ -165,6 +165,16 @@ class S {
     );
   }
 
+  /// `Service unavailable`
+  String get dio_serviceUnavailable {
+    return Intl.message(
+      'Service unavailable',
+      name: 'dio_serviceUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `By {name}`
   String albumPage_by(Object name) {
     return Intl.message(
@@ -390,6 +400,16 @@ class S {
     return Intl.message(
       'You don\'t follow any playlists yet',
       name: 'libraryPage_tab_followed_notFollowed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scan code`
+  String get libraryPAge_tab_followed_scanQR {
+    return Intl.message(
+      'Scan code',
+      name: 'libraryPAge_tab_followed_scanQR',
       desc: '',
       args: [],
     );

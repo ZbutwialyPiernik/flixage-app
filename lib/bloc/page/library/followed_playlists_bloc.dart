@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/user_repository.dart';

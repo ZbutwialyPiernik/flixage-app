@@ -17,7 +17,7 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User user = ModalRoute.of(context).settings.arguments;
+    final User user = (ModalRoute.of(context).settings.arguments as Arguments).extra;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

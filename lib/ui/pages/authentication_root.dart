@@ -2,7 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:dio/dio.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
-import 'package:flixage/bloc/follow_playlist_bloc.dart';
+import 'package:flixage/bloc/page/library/follow_playlist_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/token_store.dart';

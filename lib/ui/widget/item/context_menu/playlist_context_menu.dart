@@ -1,5 +1,5 @@
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
-import 'package:flixage/bloc/follow_playlist_bloc.dart';
+import 'package:flixage/bloc/page/library/follow_playlist_bloc.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
@@ -23,14 +23,15 @@ class PlaylistContextMenu extends QueryableContextMenu<Playlist> {
     final authenticationBloc = Provider.of<AuthenticationBloc>(context);
 
     return [
-      ContextMenuItem(
-        iconData: Icons.clear,
-        description: S.current.playlistContextMenu_removePlaylist,
-        onPressed: () {
-          bloc.dispatch(DeletePlaylist(playlist: playlist));
-          Navigator.of(context).pop();
-        },
-      ),
+      if (playlist.isOwner(authenticationBloc.currentUser))
+        ContextMenuItem(
+          iconData: Icons.clear,
+          description: S.current.playlistContextMenu_removePlaylist,
+          onPressed: () {
+            bloc.dispatch(DeletePlaylist(playlist: playlist));
+            Navigator.of(context).pop();
+          },
+        ),
       if (playlist.isOwner(authenticationBloc.currentUser))
         ContextMenuItem(
           iconData: Icons.edit,

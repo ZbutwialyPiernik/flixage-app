@@ -117,47 +117,35 @@ class _LibraryPageState extends State<LibraryPage> {
           );
         },
       ),
-      DefaultLoadingBlocWidget<TopArtistsBloc, List<Artist>>(
-        create: (context) =>
-            TopArtistsBloc(userRepository: UserRepository(Provider.of<Dio>(context))),
+      DefaultLoadingBlocWidget<FollowedPlaylistsBloc, List<Playlist>>(
+        create: (context) => FollowedPlaylistsBloc(
+            userRepository: UserRepository(Provider.of<Dio>(context))),
         onInit: (context, bloc) => bloc.dispatch(Load()),
-        builder: (context, _, artits) {
-          return QueryableList<Artist>(
-            items: artits,
-            itemBuilder: (context, artist) => ArtistItem(artist: artist),
-            emptyBuilder: (context) => Center(
-              child: Text(S.current.libraryPage_tab_artists_notPlayed,
-                  style: Theme.of(context).textTheme.headline5),
-            ),
-          );
-        },
-      ),
-      QueryableList<Playlist>(
-        items: [],
-        itemBuilder: (context, playlist) => PlaylistItem(playlist: playlist),
-        emptyBuilder: (context) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(S.current.libraryPage_tab_followed_notFollowed,
-                style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 8),
-            Row(
+        builder: (context, _, playlists) {
+          return QueryableList<Playlist>(
+            items: playlists,
+            itemBuilder: (context, playlist) => PlaylistItem(playlist: playlist),
+            emptyBuilder: (context) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
+                Text(S.current.libraryPage_tab_followed_notFollowed,
+                    style: Theme.of(context).textTheme.headline5),
+                RaisedButton.icon(
                   icon: Icon(Icons.qr_code),
+                  label: Text(S.current.libraryPAge_tab_followed_scanQR),
                   onPressed: () {
                     scanner.scan().then((value) {
-                      Provider.of<NotificationBloc>(context)
+                      Provider.of<NotificationBloc>(context, listen: false)
                           .dispatch(SimpleNotification.info(content: value));
                     });
                   },
                 ),
               ],
-            )
-          ],
-        ),
-      )
+            ),
+          );
+        },
+      ),
     ];
   }
 

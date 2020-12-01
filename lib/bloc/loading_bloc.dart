@@ -38,7 +38,8 @@ class LoadingSuccess<T> extends LoadingState<T> {
 }
 
 abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> {
-  final BehaviorSubject<LoadingState<D>> _subject = BehaviorSubject();
+  final BehaviorSubject<LoadingState<D>> _subject =
+      BehaviorSubject.seeded(LoadingUnitinialized());
 
   Stream<LoadingState<D>> get state => _subject.stream;
 

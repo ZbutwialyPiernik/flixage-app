@@ -42,9 +42,9 @@ abstract class PlaylistRepository {
   @GET("/users/me/playlists")
   Future<List<Playlist>> getCurrentUserPlaylists();
 
-  @PUT("/playlist/{id}/followers")
+  @PUT("/playlists/{id}/followers")
   Future<void> followPlaylist(@Path() String id);
 
-  @DELETE("/playlist/{id}/followers")
+  @DELETE("/playlists/{id}/followers")
   Future<void> unfollowPlaylist(@Path() String id);
 }

@@ -21,14 +21,10 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/playlists/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/playlists/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = Playlist.fromJson(_result.data);
     return value;
@@ -41,8 +37,7 @@ class _PlaylistRepository implements PlaylistRepository {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/playlists',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/playlists',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -62,14 +57,10 @@ class _PlaylistRepository implements PlaylistRepository {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(playlist?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/playlists/$id',
+    final Response<Map<String, dynamic>> _result = await _dio.request('/playlists/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'PUT', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     final value = Playlist.fromJson(_result.data);
     return value;
@@ -103,14 +94,10 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request(
-        '/playlists/$id/tracks',
+    final Response<List<dynamic>> _result = await _dio.request('/playlists/$id/tracks',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Track.fromJson(i as Map<String, dynamic>))
@@ -146,10 +133,7 @@ class _PlaylistRepository implements PlaylistRepository {
     await _dio.request<void>('/playlists/$id/tracks',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'PUT', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     return null;
   }
@@ -179,14 +163,10 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request(
-        '/users/$userId/playlists',
+    final Response<List<dynamic>> _result = await _dio.request('/users/$userId/playlists',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
@@ -199,14 +179,10 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<List<dynamic>> _result = await _dio.request(
-        '/users/me/playlists',
+    final Response<List<dynamic>> _result = await _dio.request('/users/me/playlists',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'GET', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     var value = _result.data
         .map((dynamic i) => Playlist.fromJson(i as Map<String, dynamic>))
@@ -220,13 +196,10 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    await _dio.request<void>('/playlist/$id/followers',
+    await _dio.request<void>('/playlists/$id/followers',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'PUT',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
+            method: 'PUT', headers: <String, dynamic>{}, extra: _extra, baseUrl: baseUrl),
         data: _data);
     return null;
   }
@@ -237,7 +210,7 @@ class _PlaylistRepository implements PlaylistRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    await _dio.request<void>('/playlist/$id/followers',
+    await _dio.request<void>('/playlists/$id/followers',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'DELETE',
