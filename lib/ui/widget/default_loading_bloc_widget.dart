@@ -13,8 +13,14 @@ class DefaultLoadingBlocWidget<B extends BaseBloc<LoadingState<S>>, S>
   final Widget Function(BuildContext context, B bloc) onLoading;
   final void Function(BuildContext context, B bloc) onInit;
 
-  DefaultLoadingBlocWidget(
-      {this.create, this.onInit, this.builder, this.onError, this.onLoading});
+  DefaultLoadingBlocWidget({
+    Key key,
+    this.create,
+    this.onInit,
+    this.builder,
+    this.onError,
+    this.onLoading,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class DefaultLoadingBlocWidget<B extends BaseBloc<LoadingState<S>>, S>
       builder: (context, bloc, snapshot) {
         final data = snapshot.data;
 
-        if (snapshot.hasError) {
+        if (snapshot.data is LoadingError) {
           if (onError != null) {
             return onError(context, bloc, snapshot.error);
           } else {

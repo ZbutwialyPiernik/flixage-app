@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/authentication/authentication_bloc.dart';
 import 'package:flixage/bloc/page/register/register_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
@@ -18,7 +17,7 @@ class RegisterPage extends StatelessWidget {
         child: FormWidget(
           createBloc: (context) => RegisterBloc(
             Provider.of<AuthenticationBloc>(context),
-            AuthenticationRepository(Provider.of<Dio>(context)),
+            Provider.of<AuthenticationRepository>(context),
           ),
           submitButtonText: S.current.registerPage_register,
         ),

@@ -1,7 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
-import 'package:flixage/bloc/notification/notification_bloc.dart';
-import 'package:flixage/bloc/page/library/followed_playlists_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/bloc/page/library/top_artists_bloc.dart';
@@ -20,7 +17,6 @@ import 'package:flixage/ui/widget/list/queryable_list.dart';
 import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:provider/provider.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -104,7 +100,7 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
       DefaultLoadingBlocWidget<TopArtistsBloc, List<Artist>>(
         create: (context) =>
-            TopArtistsBloc(userRepository: UserRepository(Provider.of<Dio>(context))),
+            TopArtistsBloc(userRepository: Provider.of<UserRepository>(context)),
         onInit: (context, bloc) => bloc.dispatch(Load()),
         builder: (context, _, artits) {
           return QueryableList<Artist>(
@@ -113,35 +109,6 @@ class _LibraryPageState extends State<LibraryPage> {
             emptyBuilder: (context) => Center(
               child: Text(S.current.libraryPage_tab_artists_notPlayed,
                   style: Theme.of(context).textTheme.headline5),
-            ),
-          );
-        },
-      ),
-      DefaultLoadingBlocWidget<FollowedPlaylistsBloc, List<Playlist>>(
-        create: (context) => FollowedPlaylistsBloc(
-            userRepository: UserRepository(Provider.of<Dio>(context))),
-        onInit: (context, bloc) => bloc.dispatch(Load()),
-        builder: (context, _, playlists) {
-          return QueryableList<Playlist>(
-            items: playlists,
-            itemBuilder: (context, playlist) => PlaylistItem(playlist: playlist),
-            emptyBuilder: (context) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(S.current.libraryPage_tab_followed_notFollowed,
-                    style: Theme.of(context).textTheme.headline5),
-                RaisedButton.icon(
-                  icon: Icon(Icons.qr_code),
-                  label: Text(S.current.libraryPAge_tab_followed_scanQR),
-                  onPressed: () {
-                    scanner.scan().then((value) {
-                      Provider.of<NotificationBloc>(context, listen: false)
-                          .dispatch(SimpleNotification.info(content: value));
-                    });
-                  },
-                ),
-              ],
             ),
           );
         },

@@ -4,6 +4,7 @@ import 'package:flixage/bloc/language/language_bloc.dart';
 import 'package:flixage/bloc/networt_status_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
+import 'package:flixage/ui/bloc_util.dart';
 import 'package:flixage/ui/pages/authentication_root.dart';
 import 'package:flixage/ui/widget/bloc_provider.dart';
 import 'package:flixage/util/constants.dart';
@@ -91,6 +92,10 @@ class Main extends StatelessWidget {
   Widget build(context) {
     return MultiProvider(
       providers: [
+        Provider<Dio>.value(value: dio),
+        repositoryProvider<UserRepository>((dio) => UserRepository(dio)),
+        repositoryProvider<AuthenticationRepository>(
+            (dio) => AuthenticationRepository(dio)),
         BlocProvider<AuthenticationBloc>(
           create: (_) => AuthenticationBloc(
             authenticationRepository,
@@ -100,16 +105,12 @@ class Main extends StatelessWidget {
           )..dispatch(AppStarted()),
           lazy: false,
         ),
-        BlocProvider<NotificationBloc>(
-          create: (_) => NotificationBloc(),
-        ),
+        BlocProvider<NotificationBloc>(create: (_) => NotificationBloc()),
         BlocProvider<LanguageBloc>(
           create: (_) => LanguageBloc(secureStorage)..dispatch(LoadLanguage()),
           lazy: false,
         ),
-        Provider<AuthenticationRepository>.value(value: authenticationRepository),
         Provider<TokenStore>.value(value: tokenStore),
-        Provider<Dio>.value(value: dio),
         Provider<NetworkStatusBloc>.value(value: networkBloc),
       ],
       child: MaterialApp(

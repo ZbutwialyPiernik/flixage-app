@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flixage/bloc/bloc.dart';
 import 'package:flixage/bloc/dio_util.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class AbstractLoad<T> extends Equatable {
@@ -37,6 +38,15 @@ class LoadingSuccess<T> extends LoadingState<T> {
   List<Object> get props => [item];
 }
 
+class LoadingError<T> extends LoadingState<T> {
+  final String message;
+
+  LoadingError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> {
   final BehaviorSubject<LoadingState<D>> _subject =
       BehaviorSubject.seeded(LoadingUnitinialized());
@@ -45,6 +55,7 @@ abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> 
 
   LoadingBloc();
 
+  @protected
   Future<D> load(T event);
 
   @override
@@ -53,7 +64,7 @@ abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> 
 
     load(event.arg)
         .then((data) => _subject.add(LoadingSuccess(data)))
-        .catchError((e) => _subject.addError(mapCommonErrors(e)));
+        .catchError((e) => _subject.add(LoadingError(mapCommonErrors(e))));
   }
 
   @override

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/search_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/album.dart';
@@ -8,6 +7,7 @@ import 'package:flixage/model/queryable.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/model/user.dart';
 import 'package:flixage/repository/search_repository.dart';
+import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/item/album_item.dart';
 import 'package:flixage/ui/widget/item/artist_item.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
@@ -27,16 +27,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  GlobalKey<BlocBuilderState<SearchBloc, SearchState>> key;
+
   @override
   Widget build(BuildContext context) {
-    final dio = Provider.of<Dio>(context);
-    final searchBloc = SearchBloc(SearchRepository(dio));
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         SearchField(
-          onChanged: (query) => searchBloc.dispatch(
+          onChanged: (query) => key.currentState.bloc.dispatch(
             TextChanged(
               query: query,
               types: [
@@ -49,9 +48,10 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
         ),
-        StreamBuilder<SearchState>(
-          stream: searchBloc.state,
-          builder: (context, snapshot) {
+        BlocBuilder<SearchBloc, SearchState>(
+          key: key,
+          create: (context) => SearchBloc(Provider.of<SearchRepository>(context)),
+          builder: (context, bloc, snapshot) {
             final state = snapshot.data;
             if (state is SearchStateEmpty) {
               return Expanded(

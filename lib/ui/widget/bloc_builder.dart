@@ -15,37 +15,39 @@ class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _BlocBuilderState<B, S>();
+  State<StatefulWidget> createState() => BlocBuilderState<B, S>();
 }
 
-class _BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S>> {
-  B bloc;
-  bool isLocal;
+class BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S>> {
+  B _bloc;
+  bool _isLocal;
+
+  B get bloc => _bloc;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    isLocal = widget.create != null;
+    _isLocal = widget.create != null;
 
-    bloc = isLocal ? widget.create(context) : Provider.of<B>(context);
+    _bloc = _isLocal ? widget.create(context) : Provider.of<B>(context);
 
     if (widget.onInit != null) {
-      widget.onInit(context, bloc);
+      widget.onInit(context, _bloc);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<S>(
-      stream: bloc.state,
-      builder: (context, snapshot) => widget.builder(context, bloc, snapshot),
+      stream: _bloc.state,
+      builder: (context, snapshot) => widget.builder(context, _bloc, snapshot),
     );
   }
 
   void dispose() {
-    if (isLocal) {
-      bloc?.dispose();
+    if (_isLocal) {
+      _bloc?.dispose();
     }
 
     super.dispose();

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/user/user_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
@@ -30,7 +29,7 @@ class UserPage extends StatelessWidget {
         Text(user.name),
         DefaultLoadingBlocWidget<UserBloc, UserData>(
           create: (context) =>
-              UserBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
+              UserBloc(playlistRepository: Provider.of<PlaylistRepository>(context)),
           onInit: (context, bloc) => bloc.dispatch(Load(arg: user)),
           builder: (context, _, data) {
             return Expanded(

@@ -15,7 +15,6 @@ import 'package:flixage/ui/widget/item/track_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 
 class PlaylistPage extends StatelessWidget {
@@ -32,7 +31,7 @@ class PlaylistPage extends StatelessWidget {
 
     return DefaultLoadingBlocWidget<PlaylistBloc, List<Track>>(
       create: (context) =>
-          PlaylistBloc(playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
+          PlaylistBloc(playlistRepository: Provider.of<PlaylistRepository>(context)),
       onInit: (context, bloc) => bloc.dispatch(Load(arg: playlist)),
       builder: (context, _, tracks) {
         Widget body;

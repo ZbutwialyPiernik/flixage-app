@@ -1,4 +1,5 @@
 import 'package:flixage/bloc/form_bloc.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flutter/foundation.dart';
@@ -37,7 +38,7 @@ class _FormWidgetState<T extends FormBloc> extends State<FormWidget<T>> {
         final state = snapshot.data;
         final isDisabled = state is FormLoading || state is FormSubmitSuccess;
 
-        if (snapshot.hasError) {
+        if (snapshot.data is LoadingError) {
           notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
         }
 

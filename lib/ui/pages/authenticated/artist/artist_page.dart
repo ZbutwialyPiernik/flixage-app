@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/artist/artist_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
@@ -35,7 +34,7 @@ class _ArtistPageState extends State<ArtistPage> {
     return DefaultLoadingBlocWidget<ArtistBloc, ArtistData>(
       create: (context) => ArtistBloc(
         notificationBloc: Provider.of<NotificationBloc>(context),
-        artistRepository: ArtistRepository(Provider.of<Dio>(context)),
+        artistRepository: Provider.of<ArtistRepository>(context),
       ),
       onInit: (context, bloc) => bloc.dispatch(Load(arg: artist)),
       builder: (context, _, data) {

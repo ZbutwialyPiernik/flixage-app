@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/page/playlist/playlist_thumbnail_bloc.dart';
 import 'package:flixage/model/playlist.dart';
@@ -30,7 +29,7 @@ class _PlaylistThumbnailState extends State<PlaylistThumbnail> {
   @override
   Widget build(BuildContext context) {
     final bloc = PlaylistThumbnailBloc(
-        playlistRepository: PlaylistRepository(Provider.of<Dio>(context)));
+        playlistRepository: Provider.of<PlaylistRepository>(context));
 
     return StreamBuilder<LoadingState<ThumbnailUploaded>>(
       stream: bloc.state,

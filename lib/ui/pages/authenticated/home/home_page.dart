@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flixage/bloc/audio_player/audio_player_bloc.dart';
 import 'package:flixage/bloc/audio_player/audio_player_event.dart';
 import 'package:flixage/bloc/loading_bloc.dart';
@@ -22,8 +21,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dio = Provider.of<Dio>(context);
-
     final audioPlayer = Provider.of<AudioPlayerBloc>(context);
 
     return Column(
@@ -42,10 +39,10 @@ class HomePage extends StatelessWidget {
         ),
         DefaultLoadingBlocWidget<HomeBloc, HomeData>(
           create: (context) => HomeBloc(
-            albumRepository: AlbumRepository(dio),
-            artistRepository: ArtistRepository(dio),
-            trackRepository: TrackRepository(dio),
-            userRepository: UserRepository(dio),
+            albumRepository: Provider.of<AlbumRepository>(context),
+            artistRepository: Provider.of<ArtistRepository>(context),
+            trackRepository: Provider.of<TrackRepository>(context),
+            userRepository: Provider.of<UserRepository>(context),
           ),
           onInit: (context, bloc) => bloc.dispatch(Load()),
           builder: (context, _, data) {

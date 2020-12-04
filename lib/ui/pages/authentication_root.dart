@@ -6,12 +6,15 @@ import 'package:flixage/bloc/page/library/follow_playlist_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/token_store.dart';
+import 'package:flixage/repository/album_repository.dart';
+import 'package:flixage/repository/artist_repository.dart';
 import 'package:flixage/repository/playlist_repository.dart';
+import 'package:flixage/repository/search_repository.dart';
 import 'package:flixage/repository/track_repository.dart';
+import 'package:flixage/ui/bloc_util.dart';
 import 'package:flixage/ui/pages/authenticated/authenticated_main_page.dart';
 import 'package:flixage/ui/pages/unauthenticated/loading/splash_page.dart';
 import 'package:flixage/ui/pages/unauthenticated/unauthenticated_main_page.dart';
-import 'package:flixage/ui/widget/bloc_provider.dart';
 import 'package:flixage/ui/widget/cached_network_image/dio_cache_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +27,6 @@ class AuthenticationRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = Provider.of<AuthenticationBloc>(context);
-    final dio = Provider.of<Dio>(context);
     final tokenStore = Provider.of<TokenStore>(context);
 
     return StreamBuilder<AuthenticationState>(
@@ -35,21 +37,27 @@ class AuthenticationRoot extends StatelessWidget {
         switch (state.runtimeType) {
           case AuthenticationAuthenticated:
             return MultiProvider(providers: [
-              Provider<DioCacheManager>(
-                create: (_) => DioCacheManager(dio, Settings(cacheKey: "images")),
+              repositoryProvider<PlaylistRepository>((dio) => PlaylistRepository(dio)),
+              repositoryProvider<AlbumRepository>((dio) => AlbumRepository(dio)),
+              repositoryProvider<SearchRepository>((dio) => SearchRepository(dio)),
+              repositoryProvider<TrackRepository>((dio) => TrackRepository(dio)),
+              repositoryProvider<ArtistRepository>((dio) => ArtistRepository(dio)),
+              ProxyProvider<Dio, DioCacheManager>(
+                update: (_, dio, __) =>
+                    DioCacheManager(dio, Settings(cacheKey: "images")),
               ),
-              BlocProvider<AudioPlayerBloc>(
-                create: (_) => AudioPlayerBloc(
-                    TrackRepository(dio), AssetsAudioPlayer(), tokenStore),
+              ProxyProvider<TrackRepository, AudioPlayerBloc>(
+                update: (_, trackRepository, __) =>
+                    AudioPlayerBloc(trackRepository, AssetsAudioPlayer(), tokenStore),
                 lazy: false,
               ),
-              ProxyProvider<NotificationBloc, LibraryBloc>(
-                update: (_, notificationBloc, __) =>
-                    LibraryBloc(PlaylistRepository(dio), notificationBloc),
+              ProxyProvider2<NotificationBloc, PlaylistRepository, LibraryBloc>(
+                update: (_, notificationBloc, playlistRepository, __) =>
+                    LibraryBloc(playlistRepository, notificationBloc),
               ),
-              ProxyProvider<Dio, FollowPlaylistBloc>(
-                update: (_, dio, __) => FollowPlaylistBloc(
-                    playlistRepository: PlaylistRepository(Provider.of<Dio>(context))),
+              ProxyProvider<PlaylistRepository, FollowPlaylistBloc>(
+                update: (_, playlistRepository, __) =>
+                    FollowPlaylistBloc(playlistRepository: playlistRepository),
               )
             ], child: AuthenticatedMainPage());
           case AuthenticationUnauthenticated:
