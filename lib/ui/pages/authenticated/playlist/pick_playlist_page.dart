@@ -2,7 +2,7 @@ import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
+import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ class PickPlaylistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LibraryBloc, List<Playlist>>(
+    return DefaultLoadingBlocBuilder<LibraryBloc, List<Playlist>>(
       create: (context) => Provider.of<LibraryBloc>(context),
       onInit: (context, bloc) => bloc.dispatch(LoadLibrary()),
       builder: (context, _, snapshot) => Column(

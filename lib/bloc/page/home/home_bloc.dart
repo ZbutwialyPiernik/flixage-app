@@ -31,7 +31,7 @@ class LoadHome extends Equatable {
   List<Object> get props => [];
 }
 
-class HomeBloc extends LoadingBloc<LoadHome, HomeData> {
+class HomeBloc extends AbstractLoadingBloc<LoadHome, HomeData> {
   final UserRepository userRepository;
   final TrackRepository trackRepository;
   final ArtistRepository artistRepository;

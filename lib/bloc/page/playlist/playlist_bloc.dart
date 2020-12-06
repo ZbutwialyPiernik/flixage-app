@@ -5,7 +5,7 @@ import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';
 
-class PlaylistBloc extends LoadingBloc<Playlist, List<Track>> {
+class PlaylistBloc extends AbstractLoadingBloc<Playlist, List<Track>> {
   final Logger log = Logger();
   final PlaylistRepository playlistRepository;
 

@@ -4,7 +4,7 @@ import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:meta/meta.dart';
 
-class LoadPlaylistBloc extends LoadingBloc<String, Playlist> {
+class LoadPlaylistBloc extends AbstractLoadingBloc<String, Playlist> {
   final PlaylistRepository playlistRepository;
 
   LoadPlaylistBloc({

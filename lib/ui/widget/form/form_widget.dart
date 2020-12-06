@@ -34,12 +34,11 @@ class _FormWidgetState<T extends FormBloc> extends State<FormWidget<T>> {
     return BlocBuilder<T, FormBlocState>(
       create: widget.createBloc,
       onInit: widget.onInit,
-      builder: (context, bloc, snapshot) {
-        final state = snapshot.data;
+      builder: (context, bloc, state) {
         final isDisabled = state is FormLoading || state is FormSubmitSuccess;
 
-        if (snapshot.data is LoadingError) {
-          notificationBloc.dispatch(SimpleNotification.error(content: snapshot.error));
+        if (state is FormSubmitError) {
+          notificationBloc.dispatch(SimpleNotification.error(content: state.message));
         }
 
         return Column(

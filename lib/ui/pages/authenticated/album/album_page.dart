@@ -23,7 +23,7 @@ class AlbumPage extends StatelessWidget {
     final Album album = (ModalRoute.of(context).settings.arguments as Arguments).extra;
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return DefaultLoadingBlocWidget<AlbumBloc, AlbumData>(
+    return DefaultLoadingBlocBuilder<AlbumBloc, AlbumData>(
       create: (context) => AlbumBloc(
           notificationBloc: Provider.of<NotificationBloc>(context),
           albumRepository: Provider.of<AlbumRepository>(context)),

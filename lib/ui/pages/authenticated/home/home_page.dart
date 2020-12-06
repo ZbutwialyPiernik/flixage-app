@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        DefaultLoadingBlocWidget<HomeBloc, HomeData>(
+        DefaultLoadingBlocBuilder<HomeBloc, HomeData>(
           create: (context) => HomeBloc(
             albumRepository: Provider.of<AlbumRepository>(context),
             artistRepository: Provider.of<ArtistRepository>(context),

@@ -29,7 +29,7 @@ class PlaylistPage extends StatelessWidget {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return DefaultLoadingBlocWidget<PlaylistBloc, List<Track>>(
+    return DefaultLoadingBlocBuilder<PlaylistBloc, List<Track>>(
       create: (context) =>
           PlaylistBloc(playlistRepository: Provider.of<PlaylistRepository>(context)),
       onInit: (context, bloc) => bloc.dispatch(Load(arg: playlist)),

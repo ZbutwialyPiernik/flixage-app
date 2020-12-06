@@ -17,7 +17,7 @@ class ArtistData extends Equatable {
   List<Object> get props => [singles, albums];
 }
 
-class ArtistBloc extends LoadingBloc<Artist, ArtistData> {
+class ArtistBloc extends AbstractLoadingBloc<Artist, ArtistData> {
   final ArtistRepository artistRepository;
   final NotificationBloc notificationBloc;
 

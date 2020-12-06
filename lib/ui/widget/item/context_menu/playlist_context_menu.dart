@@ -49,9 +49,8 @@ class PlaylistContextMenu extends QueryableContextMenu<Playlist> {
         ),
       if (playlist.isNotOwner(authenticationBloc.currentUser))
         BlocBuilder<FollowPlaylistBloc, LoadingState<void>>(
-          builder: (context, bloc, snapshot) {
-            final enabled =
-                snapshot.data is LoadingUnitinialized || snapshot.data is LoadingSuccess;
+          builder: (context, bloc, state) {
+            final enabled = state is LoadingUnitinialized || state is LoadingSuccess;
 
             return ContextMenuItem(
               iconData: Icons.favorite,

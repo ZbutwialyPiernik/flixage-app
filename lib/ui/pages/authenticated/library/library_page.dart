@@ -6,15 +6,14 @@ import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/artist.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/user_repository.dart';
+import 'package:flixage/ui/pages/authenticated/library/following_tab.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
-import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/item/artist_item.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
 import 'package:flixage/ui/widget/list/queryable_list.dart';
-import 'package:flixage/ui/widget/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -58,15 +57,11 @@ class _LibraryPageState extends State<LibraryPage> {
 
   List<Widget> _buildTabs(BuildContext context) {
     return [
-      BlocBuilder<LibraryBloc, List<Playlist>>(
+      DefaultLoadingBlocBuilder<LibraryBloc, List<Playlist>>(
         onInit: (context, bloc) => bloc.dispatch(LoadLibrary()),
         builder: (context, _, state) {
-          if (!state.hasData) {
-            return LoadingWidget();
-          }
-
           return QueryableList<Playlist>(
-            items: state.data,
+            items: state,
             leadingTiles: [_createPlaylistItem(context)],
             itemBuilder: (context, playlist) => PlaylistItem(
               playlist: playlist,
@@ -98,7 +93,7 @@ class _LibraryPageState extends State<LibraryPage> {
           );
         },
       ),
-      DefaultLoadingBlocWidget<TopArtistsBloc, List<Artist>>(
+      DefaultLoadingBlocBuilder<TopArtistsBloc, List<Artist>>(
         create: (context) =>
             TopArtistsBloc(userRepository: Provider.of<UserRepository>(context)),
         onInit: (context, bloc) => bloc.dispatch(Load()),
@@ -113,6 +108,7 @@ class _LibraryPageState extends State<LibraryPage> {
           );
         },
       ),
+      FollowingTab(),
     ];
   }
 

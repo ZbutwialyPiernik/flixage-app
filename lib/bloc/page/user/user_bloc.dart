@@ -14,7 +14,7 @@ class UserData extends Equatable {
   List<Object> get props => [playlists];
 }
 
-class UserBloc extends LoadingBloc<User, UserData> {
+class UserBloc extends AbstractLoadingBloc<User, UserData> {
   final PlaylistRepository playlistRepository;
 
   UserBloc({@required this.playlistRepository});

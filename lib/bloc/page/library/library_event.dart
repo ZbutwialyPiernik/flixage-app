@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
 
-abstract class LibraryEvent extends Equatable {
+abstract class LibraryEvent extends Load<void> {
   @override
   List<Object> get props => [];
 }

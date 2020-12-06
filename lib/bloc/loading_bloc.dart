@@ -48,27 +48,28 @@ class LoadingError<T> extends LoadingState<T> {
 }
 
 abstract class LoadingBloc<T, D> extends Bloc<AbstractLoad<T>, LoadingState<D>> {
-  final BehaviorSubject<LoadingState<D>> _subject =
-      BehaviorSubject.seeded(LoadingUnitinialized());
-
-  Stream<LoadingState<D>> get state => _subject.stream;
-
-  LoadingBloc();
-
   @protected
   Future<D> load(T event);
+}
+
+abstract class AbstractLoadingBloc<T, D> extends LoadingBloc<T, D> {
+  @protected
+  final BehaviorSubject<LoadingState<D>> subject =
+      BehaviorSubject.seeded(LoadingUnitinialized());
+
+  Stream<LoadingState<D>> get state => subject.stream;
 
   @override
   void onEvent(AbstractLoad<T> event) {
-    _subject.add(LoadingInProgress());
+    subject.add(LoadingInProgress());
 
     load(event.arg)
-        .then((data) => _subject.add(LoadingSuccess(data)))
-        .catchError((e) => _subject.add(LoadingError(mapCommonErrors(e))));
+        .then((data) => subject.add(LoadingSuccess(data)))
+        .catchError((e) => subject.add(LoadingError(mapCommonErrors(e))));
   }
 
   @override
   void dispose() {
-    _subject.close();
+    subject.close();
   }
 }

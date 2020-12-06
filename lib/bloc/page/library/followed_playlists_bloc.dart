@@ -3,7 +3,7 @@ import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/user_repository.dart';
 import 'package:meta/meta.dart';
 
-class FollowedPlaylistsBloc extends LoadingBloc<void, List<Playlist>> {
+class FollowedPlaylistsBloc extends AbstractLoadingBloc<void, List<Playlist>> {
   final UserRepository userRepository;
 
   FollowedPlaylistsBloc({@required this.userRepository});

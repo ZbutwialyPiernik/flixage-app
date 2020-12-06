@@ -1,5 +1,5 @@
 import 'package:flixage/bloc/form_bloc.dart';
-import 'package:flixage/bloc/page/create_playlsit/create_playlist_bloc.dart';
+import 'package:flixage/bloc/page/create_playlist/create_playlist_bloc.dart';
 import 'package:flixage/bloc/page/library/library_bloc.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/ui/widget/stateful_wrapper.dart';

@@ -4,15 +4,18 @@ import 'package:provider/provider.dart';
 
 class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
   final B Function(BuildContext context) create;
-  final Widget Function(BuildContext context, B bloc, AsyncSnapshot<S> state) builder;
+  final Widget Function(BuildContext context, B bloc, S state) builder;
+  final void Function(BuildContext context, B bloc, S state) listener;
   final void Function(BuildContext context, B bloc) onInit;
 
   const BlocBuilder({
     Key key,
     @required this.builder,
+    this.listener,
     this.create,
     this.onInit,
-  }) : super(key: key);
+  })  : assert(builder != null),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => BlocBuilderState<B, S>();
@@ -21,6 +24,7 @@ class BlocBuilder<B extends BaseBloc<S>, S> extends StatefulWidget {
 class BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S>> {
   B _bloc;
   bool _isLocal;
+  S _lastState;
 
   B get bloc => _bloc;
 
@@ -41,7 +45,14 @@ class BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S>
   Widget build(BuildContext context) {
     return StreamBuilder<S>(
       stream: _bloc.state,
-      builder: (context, snapshot) => widget.builder(context, _bloc, snapshot),
+      builder: (context, snapshot) {
+        if (_lastState != snapshot.data) {
+          _lastState = snapshot.data;
+          widget.listener?.call(context, _bloc, snapshot.data);
+        }
+
+        return widget.builder(context, _bloc, snapshot.data);
+      },
     );
   }
 

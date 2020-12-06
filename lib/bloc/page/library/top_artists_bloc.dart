@@ -3,7 +3,7 @@ import 'package:flixage/model/artist.dart';
 import 'package:flixage/repository/user_repository.dart';
 import 'package:meta/meta.dart';
 
-class TopArtistsBloc extends LoadingBloc<void, List<Artist>> {
+class TopArtistsBloc extends AbstractLoadingBloc<void, List<Artist>> {
   final UserRepository userRepository;
 
   TopArtistsBloc({@required this.userRepository});

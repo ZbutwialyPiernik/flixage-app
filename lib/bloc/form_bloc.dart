@@ -16,6 +16,15 @@ class FormLoading extends FormBlocState {}
 
 class FormSubmitSuccess extends FormBlocState {}
 
+class FormSubmitError extends FormBlocState {
+  final String message;
+
+  FormSubmitError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 class FormValidationError extends FormBlocState {
   final Map<String, ValidationResult> errors;
 
@@ -101,7 +110,7 @@ abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
 
         onValid(event)
             .then((value) => _formSubject.add(value))
-            .catchError((e) => _formSubject.addError(e));
+            .catchError((e) => _formSubject.add(FormSubmitError(e)));
       }
     }
   }

@@ -1,37 +1,26 @@
-import 'package:flixage/bloc/bloc.dart';
+import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/bloc/notification/notification_bloc.dart';
 import 'package:flixage/bloc/page/library/library_event.dart';
 import 'package:flixage/generated/l10n.dart';
 import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 
-class LibraryBloc extends Bloc<LibraryEvent, List<Playlist>> {
+class LibraryBloc extends AbstractLoadingBloc<void, List<Playlist>> {
   static final log = Logger();
-
-  final BehaviorSubject<List<Playlist>> _playlistsSubject = BehaviorSubject();
 
   final PlaylistRepository playlistRepository;
   final NotificationBloc notificationBloc;
 
-  @override
-  Stream<List<Playlist>> get state => _playlistsSubject.stream;
-
   LibraryBloc(this.playlistRepository, this.notificationBloc);
 
   @override
-  void onEvent(LibraryEvent event) async {
+  void onEvent(AbstractLoad<void> event) async {
     if (event is LoadLibrary) {
-      playlistRepository.getCurrentUserPlaylists().then((playlists) {
-        _playlistsSubject.add(playlists);
-      }).catchError((error) {
-        notificationBloc
-            .dispatch(SimpleNotification.error(content: S.current.libraryFetchError));
-      });
+      super.onEvent(event);
     } else if (event is CreatePlaylist) {
       playlistRepository.create({'name': event.name}).then((playlist) {
-        _playlistsSubject.add(_getPlaylists..add(playlist));
+        subject.add(LoadingSuccess(_getPlaylists..add(playlist)));
         notificationBloc.dispatch(
             SimpleNotification.info(content: S.current.playlistCreated(playlist.name)));
       }).catchError((e) {
@@ -40,9 +29,9 @@ class LibraryBloc extends Bloc<LibraryEvent, List<Playlist>> {
       });
     } else if (event is UpdatePlaylist) {
       playlistRepository.update(event.playlist.id, event.playlist).then((playlist) {
-        _playlistsSubject.add(_getPlaylists
+        subject.add(LoadingSuccess(_getPlaylists
           ..removeWhere((playlist) => playlist.id == event.playlist.id)
-          ..add(event.playlist));
+          ..add(event.playlist)));
 
         notificationBloc.dispatch(
             SimpleNotification.info(content: S.current.playlistUpdated(playlist.name)));
@@ -52,7 +41,7 @@ class LibraryBloc extends Bloc<LibraryEvent, List<Playlist>> {
       });
     } else if (event is DeletePlaylist) {
       playlistRepository.delete(event.playlist.id).then((_) {
-        _playlistsSubject.add(_getPlaylists..remove(event.playlist));
+        subject.add(LoadingSuccess(_getPlaylists..remove(event.playlist)));
         notificationBloc.dispatch(SimpleNotification.info(
             content: S.current.playlistDeleted(event.playlist.name)));
       }).catchError((e) => notificationBloc.dispatch(SimpleNotification.error(
@@ -69,11 +58,15 @@ class LibraryBloc extends Bloc<LibraryEvent, List<Playlist>> {
     }
   }
 
-  @override
-  void dispose() {
-    _playlistsSubject.close();
-  }
-
   List<Playlist> get _getPlaylists =>
-      _playlistsSubject.hasValue ? _playlistsSubject.value : List();
+      subject.value is LoadingSuccess ? subject.value : List();
+
+  @override
+  Future<List<Playlist>> load(void _) {
+    try {
+      return playlistRepository.getCurrentUserPlaylists();
+    } catch (error) {
+      return Future.error(S.current.libraryFetchError);
+    }
+  }
 }

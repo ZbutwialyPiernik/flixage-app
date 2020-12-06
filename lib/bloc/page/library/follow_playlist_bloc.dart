@@ -5,7 +5,7 @@ import 'package:flixage/bloc/loading_bloc.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:meta/meta.dart';
 
-class FollowPlaylistBloc extends LoadingBloc<String, void> {
+class FollowPlaylistBloc extends AbstractLoadingBloc<String, void> {
   static const int codeLength = 6;
 
   final PlaylistRepository playlistRepository;

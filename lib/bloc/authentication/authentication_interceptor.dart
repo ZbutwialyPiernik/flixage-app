@@ -42,7 +42,7 @@ class AuthenticationInterceptor extends Interceptor {
   @override
   Future<dynamic> onError(DioError error) async {
     // If access token will expire, resource server will throw 401
-    if (error.response != null && error.response.statusCode == HttpStatus.unauthorized) {
+    if (error.response != null && error.response.statusCode == HttpStatus.forbidden) {
       dio.lock();
 
       final refreshToken = await tokenStore.getRefreshToken();

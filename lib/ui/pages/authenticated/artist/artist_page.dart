@@ -31,7 +31,7 @@ class _ArtistPageState extends State<ArtistPage> {
 
     final audioPlayerBloc = Provider.of<AudioPlayerBloc>(context);
 
-    return DefaultLoadingBlocWidget<ArtistBloc, ArtistData>(
+    return DefaultLoadingBlocBuilder<ArtistBloc, ArtistData>(
       create: (context) => ArtistBloc(
         notificationBloc: Provider.of<NotificationBloc>(context),
         artistRepository: Provider.of<ArtistRepository>(context),

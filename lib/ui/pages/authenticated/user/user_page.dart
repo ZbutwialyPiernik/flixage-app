@@ -27,7 +27,7 @@ class UserPage extends StatelessWidget {
           height: 128,
         ),
         Text(user.name),
-        DefaultLoadingBlocWidget<UserBloc, UserData>(
+        DefaultLoadingBlocBuilder<UserBloc, UserData>(
           create: (context) =>
               UserBloc(playlistRepository: Provider.of<PlaylistRepository>(context)),
           onInit: (context, bloc) => bloc.dispatch(Load(arg: user)),

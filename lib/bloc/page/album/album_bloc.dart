@@ -15,7 +15,7 @@ class AlbumData extends Equatable {
   List<Object> get props => [tracks];
 }
 
-class AlbumBloc extends LoadingBloc<Album, AlbumData> {
+class AlbumBloc extends AbstractLoadingBloc<Album, AlbumData> {
   final AlbumRepository albumRepository;
   final NotificationBloc notificationBloc;
 

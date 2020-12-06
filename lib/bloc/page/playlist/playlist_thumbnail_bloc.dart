@@ -26,7 +26,8 @@ class ThumbnailUploaded extends Equatable {
   List<Object> get props => [];
 }
 
-class PlaylistThumbnailBloc extends LoadingBloc<UploadThumbnail, ThumbnailUploaded> {
+class PlaylistThumbnailBloc
+    extends AbstractLoadingBloc<UploadThumbnail, ThumbnailUploaded> {
   static const supportedExtensions = [".jpg", ".png", ".jpeg"];
 
   final PlaylistRepository playlistRepository;

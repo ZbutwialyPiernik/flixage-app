@@ -11,8 +11,7 @@ class NetworkAwareWidget extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return BlocBuilder<NetworkStatusBloc, NetworkStatus>(
-      builder: (context, _, state) =>
-          builder(context, state.data ?? NetworkStatus.Offline),
+      builder: (context, _, state) => builder(context, state ?? NetworkStatus.Offline),
     );
   }
 }

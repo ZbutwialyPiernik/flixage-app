@@ -27,7 +27,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  GlobalKey<BlocBuilderState<SearchBloc, SearchState>> key;
+  final GlobalKey<BlocBuilderState<SearchBloc, SearchState>> key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +51,7 @@ class _SearchPageState extends State<SearchPage> {
         BlocBuilder<SearchBloc, SearchState>(
           key: key,
           create: (context) => SearchBloc(Provider.of<SearchRepository>(context)),
-          builder: (context, bloc, snapshot) {
-            final state = snapshot.data;
+          builder: (context, bloc, state) {
             if (state is SearchStateEmpty) {
               return Expanded(
                 child: Column(
