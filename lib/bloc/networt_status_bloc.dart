@@ -40,6 +40,8 @@ class NetworkStatusBloc extends BaseBloc<NetworkStatus> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _listener.cancel();
   }
 }

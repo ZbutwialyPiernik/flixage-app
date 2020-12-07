@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flixage/generated/l10n.dart';
 
-dynamic mapCommonErrors(dynamic e, {String defaultValue}) {
+String mapCommonErrors(dynamic e, {String defaultValue}) {
+  if (e is String) {
+    return e;
+  }
+
   if (defaultValue == null) {
     defaultValue = S.current.common_unknownError;
   }
@@ -18,12 +22,10 @@ dynamic mapCommonErrors(dynamic e, {String defaultValue}) {
         return S.current.dio_requestTimeout;
       case DioErrorType.RESPONSE:
         return _mapCommonCodes(e, defaultValue);
-      default:
-        return defaultValue;
     }
   }
 
-  return e;
+  return defaultValue;
 }
 
 String _mapCommonCodes(DioError e, String defaultValue) {

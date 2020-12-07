@@ -86,6 +86,8 @@ class LanguageBloc extends Bloc<LanguageEvent, Locale> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _languageSubject.close();
   }
 }

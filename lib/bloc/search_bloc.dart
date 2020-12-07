@@ -67,6 +67,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _searchSubject.close();
   }
 

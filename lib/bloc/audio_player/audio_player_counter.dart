@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:flixage/bloc/disposable.dart';
 import 'package:flixage/repository/track_repository.dart';
 import 'package:logger/logger.dart';
 
 /// Counter that sends info to API when user has listened to song over 30 seconds
-class AudioPlayerCounter {
+class AudioPlayerCounter implements Disposable {
   static final logger = Logger();
 
   final AssetsAudioPlayer _audioPlayer;

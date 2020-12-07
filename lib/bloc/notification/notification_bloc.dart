@@ -16,6 +16,8 @@ class NotificationBloc extends Bloc<SimpleNotification, SimpleNotification> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _notificationSubject.close();
   }
 }

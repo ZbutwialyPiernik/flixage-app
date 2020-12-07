@@ -70,6 +70,8 @@ abstract class AbstractLoadingBloc<T, D> extends LoadingBloc<T, D> {
 
   @override
   void dispose() {
+    super.dispose();
+
     subject.close();
   }
 }

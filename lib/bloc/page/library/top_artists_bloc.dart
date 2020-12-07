@@ -9,9 +9,6 @@ class TopArtistsBloc extends AbstractLoadingBloc<void, List<Artist>> {
   TopArtistsBloc({@required this.userRepository});
 
   @override
-  Future<List<Artist>> load(void arg) async {
-    final page = await userRepository.getMostListened();
-
-    return page.items;
-  }
+  Future<List<Artist>> load(void arg) async =>
+      (await userRepository.getMostListened()).items;
 }

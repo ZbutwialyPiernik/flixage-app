@@ -119,6 +119,8 @@ abstract class FormBloc extends Bloc<FormEvent, FormBlocState> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _formSubject.close();
   }
 }

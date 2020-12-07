@@ -9,11 +9,14 @@ import 'package:flixage/model/playlist.dart';
 import 'package:flixage/model/track.dart';
 import 'package:flixage/repository/track_repository.dart';
 import 'package:flixage/util/constants.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'audio_player_event.dart';
 
 class AudioPlayerBloc extends Bloc<AudioPlayerEvent, player.PlayerState> {
+  final Logger logger = Logger();
+
   final BehaviorSubject<Track> _audioSubject = BehaviorSubject<Track>();
   final BehaviorSubject<Playlist> _playlistSubject = BehaviorSubject<Playlist>();
   final BehaviorSubject<PlayMode> _playModeSubject =
@@ -37,14 +40,12 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, player.PlayerState> {
     _tokenStore.getAccessToken().then((token) => _audioPlayer.networkSettings
         .defaultHeaders[HttpHeaders.authorizationHeader] = "Bearer " + token);
 
-    _audioPlayer.onErrorDo = (handler) async {
-      /*var oldAudio = handler.playlist.audios[handler.playlistIndex];
-        var newAudio = oldAudio.copyWith(headers: {
-          HttpHeaders.authorizationHeader: "Bearer " + await _tokenStore.getAccessToken()
-        });
+    addDisposable(_audioPlayerCounter);
 
-        handler.playlist.audios[handler.playlistIndex] = newAudio;
-        dispatch(ChangePlayerState(playerState: player.PlayerState.play));*/
+    _audioPlayer.onErrorDo = (handler) async {
+      logger.d("""Audio player error
+      type: ${handler.error.errorType}
+      message: ${handler.error.message}""");
 
       dispatch(ChangePlayerState(playerState: player.PlayerState.pause));
     };
@@ -137,9 +138,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, player.PlayerState> {
 
   @override
   void dispose() {
+    super.dispose();
+
     _playlistSubject.close();
     _audioSubject.close();
-    _audioPlayerCounter.dispose();
     _audioPlayer.dispose();
   }
 }

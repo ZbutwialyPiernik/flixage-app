@@ -69,10 +69,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   AuthenticationBloc(
       this._authenticationRepository, Dio dio, this._userRepository, this._tokenStore) {
     dio.interceptors.add(AuthenticationInterceptor(
-        dio: dio,
-        authenticationBloc: this,
-        authenticationRepository: _authenticationRepository,
-        tokenStore: _tokenStore));
+      dio: dio,
+      authenticationBloc: this,
+      authenticationRepository: _authenticationRepository,
+      tokenStore: _tokenStore,
+    ));
   }
 
   @override
@@ -130,6 +131,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   @override
   void dispose() {
+    super.dispose();
+
     _authenticationSubject.close();
   }
 }

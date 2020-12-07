@@ -1,10 +1,9 @@
+import 'package:flixage/bloc/disposable.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 
-abstract class BaseBloc<S> {
+abstract class BaseBloc<S> extends DisposableParent {
   Stream<S> get state;
-
-  void dispose();
 }
 
 abstract class Bloc<E, S> extends BaseBloc<S> {
