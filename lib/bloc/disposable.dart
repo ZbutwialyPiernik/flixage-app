@@ -5,7 +5,7 @@ abstract class Disposable {
 }
 
 abstract class DisposableParent implements Disposable {
-  List<Disposable> _disposables;
+  final List<Disposable> _disposables = List();
 
   @protected
   void addDisposable(Disposable disposable) => _disposables.add(disposable);
