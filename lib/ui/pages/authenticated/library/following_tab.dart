@@ -53,8 +53,10 @@ class _FollowingTabState extends State<FollowingTab> {
                     color: Theme.of(context).accentColor,
                     onPressed: () => scanner.scan().then(
                       (url) {
-                        url = url.substring(url.lastIndexOf("/"));
-                        key.currentState.bloc.dispatch(Load(arg: url));
+                        if (url != null) {
+                          url = url.substring(url.lastIndexOf("/"));
+                          key.currentState.bloc.dispatch(Load(arg: url));
+                        }
                       },
                     ),
                   ),

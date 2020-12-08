@@ -10,6 +10,7 @@ import 'package:flixage/ui/pages/authenticated/library/following_tab.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/create_playlist_page.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
+import 'package:flixage/ui/widget/cached_tab.dart';
 import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
 import 'package:flixage/ui/widget/item/artist_item.dart';
 import 'package:flixage/ui/widget/item/playlist_item.dart';
@@ -57,43 +58,46 @@ class _LibraryPageState extends State<LibraryPage> {
 
   List<Widget> _buildTabs(BuildContext context) {
     return [
-      DefaultLoadingBlocBuilder<LibraryBloc, List<Playlist>>(
-        onInit: (context, bloc) => bloc.dispatch(LoadLibrary()),
-        builder: (context, _, state) {
-          return QueryableList<Playlist>(
-            items: state,
-            leadingTiles: [_createPlaylistItem(context)],
-            itemBuilder: (context, playlist) => PlaylistItem(
-              playlist: playlist,
-              onTap: (playlist) => Navigator.of(context).pushNamed(
-                PlaylistPage.route,
-                arguments: Arguments(extra: playlist),
-              ),
-            ),
-            emptyBuilder: (context) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  S.current.libraryPage_tab_playlists_noPlaylists,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+      CachedTab(
+        child: DefaultLoadingBlocBuilder<LibraryBloc, List<Playlist>>(
+          onInit: (context, bloc) => bloc.dispatch(LoadLibrary()),
+          builder: (context, _, state) {
+            return QueryableList<Playlist>(
+              items: state,
+              leadingTiles: [_createPlaylistItem(context)],
+              itemBuilder: (context, playlist) => PlaylistItem(
+                playlist: playlist,
+                onTap: (playlist) => Navigator.of(context).pushNamed(
+                  PlaylistPage.route,
+                  arguments: Arguments(extra: playlist),
                 ),
-                SizedBox(height: 16),
-                RaisedButton(
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                  color: Theme.of(context).accentColor,
-                  shape: StadiumBorder(),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                      CreatePlaylistPage.route,
-                      arguments: Arguments(showBottomAppBar: false)),
-                  child: Text(S.current.libraryPage_tab_playlists_createPlaylist),
-                )
-              ],
-            ),
-          );
-        },
+              ),
+              emptyBuilder: (context) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    S.current.libraryPage_tab_playlists_noPlaylists,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  SizedBox(height: 16),
+                  RaisedButton(
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                    color: Theme.of(context).accentColor,
+                    shape: StadiumBorder(),
+                    onPressed: () => Navigator.of(context).pushNamed(
+                        CreatePlaylistPage.route,
+                        arguments: Arguments(showBottomAppBar: false)),
+                    child: Text(S.current.libraryPage_tab_playlists_createPlaylist),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
       ),
-      DefaultLoadingBlocBuilder<TopArtistsBloc, List<Artist>>(
+      CachedTab(
+          child: DefaultLoadingBlocBuilder<TopArtistsBloc, List<Artist>>(
         create: (context) =>
             TopArtistsBloc(userRepository: Provider.of<UserRepository>(context)),
         onInit: (context, bloc) => bloc.dispatch(Load()),
@@ -107,8 +111,8 @@ class _LibraryPageState extends State<LibraryPage> {
             ),
           );
         },
-      ),
-      FollowingTab(),
+      )),
+      CachedTab(child: FollowingTab()),
     ];
   }
 
