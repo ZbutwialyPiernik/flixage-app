@@ -87,7 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "libraryPAge_tab_followed_scanQR" : MessageLookupByLibrary.simpleMessage("Skanuj kod"),
     "libraryPage_tab_artists_notPlayed" : MessageLookupByLibrary.simpleMessage("Nie zagrałeś jescze żadnej piosenki"),
     "libraryPage_tab_artists_title" : MessageLookupByLibrary.simpleMessage("Artyści"),
-    "libraryPage_tab_followed_notFollowed" : MessageLookupByLibrary.simpleMessage("Nie obserwujesz jeszcze żadnej playlist"),
+    "libraryPage_tab_followed_notFollowed" : MessageLookupByLibrary.simpleMessage("Nie obserwujesz jeszcze żadnej playlisty"),
     "libraryPage_tab_followed_title" : MessageLookupByLibrary.simpleMessage("Obserwowane"),
     "libraryPage_tab_playlists_createPlaylist" : MessageLookupByLibrary.simpleMessage("Stwórz playlistę"),
     "libraryPage_tab_playlists_noPlaylists" : MessageLookupByLibrary.simpleMessage("Nie masz jeszcze żadnej playlisty"),

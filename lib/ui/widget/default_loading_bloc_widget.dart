@@ -42,7 +42,9 @@ class DefaultLoadingBlocBuilder<B extends BaseBloc<LoadingState<S>>, S>
           }
         }
 
-        if (state is LoadingInProgress || state is LoadingUnitinialized) {
+        if (state == null ||
+            state is LoadingInProgress ||
+            state is LoadingUnitinialized) {
           if (onLoading != null) {
             return onLoading(context, bloc);
           } else {

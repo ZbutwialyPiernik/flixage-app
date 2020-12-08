@@ -43,10 +43,14 @@ class _FollowingTabState extends State<FollowingTab> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(S.current.libraryPage_tab_followed_notFollowed,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline5),
+                  SizedBox(height: 8),
                   RaisedButton.icon(
                     icon: Icon(Icons.qr_code),
                     label: Text(S.current.libraryPAge_tab_followed_scanQR),
+                    shape: StadiumBorder(),
+                    color: Theme.of(context).accentColor,
                     onPressed: () => scanner.scan().then(
                       (url) {
                         url = url.substring(url.lastIndexOf("/"));
@@ -63,14 +67,15 @@ class _FollowingTabState extends State<FollowingTab> {
           key: key,
           create: (context) => LoadPlaylistBloc(
               playlistRepository: Provider.of<PlaylistRepository>(context)),
-          builder: (context, _, state) {
-            if (state is LoadingInProgress) {
-              return LoadingWidget();
-            }
-
+          listener: (context, _, state) {
             if (state is LoadingSuccess<Playlist>) {
               Navigator.of(context)
                   .pushNamed(PlaylistPage.route, arguments: Arguments(extra: state.item));
+            }
+          },
+          builder: (context, _, state) {
+            if (state is LoadingInProgress) {
+              return LoadingWidget();
             }
 
             return Container();
