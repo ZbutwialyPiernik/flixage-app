@@ -6,6 +6,7 @@ import 'package:flixage/model/playlist.dart';
 import 'package:flixage/repository/playlist_repository.dart';
 import 'package:flixage/repository/user_repository.dart';
 import 'package:flixage/ui/pages/authenticated/playlist/playlist_page.dart';
+import 'package:flixage/ui/pages/authenticated/search/search_page.dart';
 import 'package:flixage/ui/widget/arguments.dart';
 import 'package:flixage/ui/widget/bloc_builder.dart';
 import 'package:flixage/ui/widget/default_loading_bloc_widget.dart';
@@ -46,19 +47,33 @@ class _FollowingTabState extends State<FollowingTab> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline5),
                   SizedBox(height: 8),
-                  RaisedButton.icon(
-                    icon: Icon(Icons.qr_code),
-                    label: Text(S.current.libraryPAge_tab_followed_scanQR),
-                    shape: StadiumBorder(),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => scanner.scan().then(
-                      (url) {
-                        if (url != null) {
-                          url = url.substring(url.lastIndexOf("/"));
-                          key.currentState.bloc.dispatch(Load(arg: url));
-                        }
-                      },
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RaisedButton.icon(
+                        icon: Icon(Icons.search),
+                        label: Text(S.current.searchPage_search),
+                        shape: StadiumBorder(),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(SearchPage.route),
+                      ),
+                      SizedBox(width: 8),
+                      RaisedButton.icon(
+                        icon: Icon(Icons.qr_code),
+                        label: Text(S.current.libraryPAge_tab_followed_scanQR),
+                        shape: StadiumBorder(),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () => scanner.scan().then(
+                          (url) {
+                            if (url != null) {
+                              url = url.substring(url.lastIndexOf("/"));
+                              key.currentState.bloc.dispatch(Load(arg: url));
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

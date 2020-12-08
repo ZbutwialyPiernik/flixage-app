@@ -12,7 +12,7 @@ class DefaultLoadingBlocBuilder<B extends BaseBloc<LoadingState<S>>, S>
   final Widget Function(BuildContext context, B bloc, S state) builder;
   final Widget Function(BuildContext context, B bloc, Object error) onError;
   final Widget Function(BuildContext context, B bloc) onLoading;
-  final void Function(BuildContext context, S state) listener;
+  final void Function(BuildContext context, B bloc, LoadingState<S> state) listener;
   final void Function(BuildContext context, B bloc) onInit;
 
   DefaultLoadingBlocBuilder({
@@ -37,6 +37,7 @@ class _DefaultLoadingBlocBuilderState<B extends BaseBloc<LoadingState<S>>, S>
     return BlocBuilder<B, LoadingState<S>>(
       create: widget.create,
       onInit: widget.onInit,
+      listener: widget.listener,
       builder: (context, bloc, state) {
         if (state is LoadingError<S>) {
           if (widget.onError != null) {

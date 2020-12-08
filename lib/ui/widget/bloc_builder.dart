@@ -48,7 +48,9 @@ class BlocBuilderState<B extends BaseBloc<S>, S> extends State<BlocBuilder<B, S>
       builder: (context, snapshot) {
         if (_lastState != snapshot.data) {
           _lastState = snapshot.data;
-          widget.listener?.call(context, _bloc, snapshot.data);
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            widget.listener?.call(context, _bloc, snapshot.data);
+          });
         }
 
         return widget.builder(context, _bloc, snapshot.data);
